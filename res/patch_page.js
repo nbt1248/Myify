@@ -23,7 +23,7 @@ async function updateOnline() {
 	}
 }
 updateOnline();
-setInterval(() => updateOnline(), 5000);
+setInterval(() => updateOnline(), 300000);
 
 window.player.ajCreate = function() {
 	const previous_time_x = localStorage.getItem('audio.lastX') ?? 100

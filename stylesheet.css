@@ -1316,7 +1316,8 @@ background-position: -108px -52px !important;
   position: relative;
 }
 
-.leftDataBlock .ovk-album .albumPreview {
+.leftDataBlock .ovk-album .albumPreview,
+.right_small_block .ovk-album .albumPreview {
   position: relative;
 }
 
@@ -1338,6 +1339,8 @@ background-position: -108px -52px !important;
   font-weight: bold;
   margin-left: 6px;
   color: #FFF;
+  padding-bottom: 1px;
+  margin-top: -1px;
 }
 
 .albumCamera {
@@ -1604,7 +1607,8 @@ background-position: -108px -52px !important;
     font-size: 12px;
 }
 
-.leftDataBlock .content_list.long {
+.leftDataBlock .content_list.long,
+.right_small_block .content_list.long {
   width: 200px;
 }
 .giftsDataBlock .content_list .cl_element {

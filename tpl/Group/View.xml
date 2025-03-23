@@ -263,21 +263,22 @@
 					{tr("albums", $albumsCount)}
 				</div>
 			</a>
-            <div n:if="$albumsCount > 0" style="padding: 5px;">
-                <div class="ovk-album" style="display: inline-block;" n:foreach="$albums as $album">
-                    <div style="text-align: center;float: left;height: 54pt;width: 100px;">
-                        {var $cover = $album->getCoverPhoto()}
-                        
-                        <img
-                            src="{is_null($cover)?'/assets/packages/static/openvk/img/camera_200.png':$cover->getURL()}"
-                            style="max-width: 80px; max-height: 54pt;" loading=lazy />
-                    </div>
-                    <div>
-                        <b><a href="/album{$album->getPrettyId()}">{$album->getName()}</a></b><br>
-                        <span class="nobold">{tr("updated_at", $album->getEditTime() ?? $album->getCreationTime())}</span>
-                    </div>
-                </div>
-            </div>
+			<div n:if="$albumsCount > 0" style="padding-left: 10px; padding-bottom: 10px;">
+				<a n:foreach="$albums as $album" href="/album{$album->getPrettyId()}">
+					<div class="ovk-album" style="display: inline-block;">
+					{var $cover = $album->getCoverPhoto()}
+
+						<div class="albumInfo">
+							<div class="albumCamera">{$album->getPhotosCount()}</div>
+							<div class="albumName">{$album->getName()}</div>
+						</div>
+							<img
+							src="{is_null($cover)?'/themepack/vkify/2.0.0.0/resource/m_noalbum.png':$cover->getURLBySizeId('small')}"
+							style="{is_null($cover)?'':'width: 178px;'|noescape}"
+							class="albumPreview" loading=lazy />
+					</div>
+				</a>
+			</div>
         </div>
     </div>
     <div n:if="($thisUser && $docsCount > 0 || ($thisUser && $club->canBeModifiedBy($thisUser)))">
