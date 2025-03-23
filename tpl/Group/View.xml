@@ -5,19 +5,19 @@
 
 {block header}
     {_group}
-    
-    <img n:if="$club->isVerified()"
-         class="name-checkmark"
-         src="/assets/packages/static/openvk/img/checkmark.png"
-         alt="{_verified_page}"
-         />
 {/block}
 
 {block content}
 <div class="left_big_block">
     <div n:if="!is_null($alert = $club->getAlert())" class="group-alert">{strpos($alert, "@") === 0 ? tr(substr($alert, 1)) : $alert}</div>
     <div class="public_info">
-		<h2>{$club->getName()}</h2>
+		<h2>{$club->getName()}
+			<img n:if="$club->isVerified()"
+					 class="name-checkmark"
+					 src="/assets/packages/static/openvk/img/checkmark.png"
+					 alt="{_verified_page}"
+					 />
+		 </h2>
     </div>
 	<div class="public_info_more">
 		<span n:if="$club->getDescriptionHtml()" class="nobold label">{_description}: </span><div n:if="$club->getDescriptionHtml()" style="max-width: 260px;display: inline-block;">{$club->getDescriptionHtml()|noescape}</div>

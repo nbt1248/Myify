@@ -1772,3 +1772,17 @@ img[src*="/assets/packages/static/openvk/img/banned.jpg"] {
 	margin-top: 5px;
 	padding: 8px 0px 9px 127px;
 }
+/* хром-онли такие классные скроллбары */
+.tippy-content .rightlist::-webkit-scrollbar,
+.tippy-content .audiosContainer::-webkit-scrollbar {
+    width: 7px;
+}
+.tippy-content .rightlist::-webkit-scrollbar-thumb,
+.tippy-content .audiosContainer::-webkit-scrollbar-thumb {
+  background-color: #DAE1E8;
+  border-radius: 3px;
+}
+.tippy-content .rightlist::-webkit-scrollbar-thumb:hover,
+.tippy-content .audiosContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #BEC8D3;
+}
