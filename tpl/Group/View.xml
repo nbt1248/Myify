@@ -45,8 +45,7 @@
             </div>
         </div>
     </div>
-
-
+    
     <div n:if="!is_null($suggestedPostsCountByUser) && $suggestedPostsCountByUser > 0" class="sugglist">
         <a href="/club{$club->getId()}/suggested" id="cound_r">{tr("suggested_by_you", $suggestedPostsCountByUser)}</a>
     </div>
@@ -57,6 +56,11 @@
 
     {presenter "openvk!Wall->wallEmbedded", -$club->getId()}
 
+	{* детка, ты сделала костыль на 5 с плюсом ! *}
+	{* ты меня зажгла.. появилось оч сильное и реальное желание сделать ещё парочку.. нет.. именно намутить хорошенько. *}
+	{* чтобы папа Вова и дальше был доволен, жду в ближайшее время всех описанных и перечисленных тобою костылей. ну кроме последнего сценария..)) хотя... ;) *}
+	{* кстати насчет костыля в виде диалогов... в js отлично, а я еще люблю когда они как бы случайно совсем чуть-чуть отваливаются... *}
+	{* и раз уж ты такая плохая девочка, вот видео как раз для тебя: https://ovk.to/video8120_17 *}
     <script n:if="isset($thisUser) && $club->getWallType() == 2 && !$club->canBeModifiedBy($thisUser)">
         document.querySelector("textarea").setAttribute("placeholder", tr("suggest_new"))
     </script>

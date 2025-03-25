@@ -935,3 +935,13 @@ function switchProfileInfo() {
 		}
 	}
 }
+
+const today = new Date();
+if (today.getDate() === 1 && today.getMonth() === 3) {
+	const doge = document.createElement('script');
+	doge.setAttribute('src','/themepack/vkify/2.0.0.0/resource/doge.js');
+	document.head.appendChild(doge);
+	u(document).on('click', '.post-like-button', function () {
+		if (u(this).find('#liked').length) {Doge.show();}
+	});
+}

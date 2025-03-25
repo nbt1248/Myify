@@ -1,5 +1,4 @@
 {extends "../@layout.xml"}
-
 {block title}
     {_send_gift}
 {/block}

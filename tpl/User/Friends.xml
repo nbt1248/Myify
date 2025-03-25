@@ -51,6 +51,15 @@
             {_friends}
         {/if}
     {/if}
+	<style>
+	.container_gray {
+	  background: #FFF !important;
+	  padding: 10px !important;
+	}
+	.container_gray .content {
+	  border: none !important;
+	}
+	</style>
 {/block}
 
 {block tabs}
@@ -63,9 +72,11 @@
     <div n:if="!is_null($thisUser) && $user->getId() === $thisUser->getId()" n:attr="id => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming' ? 'activetabs' : 'ki')" class="tab">
         <a n:attr="id => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming' ? 'act_tab_a' : 'ki')" href="?act=incoming">{_req}</a>
     </div>
+	{if isset($thisUser) && $thisUser->getId() == $user->getId()}
     <div id="ki" class="tab">
         <a id="ki" href="/invite">{_invite}</a>
     </div>
+	{/if}
 {/block}
 
 {block size}

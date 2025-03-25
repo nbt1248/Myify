@@ -1,5 +1,4 @@
 {extends "../@listView.xml"}
-
 {block title}
     {tr("users_gifts", $user->getFirstName())}
 {/block}

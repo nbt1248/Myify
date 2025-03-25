@@ -2,7 +2,6 @@
 {block title}{$correspondent->getCanonicalName()}{/block}
 
 {block header}
-    
 <a href="/im">{_my_messages}</a> »
 <a href="{$correspondent->getURL()}">{$correspondent->getCanonicalName()}</a>    
     <div n:if="($online = $correspondent->getOnline()->timestamp()) + 2505600 > time()" style="float: right;">

@@ -720,7 +720,7 @@
 										<img
 											src="{$photo->getURLBySizeId('tiny')}"
 											onclick="OpenMiniature(event, {$photo->getURLBySizeId('larger')}, null, {$photo->getPrettyId()}, null)"
-											class="albumPreview" loading=lazy style="max-width: 78px; max-height: 75px;"/>
+											class="albumPreview" loading=lazy style="max-width: 75px; max-height: 75px;"/>
 									</div>
 								</a>
 							</td>

@@ -1,5 +1,4 @@
 {extends "../@listView.xml"}
-
 {block title}
     {_gift_select}
 {/block}
