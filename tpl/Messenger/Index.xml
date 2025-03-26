@@ -20,13 +20,13 @@
         <div class="crp-list scroll_container">
             <div n:foreach="$corresps as $coresp"
                  class="scroll_node crp-entry"
-                 onmousedown="window.location.assign({$coresp->getURL()});" >
+                 onmousedown="window.open({$coresp->getURL()}, '_blank').focus();" >
                 {var $recipient = $coresp->getCorrespondents()[1]}
                 {var $lastMsg   = $coresp->getPreviewMessage()}
 
                 <div class="crp-entry--image">
                     <img src="{$recipient->getAvatarURL('miniscule')}"
-                    alt="Фотография пользователя" loading=lazy />
+                    alt="{_photo}" loading=lazy />
                 </div>
                 <div class="crp-entry--info">
                     <a href="{$recipient->getURL()}">{$recipient->getCanonicalName()}</a><br/>
@@ -37,7 +37,7 @@
 
                     <div class="crp-entry--message---av" n:if="$_author->getId() === $thisUser->getId()">
                         <img src="{$_author->getAvatarURL('miniscule')}"
-                        alt="Фотография пользователя" />
+                        alt="{_photo}" />
                     </div>
                     <div class="crp-entry--message---text">
                         {$lastMsg->getText()|noescape}

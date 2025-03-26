@@ -1900,3 +1900,7 @@ img[src*="/assets/packages/static/openvk/img/loading_mini.gif"] {
 	padding-top: 10px;
 	margin-top: 5%;
 }
+
+.page_status_popup {
+	margin-top: 0px;
+}
