@@ -945,7 +945,7 @@ textarea {
   font-size: 10px;
   line-height: 11px;
   background: #D5DDE5;
-  margin: -3px -2px !important;
+  margin: -3px -3px !important;
   padding: 4px !important;
   border-radius: 2px;
   max-width: 30px;
@@ -1875,4 +1875,27 @@ img[src*="/assets/packages/static/openvk/img/loading_mini.gif"] {
   padding: 10px 0px 10px;
   user-select: none !important;
   text-align: center;
+}
+
+.addEmoji {
+  float: right;
+  width: 17px;
+  height: 17px;
+  transform: translateY(-25px) translateX(-8px);
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAwCAMAAADNXREcAAAApVBMVEUAAAB+k695j6y1wtJ7kK33+Pr8/P2InbSzwNG2w9OhsMWgsMXS2uOwvs/r7vKiscaUpb2vu87O1+CSpLzo7PGfrsTY3+e3w9P29/nDzdn6+/zU2+SBlrGQorqcrMLQ2OHn6/D9/v6xvs/x8/b9/f6yv9Db4emZqsCPobr4+fuHmrXw8/aNoLmJnLb5+vvU3OTp7fF8kq5/lLCEmLOjscbh5uyMn7jT3abLAAAAAXRSTlMAQObYZgAAANdJREFUeF7tkMdqBDEQBatbmpw25+iYc/j/T/MehBCzHowvxgfX4SFKtGg9/iqJy7ZOEpctfcDl8cWxhg4N3br7mR/t4/P7/3r+qU3P2p6pW3ou0vT7jcicgHisJgKIjI5jPKkOcAzUeL2zGYt8BKN8QWafcKQyY6JTmOqEmfiBuwJKreBESyiucDwbuJUlLOUUzCr0RLgwLzg+CuK9O58F75xLdH2z3uTFZn3/EEka7llaPWAfyewOP6BbLi5Xr2/vbDX9qofM9RD2VlW+t7DnoerQ1PwOn3m4DAeNkaBWAAAAAElFTkSuQmCC");
+  background-position: 20px 20px;
+  cursor: pointer;
+}
+.addEmoji.opened {
+  background-position: 20px 45px;
+}
+
+.wall_none{
+	border-top: 1px solid #e0eaef;
+	height: 125px;
+	text-align: center;
+	font-size: 13px;
+	color: #999;
+	padding-top: 10px;
+	margin-top: 5%;
 }
