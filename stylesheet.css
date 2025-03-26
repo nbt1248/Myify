@@ -1904,3 +1904,32 @@ img[src*="/assets/packages/static/openvk/img/loading_mini.gif"] {
 .page_status_popup {
 	margin-top: 0px;
 }
+
+.vkdropdown {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.vkdropopt {
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.vkdropopt:hover {
+  background-color: #DAE2E8;
+}
+.vkdropopt.selected {
+  background-color: #587da1;
+  border: 1px solid #2a5880;
+  color: #FFF;
+}
+
+.closedWallPost {
+  text-align: center;
+  font-size: 10px;
+  color: #999;
+  padding: 12px;
+}
+
+#gif_loader {
+  background-image: url('data:image/gif;base64,R0lGODlhIAAIAKECAEVojoSctMHN2QAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgADACwAAAAAIAAIAAACFZyPqcvtD6KMr445LcRUN9554kiSBQAh+QQFCgADACwCAAIAEgAEAAACD4xvM8DNiJRz8Mj5ari4AAAh+QQFCgADACwCAAIAHAAEAAACGJRvM8HNCqKMCCnn4JT1XPwMG9cJH6iNBQAh+QQFCgADACwMAAIAEgAEAAACD5RvM8HNiJRz8Mj5qri4AAAh+QQFCgADACwWAAIACAAEAAACBZSPqYsFACH5BAUUAAMALAAAAAAgAAgAAAIOnI+py+0Po5y02ouzPgUAOw==') !important;
+  margin-left: auto;
+  margin-right: auto;
+}

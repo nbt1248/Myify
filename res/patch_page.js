@@ -360,6 +360,55 @@ window.toggle_comment_textarea = function(id) {
 		}
 }
 
+$(document).ready(function() {
+  $(document).on('mousedown focus click', 'select', function(e) {
+    e.preventDefault();
+    showCustomMenu($(this));
+  });
+  
+  function showCustomMenu($select) {
+    $('.vkdropdown').remove();
+    const rect = $select[0].getBoundingClientRect();
+    const $menu = $('<div class="vkdropdown">')
+      .css({
+        position: 'absolute',
+        left: (rect.left + scrollX - 1) + 'px',
+        top: (rect.bottom + scrollY - 2) + 'px',
+        width: rect.width + 'px',
+        background: '#fff',
+        border: '1px solid #ddd',
+        'z-index': 9999,
+        'max-height': '200px',
+        'overflow-y': 'auto'
+      })
+      .appendTo('body');
+
+    $select.find('option').each(function() {
+      const $option = $(this);
+      $('<div class="vkdropopt">')
+        .text($option.text())
+        .toggleClass('selected', $option.prop('selected'))
+        .appendTo($menu);
+    });
+
+    $menu.on('click', '.vkdropopt', function() {
+      const index = $(this).index();
+	  $select.find('option').eq(index).prop('selected', true)
+	  /* jquery для лохов */
+	  $select[0].dispatchEvent(new Event('change', { bubbles: true }));
+      $menu.remove();
+    });
+
+    setTimeout(() => {
+      $(document).one('click', function(e) {
+        if (!$(e.target).closest('.vkdropdown').length) {
+          $menu.remove();
+        }
+      });
+    }, 0);
+  }
+});
+
 window.addEventListener('DOMContentLoaded', async () => {
 $(document).on('mouseenter', '.menu_toggler_vkify', function(e) {
     const post_buttons = $(e.target).closest('.post-buttons')

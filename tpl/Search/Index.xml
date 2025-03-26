@@ -286,7 +286,7 @@
                             {elseif $section === 'posts'}
                                 <div class='scroll_node search_content' n:foreach="$data as $dat">
                                     {if !$dat || $dat->getWallOwner()->isHideFromGlobalFeedEnabled()}
-                                        {_closed_group_post}.
+                                        <div class="closedWallPost">{_closed_group_post}.</div>
                                     {else}
                                         {include "../components/post.xml", post => $dat, commentSection => true, onWallOf => true}
                                     {/if}
