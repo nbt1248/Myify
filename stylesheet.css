@@ -361,7 +361,7 @@ img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-l
 .page_header.search_expanded_at_all.search_expanded select[name="section"] {
   display: none !important;
 }
-.page_content .comment::not(.page_content.overscrolled .comment) {
+.page_content .comment:not(.page_content.overscrolled .comment) {
   padding: 5px 0 0;
   border-top: 1px #ddd solid;
   width: 323px !important;
@@ -753,16 +753,17 @@ textarea {
 }
 
 .tippy-box[data-animation='up_down'][data-state='hidden'],
-.tippy-box[data-animation='fade'][data-state='hidden']::not([data-theme*="musicpopup"]) {
+.tippy-box[data-animation='fade'][data-state='hidden']:not([data-theme*="musicpopup"]) {
     animation: vkFadeout 0.2s ease-out forwards !important;
 }
 .tippy-box[data-animation='up_down'][data-state='visible'],
-.tippy-box[data-animation='fade'][data-state='visible']::not([data-theme*="musicpopup"]) {
+.tippy-box[data-animation='fade'][data-state='visible']:not([data-theme*="musicpopup"]) {
     animation: vkAppear 0.2s ease-out forwards !important;
 }
 
 /* только попробуйте сломать это */
-.tippy-box[data-animation='fade'][data-theme~="vk"]::not([data-theme*="musicpopup"]) tr td span[style*="color: #444;"]  {
+/* оно само сломалось ура */
+.tippy-box[data-theme~="vk"][data-animation~="fade"] tr td span[style*="color: #444;"]  {
 	font-size: 11px;
 	font-weight: normal;
 }
