@@ -419,6 +419,15 @@ $(document).on('mouseenter', '.menu_toggler_vkify', function(e) {
 		wall_attachment_menu.addClass('small');
     }
 });
+$(document).on('mouseenter', '.menu_toggler', function(e) {
+    const post_buttons = $(e.target).closest('.post-buttons')
+    const wall_attachment_menu = post_buttons.find('#wallAttachmentMenu')
+    if(wall_attachment_menu.is('.hidden')) {
+        wall_attachment_menu.css({ opacity: 0 });
+        wall_attachment_menu.toggleClass('hidden').fadeTo(250, 1);
+		wall_attachment_menu.addClass('small');
+    }
+});
 $(document).on('mouseenter', '#wallAttachmentMenu #__audioAttachment', function(e) {
     const wall_attachment_menu = $(e.target).closest('#wallAttachmentMenu')
 	wall_attachment_menu.addClass('full');
