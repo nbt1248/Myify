@@ -644,7 +644,7 @@ width: 627,
 arrow: true,
 getReferenceClientRect: () => document.querySelector('#headerMusicBtn').getBoundingClientRect(),
 maxWidth: 627,
-offset: [-185, 17],
+offset: [-178, 17],
 appendTo: document.body,
 onHidden(instance) {
    window.musHtml = undefined;

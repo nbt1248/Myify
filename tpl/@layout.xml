@@ -139,6 +139,9 @@
 								</div>
 								<div id="searchBoxFastTips"></div>
 							</div>
+							<div class="link headBack" style="display: none;">
+								<a href="/">unknown</a>
+							</div>
 							<div class="link">
 								<a href="/search?q=&section=users"><vkifyloc name="people"></vkifyloc></a>
 							</div>
