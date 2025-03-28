@@ -802,6 +802,34 @@ tippy.delegate("body", {target: '#aj_player_track',
     });
 };
 bindajtip(mushtml);
+
+CMessageBox.prototype.__getTemplate = function() {
+        return u(
+`<div class="ovk-diag-cont ovk-msg-all" data-id="${this.id}">
+      <div class="ovk-diag">
+         <div class="ovk-diag-head">${this.title}<div class="ovk-diag-head-close" onclick="CMessageBox?.prototype.__close2()">${tr('close')}</div></div>
+         <div class="ovk-diag-body">${this.body}</div>
+         <div class="ovk-diag-action"></div>
+      </div>
+ </div>`)
+};
+
+CMessageBox.prototype.__close2 = async function() {
+   const msg = window.messagebox_stack[window.messagebox_stack.length - 1]
+   if(!msg) {
+      return
+   }
+   if(msg.close_on_buttons) {
+      msg.close()
+      return
+   }
+   if(msg.warn_on_exit) {
+      const res = await msg.__showCloseConfirmationDialog()
+      if(res === true) {
+         msg.close()
+      }
+   }
+}
 });
 
 const searchbox = document.querySelector('#search_box form input[type="search"]');
@@ -994,3 +1022,4 @@ if (today.getDate() === 1 && today.getMonth() === 3) {
 		if (u(this).find('#liked').length) {Doge.show();}
 	});
 }
+

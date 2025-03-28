@@ -11,7 +11,8 @@ let locales = {
 		"graffiticolor": "Color:",
 		"graffitiopacity": "Opacity:",
 		"graffitithickness": "Thickness:",
-		"usetruegraffiti": "Use graffiti from VKontakte"
+		"usetruegraffiti": "Use graffiti from VKontakte",
+		"ovkhat": "Use OpenVK logo in hat"
 	},
 	'ru': {
 		"headmusic": "музыка",
@@ -25,7 +26,8 @@ let locales = {
 		"graffiticolor": "Цвет:",
 		"graffitiopacity": "Интенсивность:",
 		"graffitithickness": "Толщина:",
-		"usetruegraffiti": "Использовать граффити из ВКонтакте"
+		"usetruegraffiti": "Использовать граффити из ВКонтакте",
+		"ovkhat": "Использовать лого OpenVK в шапочке"
 	}
 }
 
@@ -66,5 +68,8 @@ function patchpage(langcode) {
 	document.querySelector('vkifyloc[name="music"]').outerHTML = locales[langcode].headmusic;
 	if (document.querySelector('vkifyloc[name="graffitiswitch"]')) {
 		document.querySelector('vkifyloc[name="graffitiswitch"]').outerHTML = locales[langcode].usetruegraffiti;
+	}
+	if (document.querySelector('vkifyloc[name="ovkhat"]')) {
+		document.querySelector('vkifyloc[name="ovkhat"]').outerHTML = locales[langcode].ovkhat;
 	}
 }

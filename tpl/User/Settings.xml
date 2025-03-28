@@ -608,6 +608,25 @@
 						</script>
                     </tr>
                     <tr>
+                        <td width="120" valign="top" align="right">
+                            <input type="checkbox" name="newhat" value="0">
+                        </td>
+                        <td>
+                            <vkifyloc name="ovkhat"></vkifyloc>
+                        </td>
+						<script>
+							document.querySelector('input[name="newhat"]').checked = document.cookie.includes('newhat=realno_novaya_shapochka');
+							document.querySelector('input[name="newhat"]').onchange = () => {
+								document.cookie = `newhat=${ document.querySelector('input[name="newhat"]').checked ? 'realno_novaya_shapochka' : '' }; path=/; max-age=31536000`;
+							};
+							if (locales["{php echo getLanguage()}"].ovkhat) {
+								document.querySelector('vkifyloc[name="ovkhat"]').outerHTML = locales["{php echo getLanguage()}"].ovkhat;
+							} else {
+								document.querySelector('vkifyloc[name="ovkhat"]').outerHTML = locales["en"].ovkhat;
+							}
+						</script>
+                    </tr>
+                    <tr>
                         <td>
                             
                         </td>
