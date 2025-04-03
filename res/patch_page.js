@@ -8,6 +8,23 @@ function setTip(obj, text, interactive=false) {
 		interactive: interactive
 	});
 }
+
+window.showBlueWarning = function(content) {
+document.querySelector('.toTop').insertAdjacentHTML('afterend', `<div class="top_info_bar_blue">
+<div class="info">
+    <div class="hide_button" onclick="slideBlueWarn(this)"></div>
+		${content}
+    </div>
+</div>
+`)
+}
+
+function slideBlueWarn(el) {
+    $(el).closest(".top_info_bar_blue").slideUp(100, function() {
+        $(this).remove();
+    });
+}
+
 let friendson;
 async function updateOnline() {
 	friendson = (await window.OVKAPI.call("friends.get", {"user_id": window.openvk.current_id, "count": 99999})).items.filter(user => user.online === 1).length

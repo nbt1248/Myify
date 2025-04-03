@@ -1602,6 +1602,7 @@ background-position: -108px -52px !important;
 	height: 206px;
 	transition: height ease-out .25s;
 	overflow: hidden;
+	width: max-content;
 }
 
 .msg {
@@ -2130,4 +2131,37 @@ input[class="button"] {
 }
 .langSelect:hover {
     background-color: #ECF0F4;
+}
+#standaloneCommentBox {
+  border-bottom: none;
+  padding-bottom: 6px;
+}
+
+.top_info_bar_blue {
+    border-bottom: 1px solid #B8C7D3;
+    background-color: #F2F4FF;
+}
+.top_info_bar_blue .info {
+  padding: 8px;
+  text-align: center;
+  line-height: 160%;
+}
+.top_info_bar_blue .hide_button {
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+    background: url('data:image/gif;base64,R0lGODlhCwALAIABAGuNsf///yH5BAEAAAEALAAAAAALAAsAAAIZTGCJBq3e4omI2nfTlNo65kHUJi6boh1GAQA7') 2px 4px no-repeat;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    height: 19px;
+    width: 15px;
+    -webkit-transition: opacity 100ms linear;
+    -moz-transition: opacity 100ms linear;
+    -o-transition: opacity 100ms linear;
+    transition: opacity 100ms linear;
+    float: right;
+}
+.top_info_bar_blue .hide_button:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
 }

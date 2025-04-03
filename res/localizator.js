@@ -12,7 +12,9 @@ let locales = {
 		"graffitiopacity": "Opacity:",
 		"graffitithickness": "Thickness:",
 		"usetruegraffiti": "Use graffiti from VKontakte",
-		"ovkhat": "Use OpenVK logo in hat"
+		"ovkhat": "Use OpenVK logo in hat",
+		"httpwarn": "This OpenVK insance uses outdated <b>http</b> protocol.<br>Please, migrate to <b>https</b>.",
+		"httpwarnovk": "You are using an insecure protocol: <b>http</b>. Please always use <b>https</b>.<br><a href='https://ovk.to'>Switch to https »</a>"
 	},
 	'ru': {
 		"headmusic": "музыка",
@@ -27,7 +29,9 @@ let locales = {
 		"graffitiopacity": "Интенсивность:",
 		"graffitithickness": "Толщина:",
 		"usetruegraffiti": "Использовать граффити из ВКонтакте",
-		"ovkhat": "Использовать лого OpenVK в шапочке"
+		"ovkhat": "Использовать лого OpenVK в шапочке",
+		"httpwarn": "Этот инстанс использует устаревший протокол <b>http</b>.<br>Пожалуйста, смените его на <b>https</b>.",
+		"httpwarnovk": "Вы используете небезопасный протокол <b>http</b>. Пожалуйста, всегда используйте <b>https</b>.<br><a href='https://ovk.to'>Перейти на https »</a>"
 	}
 }
 
@@ -71,5 +75,12 @@ function patchpage(langcode) {
 	}
 	if (document.querySelector('vkifyloc[name="ovkhat"]')) {
 		document.querySelector('vkifyloc[name="ovkhat"]').outerHTML = locales[langcode].ovkhat;
+	}
+	if (location.protocol.includes('http:')) {
+		if (location.host.includes('openvk.xyz')) {
+			showBlueWarning(window.vkifylang.httpwarnovk);
+		} else {
+			showBlueWarning(window.vkifylang.httpwarn);
+		}
 	}
 }
