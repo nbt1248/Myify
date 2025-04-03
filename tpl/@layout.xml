@@ -388,7 +388,7 @@
                         {$language['native_name']}
                     </a>
                 {/foreach}
-                <a href="/language" class="vkify-footer-lang">all languages &raquo;</a>
+                <a href="/language" onclick="changeLangPopup(); return false;" class="vkify-footer-lang">all languages &raquo;</a>
             </p>
         </div>
 
@@ -483,6 +483,13 @@
     </body>
 	<script src="/themepack/vkify/1.0.0.0/resource/patch_page.js" crossorigin="anonymous"></script>
 	<script src="/themepack/vkify/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
+	<script>
+		window.openvk.locales = {
+        {foreach getLanguages() as $language}
+			{$language['code']}: {$language['native_name']},
+        {/foreach}
+		}
+	</script>
 	<script>
 		window.vkifylocalize("{php echo getLanguage()}");
 	</script>

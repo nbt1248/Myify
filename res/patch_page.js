@@ -25,6 +25,268 @@ async function updateOnline() {
 updateOnline();
 setInterval(() => updateOnline(), 300000);
 
+window.changeLangPopup = function() {
+    window.langPopup = new CMessageBox({
+            title: tr('select_language'),
+            body: `<a href="/language?lg=ru&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}">
+<div class="langSelect"><img src="/themepack/vkify/1.0.0.0/resource/lang_flags/ru.png" style="margin-right: 14px;"><b>Русский</b></div>
+</a>
+<a href="/language?lg=uk&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}">
+   <div class="langSelect"><img style="margin-right: 14px;" src="/themepack/vkify/1.0.0.0/resource/lang_flags/uk.png"><b>Україньска</b></div>
+</a>
+<a href="/language?lg=en&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}">
+   <div class="langSelect"><img src="/themepack/vkify/1.0.0.0/resource/lang_flags/en.png" style="margin-right: 14px;"><b>English</b></div>
+</a>
+<a href="/language?lg=ru_sov&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}">
+   <div class="langSelect"><img src="/themepack/vkify/1.0.0.0/resource/lang_flags/sov.png" style="margin-right: 14px;"><b>Советский</b></div>
+</a>
+<a href="/language?lg=ru_old&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}">
+   <div class="langSelect"><img style="margin-right: 14px;" src="/themepack/vkify/1.0.0.0/resource/lang_flags/imp.png"><b>Дореволюціонный</b></div>
+</a>
+<a href="/language" onclick="langPopup.close(); allLangsPopup(); return false;">
+   <div class="langSelect"><b style="padding: 2px 2px 2px 48px;">All languages »</b></div>
+</a>`,
+            buttons: [tr('close')],
+            callbacks: [() => {langPopup.close()}]
+    });
+}
+
+window.allLangsPopup = function() {
+    const container = document.createElement("div");
+    let ul;
+    Object.entries(window.openvk.locales).forEach(([langCode, nativeName], index) => {
+        if (index % 26 === 0) {
+            ul = document.createElement("ul");
+            container.appendChild(ul);
+        }
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `/language?lg=${langCode}&hash=${encodeURIComponent(window.router.csrf)}&jReturnTo=${encodeURI(window.location.pathname + window.location.search)}`;
+        link.textContent = nativeName;
+        li.appendChild(link);
+        ul.appendChild(li);
+    });
+
+    window.langPopup = new CMessageBox({
+            title: tr('select_language'),
+            body: container.innerHTML,
+            buttons: [tr('close')],
+            callbacks: [() => {langPopup.close()}]
+    });
+}
+
+window.showAudioUploadPopup = function() {
+window.audioUploadPopup = new CMessageBox({
+        title: tr('upload_audio'),
+        body: `
+<div id="upload_container">
+            <div id="firstStep" style="width: 500px;margin-right: 20px;">
+                <b><a href="javascript:void(0)">${tr('limits')}</a></b>
+                <ul>
+                    <li>${tr("audio_requirements", 1, 30, 25)}</li>
+                    <li>${tr("audio_requirements_2")}</li>
+                </ul>
+					<div id="audio_upload">
+						<input id="audio_input" multiple="" type="file" name="blob" accept="audio/*" style="display:none">
+						<input value="${tr('upload_button')}" class="button" type="button" onclick="document.querySelector('#audio_input').click()">
+					</div>
+				</div>
+
+            <div id="lastStep" style="display:none;width: 500px;margin-right: 20px;">
+                <div id="lastStepContainers"></div>
+                <div id="lastStepButtons" style="text-align: center;margin-top: 10px;">
+                    <input class="button" type="button" id="uploadMusicPopup" value="${tr('upload_button')}">
+                    <input class="button" type="button" id="backToUpload" onclick="document.querySelector('#audio_input').click()" value="${tr('select_another_file')}">
+                </div>
+            </div>
+        </div>`,
+        buttons: [tr('close')],
+        callbacks: [() => {audioUploadPopup.close()}]
+});
+
+setTimeout(() => {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.innerHTML = `
+	import * as id3 from "/assets/packages/static/openvk/js/node_modules/id3js/lib/id3.js";
+
+	window.__audio_upload_page = new class {
+		files_list = []
+
+		hideFirstPage() {
+			u('#firstStep').attr('style', 'display:none')
+			u('#lastStep').attr('style', 'display:block;width: 500px;margin-right: 20px;')
+		}
+
+		showFirstPage() {
+			u('#firstStep').attr('style', 'display:block;width: 500px;margin-right: 20px;')
+			u('#lastStep').attr('style', 'display:none')
+		}
+
+		async detectTags(blob) {
+			const return_params = {
+				performer: '',
+				name: '',
+				genre: '',
+				lyrics: '',
+				explicit: 0,
+				unlisted: 0,
+			}
+
+			function fallback() {
+				console.info('Tags not found, setting default values.')
+				return_params.name = remove_file_format(blob.name)
+				return_params.genre = 'Other'
+				return_params.performer = tr('track_unknown')
+			}
+
+			let tags = null
+			try {
+				tags = await id3.fromFile(blob)
+			} catch(e) {
+				console.error(e)
+			}
+
+			console.log(tags)
+			if(tags != null) {
+				console.log("ID" + tags.kind + " detected, setting values...")
+				if(tags.title) {
+					return_params.name = tags.title
+				} else {
+					return_params.name = remove_file_format(blob.name)
+				}
+
+				if(tags.artist) {
+					return_params.performer = tags.artist
+				} else {
+					return_params.performer = tr('track_unknown')
+					// todo: split performer and title from filename
+				}
+
+				if(tags.genre != null) {
+					if(tags.genre.split(', ').length > 1) {
+						const genres = tags.genre.split(', ')
+
+						genres.forEach(genre => {
+							if(window.openvk.audio_genres[genre]) {
+								return_params.genre = genre;
+							}
+						})
+					} else {
+						if(window.openvk.audio_genres.indexOf(tags.genre) != -1) {
+							return_params.genre = tags.genre
+						} else {
+							console.warn("Unknown genre: " + tags.genre)
+							return_params.genre = 'Other'
+						}
+					}
+				} else {
+					return_params.genre = 'Other'
+				}
+
+				if(tags.comments != null)
+					return_params.lyrics = tags.comments
+			} else {
+				fallback()
+			}
+
+			return return_params
+		}
+
+		async appendFile(appender) 
+		{
+			appender.info = await this.detectTags(appender.file)
+			const audio_index = this.files_list.push(appender) - 1
+			this.appendAudioFrame(audio_index)
+		}
+
+		appendAudioFrame(audio_index) {
+			const audio_element = this.files_list[audio_index]
+			if(!audio_element) {
+				return
+			
+			}
+			const template = u(\`
+			<div class='upload_container_element' data-index="\${audio_index}">
+				<div class='upload_container_name'>
+					<span>\${ovk_proc_strtr(escapeHtml(audio_element.file.name), 63)}</span>
+					<div id="small_remove_button"></div>
+				</div>
+				<table cellspacing="7" cellpadding="0" border="0" align="center">
+					<tbody>
+						<tr>
+							<td width="120" valign="top"><span class="nobold">\${tr('performer')}:</span></td>
+							<td><input value='\${escapeHtml(audio_element.info.performer)}' name="performer" type="text" autocomplete="off" maxlength="80" /></td>
+						</tr>
+						<tr>
+							<td width="120" valign="top"><span class="nobold">\${tr('audio_name')}:</span></td>
+							<td><input type="text" value='\${escapeHtml(audio_element.info.name)}' name="name" autocomplete="off" maxlength="80" /></td>
+						</tr>
+						<tr>
+							<td width="120" valign="top"><span class="nobold">\${tr('genre')}:</span></td>
+							<td>
+								<select name="genre"></select>
+							</td>
+						</tr>
+						<tr>
+							<td width="120" valign="top"><span class="nobold">\${tr('lyrics')}:</span></td>
+							<td><textarea name="lyrics" style="resize: vertical;max-height: 300px;">\${escapeHtml(audio_element.info.lyrics)}</textarea></td>
+						</tr>
+						<tr>
+							<td width="120" valign="top"></td>
+							<td>
+								<label style='display:block'><input type="checkbox" name="explicit">\${tr('audios_explicit')}</label>
+								<label><input type="checkbox" name="unlisted">\${tr('audios_unlisted')}</label>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			\`)
+			window.openvk.audio_genres.forEach(genre => {
+				template.find('select').append(\`
+					<option \${genre == audio_element.info.genre ? 'selected': ''} value='\${genre}'>\${genre}</option>
+				\`)
+			})
+			u('#lastStep #lastStepContainers').append(template)
+		}
+	}
+
+	u(\`#audio_upload input\`).on('change', (e) => {
+		const files = e.target.files
+		if(files.length <= 0) {
+			return
+		}
+
+		Array.from(files).forEach(async file => {
+			let has_duplicates = false
+			const appender = {
+				'file': file
+			}
+
+			if(!file.type.startsWith('audio/')) {
+				makeError(tr('only_audios_accepted', escapeHtml(file.name)))
+				return
+			}
+
+			window.__audio_upload_page.files_list.forEach(el => {
+				if(el && file.name == el.file.name) {
+					has_duplicates = true
+				}
+			})
+
+			if(!has_duplicates) {
+				window.__audio_upload_page.appendFile(appender)
+			}
+		})
+		window.__audio_upload_page.hideFirstPage()
+	})
+    `;
+    document.querySelector('.ovk-diag-action').appendChild(script);
+	document.querySelector('.ovk-diag-action').insertAdjacentHTML('afterbegin', `<a href="/search?section=audios" style="float: left;margin-top: 6px;margin-left: 5px;">${tr('audio_search')}</a>`)
+}, 0);
+}
+
 window.player.ajCreate = function() {
 	const previous_time_x = localStorage.getItem('audio.lastX') ?? 100
 	const previous_time_y = localStorage.getItem('audio.lastY') ?? scrollY
@@ -410,6 +672,54 @@ $(document).ready(function() {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
+u(document).on('click', `.ovk-diag-body #upload_container #uploadMusicPopup`, async (e) => {
+    const current_upload_page = '/player/upload'
+    let error = null
+	let end_redir = ''
+    u('.ovk-diag-body #lastStepButtons').addClass('lagged')
+    for(const elem of u('.ovk-diag-body #lastStepContainers .upload_container_element').nodes) {
+        if(!elem) {
+			return
+        }
+        const elem_u = u(elem)
+        const index = elem.dataset.index
+        const file  = window.__audio_upload_page.files_list[index]
+        if(!file || !index) {
+            return
+        }
+
+        elem_u.addClass('lagged').find('.upload_container_name').addClass('uploading')
+        // Upload process
+        const fd = serializeForm(elem)
+        fd.append('blob', file.file)
+        fd.append('ajax', 1)
+        fd.append('hash', window.router.csrf)
+        const result = await fetch(current_upload_page, {
+            method: 'POST',
+            body: fd,
+        })
+        const result_text = await result.json()
+        if(result_text.success) {
+            end_redir = result_text.redirect_link
+        } else {
+            await makeError(escapeHtml(result_text.flash.message))
+        }
+        await sleep(6000)
+        elem_u.remove()
+    }
+	audioUploadPopup.close();
+	router.route(end_redir);
+	
+})
+window.player.__highlightActiveTrack = function() {
+    if(!window.player.isAtCurrentContextPage()) {
+        if (u(`.tippy-content .audiosContainer .audioEmbed[data-realid='${window.player.current_track_id}']`).length > 0) {
+			u(`.tippy-content .audiosContainer .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry, .audios_padding .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry`).addClass('nowPlaying')
+		}
+    }
+    u(`.tippy-content .audiosContainer .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry, .audios_padding .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry`).addClass('nowPlaying')
+}
+
 $(document).on('mouseenter', '.menu_toggler_vkify', function(e) {
     const post_buttons = $(e.target).closest('.post-buttons')
     const wall_attachment_menu = post_buttons.find('#wallAttachmentMenu')
@@ -586,10 +896,10 @@ const mushtml = `
 <div class="bigPlayer ctx_place">
     <div class="bigPlayerWrapper">
         <div class="playButtons">
-            <div onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="playButton musicIcon" data-tip="simple" data-title=`+tr('play_tip')+`></div>
+            <div onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="playButton musicIcon" data-tip="simple-black" data-title=`+tr('play_tip')+`></div>
             <div class="arrowsButtons">
-                <div class="nextButton musicIcon" data-tip="simple" data-title="?"></div>
-                <div class="backButton musicIcon" data-tip="simple" data-title="?"></div>
+                <div class="nextButton musicIcon" data-tip="simple-black" data-title=""></div>
+                <div class="backButton musicIcon" data-tip="simple-black" data-title=""></div>
             </div>
         </div>
 
@@ -630,9 +940,9 @@ const mushtml = `
         </div>
 
         <div class="additionalButtons">
-            <div class="repeatButton musicIcon" data-tip="simple" data-title=`+tr('repeat_tip')+`></div>
-            <div class="shuffleButton musicIcon" data-tip="simple" data-title=`+tr('shuffle_tip')+`></div>
-            <div class="deviceButton musicIcon" data-tip="simple" data-title=`+tr('mute_tip')+`></div>
+            <div class="repeatButton musicIcon" data-tip="simple-black" data-title=`+tr('repeat_tip')+`></div>
+            <div class="shuffleButton musicIcon" data-tip="simple-black" data-title=`+tr('shuffle_tip')+`></div>
+            <div class="deviceButton musicIcon" data-tip="simple-black" data-title=`+tr('mute_tip')+`></div>
         </div>
     </div>
 </div>
@@ -812,6 +1122,24 @@ tippy.delegate("body", {target: '#aj_player_track',
 };
 bindajtip(mushtml);
 
+$(document).on("click", ".statusButton.musicIcon", function (event) {
+	event.preventDefault();
+	$(this).toggleClass("pressed");
+	const formData = new FormData();
+	formData.append("status", document.forms['status_popup_form'].status.value);
+	formData.append("broadcast", $(this).hasClass("pressed") ? 1 : 0);
+	formData.append("hash", document.forms['status_popup_form'].hash.value);
+
+	// Отправляем AJAX-запрос
+	$.ajax({
+		url: "/edit?act=status",
+		method: "POST",
+		processData: false,
+		contentType: false,
+		data: formData,
+	});
+});
+
 CMessageBox.prototype.__getTemplate = function() {
         return u(
 `<div class="ovk-diag-cont ovk-msg-all" data-id="${this.id}">
@@ -839,6 +1167,32 @@ CMessageBox.prototype.__close2 = async function() {
       }
    }
 }
+u(document).on('mouseover mousemove mouseout', `div[data-tip='simple-black']`, (e) => {
+    if(e.target.dataset.allow_mousemove != '1' && e.type == 'mousemove') {
+        return
+    }
+
+    if (e.type === 'mouseout') {
+		$('.tip_result_black_el').removeClass('shown');
+		setTimeout(() => {u('.tip_result_black_el').remove();}, 50)
+        return;
+    }
+
+    const target = u(e.target);
+    const title  = target.attr('data-title')
+    if(title == '') {
+        return
+    }
+	const offset = target.nodes[0].getBoundingClientRect()
+  u('body').nodes[0].insertAdjacentHTML('afterbegin', `
+	<div class='tip_result_black_el' style='left:${offset.left-(offset.width/2)+window.scrollX}px;top:${offset.top-25+window.scrollY}px;'>
+        <div class='tip_result_black'>
+            ${escapeHtml(title)}
+        </div>
+	</div>
+    `)
+	setTimeout(() => {$('.tip_result_black_el').addClass('shown');}, 0)
+})
 });
 
 const searchbox = document.querySelector('#search_box form input[type="search"]');

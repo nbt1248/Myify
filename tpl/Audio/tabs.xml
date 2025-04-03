@@ -1,10 +1,13 @@
 <div class='verticalGrayTabsWrapper'>
     <div class="verticalGrayTabs">
         <div class='with_padding'>
-            <a n:if="isset($thisUser)" n:attr="id => $mode === 'list' && $isMy ? 'used' : 'ki'" href="/audios{$thisUser->getId()}">{_my_music}</a>
+			<div class="myaudiotab" n:attr="id => $mode === 'list' && $isMy ? 'mymussel' : ''">
+				<a class="addAudioSmall" onclick="showAudioUploadPopup(); return false;" href="/player/upload"><div class="addIcon"></div></a>
+				<a n:if="isset($thisUser)" n:attr="id => $mode === 'list' && $isMy ? 'used' : 'ki'" href="/audios{$thisUser->getId()}">{_my_music}</a>
+			</div>
             <a n:attr="id => $mode === 'uploaded' ? 'used' : 'ki'" href="/audios/uploaded">{_my_audios_small_uploaded}</a>
-            {* TODO: show upload link as and plusick (little plus) in button up*}
-            <a n:if="isset($thisUser)" href="/player/upload{if $isMyClub}?gid={abs($ownerId)}{/if}">{_upload_audio}</a>
+            {* TODO: show upload link as and plusick (little plus) in button up, добавлено хех*}
+            {* <a n:if="isset($thisUser)" href="/player/upload{if $isMyClub}?gid={abs($ownerId)}{/if}">{_upload_audio}</a> *}
             <a n:if="isset($thisUser)" n:attr="id => $mode === 'new' ? 'used' : 'ki'" href="/search?section=audios">{_audio_new}</a>
             <a n:if="isset($thisUser)" n:attr="id => $mode === 'popular' ? 'used' : 'ki'" href="/search?section=audios&order=listens">{_audio_popular}</a>
 
