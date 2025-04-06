@@ -1947,18 +1947,18 @@ img[src*="/assets/packages/static/openvk/img/loading_mini.gif"] {
 }
 
 .ovk-diag-head .ovk-diag-head-close {
-  float: right;
-  font-weight: normal;
-  font-size: 11px;
-  color: #C7D7E9;
-  cursor: pointer;
-  user-select: none;
-  padding-top: 17px;
-  padding-bottom: 22px;
-  margin-top: -17px;
-  padding-right: 20px;
-  margin-right: -20px;
-  transition: color 100ms linear;
+	float: right;
+	font-weight: normal;
+	font-size: 11px;
+	color: #c7d7e9;
+	cursor: pointer;
+	user-select: none;
+	padding-top: 19px;
+	padding-bottom: 22px;
+	margin-top: -20px;
+	padding-right: 20px;
+	margin-right: -20px;
+	transition: color 100ms linear;
 }
 .ovk-diag-head .ovk-diag-head-close:hover {
   color: #FFF;

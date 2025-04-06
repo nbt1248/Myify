@@ -197,7 +197,10 @@
                                             <tr>
                                                 <td valign="top">
                                                     <a href="{$dat->getURL()}">
-                                                        <img src="{$dat->getAvatarUrl('tiny')}" width="75" alt="{_photo}" loading='lazy' />
+														<img src="{str_contains($dat->getAvatarUrl('miniscule'), 'camera_200.png') 
+															? '/themepack/vkify/1.0.0.0/resource/community_200.png' 
+															: $dat->getAvatarUrl('miniscule')}" 
+															width="75" alt="{_photo}" loading='lazy' />
                                                     </a>
                                                 </td>
                                                 <td valign="top" style="width: 100%">

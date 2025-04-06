@@ -444,7 +444,11 @@
 							<div style="display: inline;">
 								<div class="thumb_ava32">
 									<a href="club{$club->getId()}" style="">
-										<img src="{$club->getAvatarUrl()}" />
+										<img src="{if str_contains($club->getAvatarUrl(), 'camera_200.png')}
+											/themepack/vkify/1.0.0.0/resource/community_200.png
+										{else}
+											{$club->getAvatarUrl()}
+										{/if}" alt="{$club->getCanonicalName()}" />
 									</a>
 								</div>
 								<div class="groupInfoName"><a href="club{$club->getId()}" style="">{$club->getName()}</a></div>

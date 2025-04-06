@@ -1,3 +1,46 @@
+function createLoader() {
+    const iconFrames = [
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwW0A42rsRTipvVnt7kmDE2LeiaLCeq6C4bbsEHu1e+MvrcM9j/MFU4oCADs=", // prgicon1.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIrnI9pwm0B42rsRTipvVnt7kmDE2LeiaKkArQg646V1wIZWdf3nMcU30t5CgA7", // prgicon2.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIxnI9pwr3NHpRuwGivVDsL7nVKBZZmAqRgwBopsLbDGwfuqw7sbs84rOP1fkBh74QoAAA7", // prgicon3.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwG0C42rsRTipvVnt7kmDE2LeiaLBeopr0JpvLBjvPFzyDee6zduIUokCADs=", // prgicon4.gif в Base64
+    ];
+
+    let step = 0;
+    let timer = null;
+    const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link');
+    favicon.rel = 'icon';
+    document.head.appendChild(favicon);
+
+    const updateFavicon = () => {
+        step = (step + 1) % 4;
+        favicon.href = iconFrames[step];
+        timer = setTimeout(updateFavicon, 150);
+    };
+
+    const gifFavicon = () => {
+        favicon.href = 'data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BA0KAAMAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAACLZyPacFtAONq7EU4qb1Z7e5JgxNi3omiwnquguG27BB7tXvjL63DPY/zBVOKAgAh+QQNCgADACwAAAAAEAAQAAACK5yPacJtAeNq7EU4qb1Z7e5JgxNi3omipAK0IOuOldcCGVnX95zHFN9LeQoAIfkEDQoAAwAsAAAAABAAEAAAAjGcj2nCvc0elG7AaK9UOwvudUoFlmYCpGDAGimwtsMbB+6rDuxuzzis4/V+QGHvhCgAACH5BA0KAAMALAAAAAAQABAAAAItnI9pwG0C42rsRTipvVnt7kmDE2LeiaLBeopr0JpvLBjvPFzyDee6zduIUokCADs=';
+    };
+
+    return {
+        start() {
+            document.body.style.cursor = 'progress';
+			if (/firefox/i.test(navigator.userAgent.toLowerCase())) {
+				gifFavicon();
+			} else {
+				updateFavicon();
+			}
+        },
+        stop() {
+            clearTimeout(timer);
+            document.body.style.cursor = 'default';
+            favicon.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKOBYiGjgWKVo4Fi1aOBYt2jgWJxAAAAAKOBYimjgWLUo4Fi76OBYu6jgWLYAAAAAAAAAAAAAAAAAAAAAKOBYlqjgWL3o4Fi/6OBYv+jgWL/o4FiwKOBYhijgWLeo4Fi/6OBYv+jgWL/o4FizAAAAAAAAAAAAAAAAKOBYkujgWL8o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL6o4Fi/6OBYv+jgWL/o4Fi/qOBYlIAAAAAAAAAAKOBYh6jgWLuo4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYocAAAAAAAAAAAAAAACjgWK5o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWIMAAAAAAAAAACjgWJco4Fi/6OBYv+jgWL/o4Fiq6OBYv+jgWL/o4Fi/6OBYv+jgWKyo4Fi/6OBYv+jgWL/o4FiVwAAAACjgWINo4Fi6KOBYv+jgWL/o4FivwAAAACjgWL1o4Fi/6OBYv+jgWL7o4FiB6OBYumjgWL/o4Fi/6OBYuOjgWIJo4FigqOBYv+jgWL/o4Fi/6OBYjqjgWICo4Fi9aOBYv+jgWL/o4Fi+AAAAACjgWKTo4Fi/6OBYv+jgWL/o4FicKOBYvWjgWL/o4Fi/6OBYtwAAAAAo4FiQaOBYv+jgWL/o4Fi/6OBYv4AAAAAo4FiMaOBYv+jgWL/o4Fi/6OBYt6jgWLeo4Fi/6OBYv+jgWKFAAAAAKOBYsijgWL/o4Fi/6OBYu+jgWK9AAAAAAAAAACjgWK6o4Fi/6OBYv+jgWLVAAAAAAAAAACjgWIFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo4FiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAALYAAAAAAADDAgAAAAIAAB7/AAAAAAAA4AAAAP/gAAAAAAAAeAAAAP8AAAD//wAAAB4AAAAAAAAAAA==';
+        },
+    };
+}
+
+window.favloader = createLoader();
+
 function setTip(obj, text, interactive=false) {
 	tippy(obj, {
 		content: `<text style="font-size: 11px;">${text}</text>`,
@@ -537,14 +580,14 @@ function parseAudio(onlyscnodes = false) {
 }
 
 const vkfavicon = {
-    "fav": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==",
-	"fav_im": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz//////7+ghP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////v6CE/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP///////////////////////////////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP///////////////////////////////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAA+LwAAc3QAAHQ6AABhbgAAZD4AACAgAAAgIAAAICAAACAgAAByZAAAbGkAACAgAAAgIAAAICAAADwvAABmOg==",
+    "fav": "/themepack/vkify/1.0.0.0/resource/favicon_vk.ico",
+	"fav_chat": "/themepack/vkify/1.0.0.0/resource/fav_chat.ico",
     "playiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAvkQAAL/4AADBsAAAw2wAAMUoAADG6AAAyKgAAMpsAADMNAAAzfwAAM/EAADRlAAA02AAANU0AADXCAAA2Nw==",
     "pauseiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
 }
 
 if (window.location.href.includes('im?sel=')) {
-    document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", vkfavicon["fav_im"])
+    document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", vkfavicon["fav_chat"])
 }
 
 window.initVKGraffiti = function(event) {
@@ -1211,6 +1254,66 @@ u(document).on('mouseover mousemove mouseout', `div[data-tip='simple-black']`, (
     `)
 	setTimeout(() => {$('.tip_result_black_el').addClass('shown');}, 0)
 })
+
+window.router.route = async function(params = {}) {
+	if(typeof params == 'string') {
+		params = {
+			url: params
+		}
+	}
+
+	const old_url = location.href
+	let url = params.url
+	if(url.indexOf(location.origin)) {
+		url = location.origin + url
+	}
+
+	if((localStorage.getItem('ux.disable_ajax_routing') ?? 0) == 1 || window.openvk.current_id == 0) {
+		window.location.assign(url)
+		return
+	}
+	
+	window.favloader.start();
+
+	if(this.prev_page_html && this.prev_page_html.pathname != location.pathname) {
+		this.prev_page_html = null
+	}
+	
+	const push_url = params.push_state ?? true
+	const next_page_url = new URL(url)
+	if(push_url) {
+		history.pushState({'from_router': 1}, '', url)
+	} else {
+		history.replaceState({'from_router': 1}, '', url)
+	}
+
+	const parser = new DOMParser
+	const next_page_request = await fetch(next_page_url, {
+		method: 'AJAX',
+		referrer: old_url,
+		headers: {
+			'X-OpenVK-Ajax-Query': '1',
+		}
+	})
+	const next_page_text = await next_page_request.text()
+	const parsed_content = parser.parseFromString(next_page_text, 'text/html')
+	if(next_page_request.redirected) {
+		history.replaceState({'from_router': 1}, '', next_page_request.url)
+	}
+	
+	this.__closeMsgs()
+	this.__unlinkObservers()
+
+	try {
+		this.__appendPage(parsed_content)
+		await this.__integratePage()
+	} catch(e) {
+		console.error(e)
+		next_page_url.searchParams.delete('al', 1)
+		location.assign(next_page_url)
+	}
+	window.favloader.stop();
+}
 });
 
 const searchbox = document.querySelector('#search_box form input[type="search"]');

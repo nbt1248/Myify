@@ -34,7 +34,13 @@
                 <td>
                     <span class="aui-avatar aui-avatar-xsmall">
                         <span class="aui-avatar-inner">
-                            <img src="{$club->getAvatarUrl('miniscule')}" alt="{$club->getCanonicalName()}" style="object-fit: cover;" role="presentation" />
+							<img src="{if str_contains($club->getAvatarUrl('miniscule'), 'camera_200.png')}
+								/themepack/vkify/1.0.0.0/resource/community_200.png
+							{else}
+								{$club->getAvatarUrl('miniscule')}
+							{/if}" 
+							alt="{$club->getCanonicalName()}" style="object-fit: cover;" role="presentation"
+							/>
                         </span>
                     </span>
                     
