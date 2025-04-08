@@ -2165,3 +2165,9 @@ input[class="button"] {
   opacity: 1;
   filter: alpha(opacity=100);
 }
+#backdropFilePicker {
+  position: absolute;
+  top: 140px;
+  padding: 0 1px;
+  margin: 24px;
+}
