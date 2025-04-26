@@ -270,12 +270,13 @@
 						</div>
 					</div>
 				</div>
-			{if $user->getId() != $thisUser->getId()}
-				<div class="sendGift" n:if="OPENVK_ROOT_CONF['openvk']['preferences']['commerce']">
-					<a href="/gifts?act=pick&user={$user->getId()}" class="sendGiftlnk">{tr("send_gift")}</a>
-				</div>
-			{/if}
+
 			</div>
+			{if $user->getId() != $thisUser->getId()}
+			<div class="sendGift" n:if="OPENVK_ROOT_CONF['openvk']['preferences']['commerce']">
+				<a href="/gifts?act=pick&user={$user->getId()}" class="sendGiftlnk">{tr("send_gift")}</a>
+			</div>
+			{/if}
 			<a href="/friends{$user->getId()}" n:if="$user->getFriendsCount() > 0 && $user->getPrivacyPermission('friends.read', $thisUser ?? NULL)">
 				<div>
 					{var $friendCount = $user->getFriendsCount()}

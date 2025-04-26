@@ -12,8 +12,8 @@ let locales = {
 		"graffitiopacity": "Opacity:",
 		"graffitithickness": "Thickness:",
 		"usetruegraffiti": "Use graffiti from VKontakte",
-		"ovkhat": "Use OpenVK logo in hat",
-		"httpwarn": "This OpenVK insance uses outdated <b>http</b> protocol.<br>Please, migrate to <b>https</b>.",
+		"ovkhat": "Use OpenVK logo in header",
+		"httpwarn": "This OpenVK instance uses outdated <b>http</b> protocol.<br>Please, migrate to <b>https</b>.",
 		"httpwarnovk": "You are using an insecure protocol: <b>http</b>. Please always use <b>https</b>.<br><a href='https://ovk.to'>Switch to https »</a>"
 	},
 	'ru': {

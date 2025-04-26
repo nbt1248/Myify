@@ -27,7 +27,7 @@
             <a href="/friends{$thisUser->getId()}?act=incoming" id="ki">{_req}</a>
         </div>
         <div class="tab" id="activetabs">
-            <a href="/invite" id="act_tab_a">Пригласить</a>
+            <a href="/invite" id="act_tab_a">{_invite}</a>
         </div>
     </div>
     <div class="invitebox">

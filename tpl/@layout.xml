@@ -105,12 +105,12 @@
 
         <div class="toTop">
             <div id='to_up'>
-                <svg id="to_up_icon" viewBox="0 0 10 6"><polygon points="0 6 5 0 10 6 0 6"/></svg>
+                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/vkify/1.0.0.0/resource/toTop.png">
                 <span>{_to_top}</span>
             </div>
             
             <div id='to_back'>
-                <svg id="to_back_icon" viewBox="0 0 10 6"><polygon points="0 0 5 6 10 0 0 0"/></svg>
+                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/vkify/1.0.0.0/resource/toTop.png">
             </div>
         </div>
 

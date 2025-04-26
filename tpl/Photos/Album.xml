@@ -16,6 +16,25 @@
     » {$album->getName()}
 {/block}
 
+{block tabs}
+	{if isset($thisUser) && $thisUser->getId() == $owner->getId()}
+		<div id="ki" class="tab">
+			<a id="ki" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+		<a style="float: right;margin-right: 3px;margin-top: 4px;" href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
+	{else}
+		<div id="ki" class="tab">
+			<a id="ki" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+	{/if}
+{/block}
+
 {block content}
     <a href="/album{$album->getPrettyId()}">
         {* TODO: Добавить склонения *}

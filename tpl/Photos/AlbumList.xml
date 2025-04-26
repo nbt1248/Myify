@@ -15,8 +15,21 @@
     {/if}
 {/block}
 
+{block tabs}
+	{if isset($thisUser) && $thisUser->getId() == $owner->getId()}
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+		<a style="float: right;margin-right: 3px;margin-top: 4px;" href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
+	{else}
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+	{/if}
+{/block}
+
 {block size}
-    <div style="padding-bottom: 0px; padding-top: 0;" class="summaryBar">
+    <div style="padding-bottom: 0px;" class="summaryBar">
         <div class="summary">
             {if !is_null($thisUser) && $owner->getId() === $thisUser->getId()}
                 {tr("albums_list", $count)}
@@ -25,9 +38,8 @@
             {/if}
 
             <span n:if="$canEdit" style="float: right;">
-                &nbsp;|&nbsp;
                 {var $isClub = ($owner instanceof \openvk\Web\Models\Entities\Club)}
-                <a href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
+                
             </span>
         </div>
     </div>
@@ -45,7 +57,7 @@
 
 {block preview}
     {var $cover   = $x->getCoverPhoto()}
-    {var $preview = is_null($cover) ? "/assets/packages/static/openvk/img/camera_200.png" : $cover->getURLBySizeId("normal")}
+    {var $preview = is_null($cover) ? "/themepack/vkify/2.0.0.0/resource/m_noalbum_2x.png" : $cover->getURLBySizeId("normal")}
 
     <a href="/album{$x->getPrettyId()}">
         <img src="{$preview}" alt="{$x->getName()}" style="height: 130px; width: 170px; object-fit: cover" loading=lazy />

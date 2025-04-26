@@ -64,7 +64,7 @@
 
 {block tabs}
     <div n:attr="id => ($act === 'friends' ? 'activetabs' : 'ki')" class="tab">
-        <a n:attr="id => ($act === 'friends' ? 'act_tab_a' : 'ki')" href="?">{_all_friends}</a>
+        <a n:attr="id => ($act === 'friends' ? 'act_tab_a' : 'ki')" href="/friends{$thisUser->getId()}">{_all_friends}</a>
     </div>
     <div n:attr="id => ($act === 'online' ? 'activetabs' : 'ki')" class="tab">
         <a n:attr="id => ($act === 'online' ? 'act_tab_a' : 'ki')" href="?act=online">{_online}</a>

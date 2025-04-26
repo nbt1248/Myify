@@ -1506,4 +1506,3 @@ if (today.getDate() === 1 && today.getMonth() === 3) {
 		if (u(this).find('#liked').length) {Doge.show();}
 	});
 }
-
