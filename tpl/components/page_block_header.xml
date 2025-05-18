@@ -1,0 +1,20 @@
+<h2 class="page_block_h2">
+  <div class="page_block_header clear_fix">
+    {ifset $extra_left}
+    <div class="page_block_header_extra_left _header_extra_left">
+      {$extra_left}
+    </div>
+    {/ifset}
+    {ifset $extra}
+    <div class="page_block_header_extra _header_extra">
+      {$extra}
+    </div>
+    {/ifset}
+    <div class="page_block_header_inner _header_inner">
+      {ifset $title}{tr($title)}{/ifset}
+      {ifset $count}
+        <span class="page_block_header_count" id="fw_summary">{$count}</span>
+      {/ifset}
+    </div>
+  </div>
+</h2> 

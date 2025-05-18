@@ -7,19 +7,6 @@
             {ifset title}{include title} - {/ifset}{$instance_name}
         </title>
         <meta charset="utf-8" />
-		{if $_COOKIE['newhat'] == 'realno_novaya_shapochka'}
-			<style>
-				.page_header, .home_button_bg {
-				  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxcAAAAtCAIAAABTSwE9AAABN2lDQ1BBZG9iZSBSR0IgKDE5OTgpAAAokZWPv0rDUBSHvxtFxaFWCOLgcCdRUGzVwYxJW4ogWKtDkq1JQ5ViEm6uf/oQjm4dXNx9AidHwUHxCXwDxamDQ4QMBYvf9J3fORzOAaNi152GUYbzWKt205Gu58vZF2aYAoBOmKV2q3UAECdxxBjf7wiA10277jTG+38yH6ZKAyNguxtlIYgK0L/SqQYxBMygn2oQD4CpTto1EE9AqZf7G1AKcv8ASsr1fBBfgNlzPR+MOcAMcl8BTB1da4Bakg7UWe9Uy6plWdLuJkEkjweZjs4zuR+HiUoT1dFRF8jvA2AxH2w3HblWtay99X/+PRHX82Vun0cIQCw9F1lBeKEuf1UYO5PrYsdwGQ7vYXpUZLs3cLcBC7dFtlqF8hY8Dn8AwMZP/fNTP8gAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAsEaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA2LjAtYzAwMyAxMTYuZGRjN2JjNCwgMjAyMS8wOC8xNy0xMzoxODozNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjIgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyNS0wMy0yNFQxMToxMTozOSswMzowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjUtMDMtMjRUMTY6MTg6MzUrMDM6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjUtMDMtMjRUMTY6MTg6MzUrMDM6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0iQWRvYmUgUkdCICgxOTk4KSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpjZTk4M2U1YS1jMzFmLTFkNDItYjFlYS1mNDNmN2U1ZWMwMWIiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1NTVmOTAwZi05NmE3LTZlNDktOWEwYy05MDk0ZjU1ZTNkODIiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDplMDhkMWE2Mi1lNGU4LWQ1NDUtYTQ5MS04NzdiYzkyMjJiMzMiIHRpZmY6T3JpZW50YXRpb249IjEiIHRpZmY6WFJlc29sdXRpb249Ijk2MDAwMC8xMDAwMCIgdGlmZjpZUmVzb2x1dGlvbj0iOTYwMDAwLzEwMDAwIiB0aWZmOlJlc29sdXRpb25Vbml0PSIyIiBleGlmOkNvbG9yU3BhY2U9IjY1NTM1IiBleGlmOlBpeGVsWERpbWVuc2lvbj0iNzkxIiBleGlmOlBpeGVsWURpbWVuc2lvbj0iNDUiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOmUwOGQxYTYyLWU0ZTgtZDU0NS1hNDkxLTg3N2JjOTIyMmIzMyIgc3RFdnQ6d2hlbj0iMjAyNS0wMy0yNFQxMToxMTozOSswMzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIxLjIgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjb252ZXJ0ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImZyb20gaW1hZ2UvcG5nIHRvIGFwcGxpY2F0aW9uL3ZuZC5hZG9iZS5waG90b3Nob3AiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjFhNmIxZDllLTA0NzctZWM0YS04MmY4LTYzOWU1ZjU5ZTcwMiIgc3RFdnQ6d2hlbj0iMjAyNS0wMy0yNFQxMToxODo0MCswMzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIxLjIgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo1OWY5YzBjZS0wNmIzLTIxNGQtYTllMi1mMTEzMTQ0MDNjMTciIHN0RXZ0OndoZW49IjIwMjUtMDMtMjRUMTY6MTg6MzUrMDM6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMS4yIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY29udmVydGVkIiBzdEV2dDpwYXJhbWV0ZXJzPSJmcm9tIGFwcGxpY2F0aW9uL3ZuZC5hZG9iZS5waG90b3Nob3AgdG8gaW1hZ2UvcG5nIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJkZXJpdmVkIiBzdEV2dDpwYXJhbWV0ZXJzPSJjb252ZXJ0ZWQgZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2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") !important;
-				}
-			</style>
-		{else}
-			<style>
-				.page_header, .home_button_bg {
-				  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxcAAAAtCAMAAADr92ZYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGeUExURUxukk1ukk1vk05vk05wk05wlE9wlE9xlVBxlWeEpMnT3u/y9fr7/P////X3+d7l7IWet1ByllFzlvf4+srU34qhuvL09+Lo7rrI1vT2+Pz9/c/X4X+ZtExtkXKKpmaEo/7+/uXp7lFyln+Vrq++zpepvVFzl9vh6P7+/3KNq+nt8V9+n/b3+eLn7FBwk1Jzl4GXr9/k6+fr8LLB0P39/lJ0mE9wk93j6eXq7/v8/aSzxezv81N1mdff59HZ4s3X4VZ4m15/olZ3m5mtw1x5mm6IpczW4fj5+3yTrVR2mlh2mOzw81V3m1R2m3uSrb7L2VV3nFZ4nFBxlM3W4Fd2l9ng52B8nFVzlp2vwubq74uiu1Z4nZOmvO3w9IqguWJ/oOru8ld5nVFwlIygt8PO2vn6/L7K11h6nUxskEtrj0pqjk5ukld5nlh6nmKCpVh6n11+oXSRr3SQraS3yll7n6GyxeTp71x9oVp8n9/l65+yyFl7oJyvw1l8oH+atvj5+lp8oJ6xxvn7/KK2ynWSsKS2yeHn7eru89Xd5vPz82u25/IAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ+SURBVHhe7drrXwxRHMfxw0a6HCollSLSZYtVGoXtRi6xqZVyyS1EQuRS5H6t/msz55x91ZzZHgqnz/vJfM+c34N5MN/XvmZmBYCoTQBs9AKIEpsB2EQMgE3kALCJLQBsYisAm8gFYKMXQJTYtpa8/IJCKbfvKDJrYOMQxauV7JSB0hI/l+1SWZarnd0VlSsLwHHhXhRXqSrIPX6srtG5Iji/d59e1AYLwHVif8gBffuXBjmmfzwKglynopQHgwXgOlEfktOgbv/GpmARVznup+YWFeWhw8F5wHUiEXZEF6AqyK0qtvnpqEqyvSY4DThPeGHHOnQFyvzcqVKr5zUdV0meyNVDgOPsXnjmCeNks+fpF1LlXrJLBdkdMzOA40TSktutS9DT26ffQbWcOq2OsqDfjACui/QieaZd16DrrD7KnnP6eN4zE4DrxIAt85Bt6y42A4Dzor0YuHDRNCGsI2X2AeeJwYjkpUZThbChYTMAuE6kouozX7ctQ2kzADguWy9Sl0dME5Q2/X8Q31CvGQDcJtLZXBk1TfA1VI/VmijrzD7gtuy9SF3NN02Q8lp6YOy6yfKGGQCcJsazGo7dvGWqcHt8fPBOphh3zf4fYy4L+KvExBoS9+4/iE9K2ZnnL1L9D9XHvcqRR3oXcNqavZhIJ2JTj6enp1JqEfOj74naAhwnngKwiWcAbGLmOYCwF2LWJAAZL8Wr1wDC3oi5eRMBaG/fCbnwHsBqH6SQk0UfAaz49NnvhSxcmP8CwPj6TQa9kHLu+2yfOQdsZDM/fv4KKqF68S9ZXIoD62xp0dx+GfQC+A96sTxqLhVYN6PL5vbLoBcAvQCysHoh5W9nKwotPe3gsAAAAABJRU5ErkJggg==") !important;
-				}
-			</style>
-		{/if}
         <link rel="shortcut icon" href="/themepack/vkify/1.0.0.0/resource/favicon_vk.ico" />
         <meta name="application-name" content="{$instance_name}" />
         <meta n:ifset="$csrfToken" name="csrf" value="{$csrfToken}" />
@@ -59,7 +46,7 @@
             {include headIncludes}
         {/ifset}
     </head>
-    <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if}>
+    <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if}{var $hideSidebar = $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '/reg' || $_SERVER['REQUEST_URI'] === '/login'}{if $hideSidebar} class="no-sidebar"{/if}>
         <div id="sudo-banner" n:if="isset($thisUser) && $userTainted">
             <p>
                 {_you_entered_as} <b>{$thisUser->getCanonicalName()}</b>. {_please_rights}
@@ -117,67 +104,59 @@
         <div class="layout">
             <div id="xhead" class="dm"></div>
             <div class="page_header">
-                <a href="/" class="home_button" title="{$instance_name}"><div class="home_button_bg"></div></a>
-                <div n:if="isset($thisUser) ? (!$thisUser->isBanned() XOR !$thisUser->isActivated()) : true" class="header_navigation">
-                    {ifset $thisUser}
-                        {if $thisUser->isDeactivated()}
-                            <div class="link">
-                                <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
+                <div class="page_header_inner">
+                    <a href="/" class="home_button" title="{$instance_name}"><div class="home_button_bg"></div></a>
+                    {if (isset($thisUser) ? (!$thisUser->isBanned() XOR !$thisUser->isActivated()) : true)}
+                        <div class="home_search" id="search_box">
+                            <div id="search_box_fr">
+                                <form id="search_form" action="/search" method="get">
+                                    <div id="search_and_one_more_wrapper">
+                                        <input autocomplete="off" type="search" maxlength="79" name="q" placeholder="{tr("header_search")}" title="{tr("header_search")} [Alt+Shift+F]" accesskey="f">
+                                    </div>
+                                    <button class="search_box_button">
+                                        <span>{tr("header_search")}</span>
+                                    </button>
+                                </form>
                             </div>
+                            <div id="searchBoxFastTips"></div>
+                        </div>
+                        <div class="home_navigation">
+                            {if isset($thisUser) && !$thisUser->isDeactivated()}
+                                <a class="top_nav_btn" id="top_notify_btn" href="/notifications" class="link" title="{_my_feedback} [Alt+Shift+N]" accesskey="n">
+                                    <div class="top_nav_btn_icon"></div>
+                                </a>
+                                <div class="top_nav_btn" id="headerMusicLinkDiv">
+                                    <a onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="top_nav_btn_icon paused" id="headerMusicBtn"></a>
+                                </div>
+                            {/if}
+                        </div>
+                        <div class="end_navigation">
+                        {ifset $thisUser}
+                            {if $thisUser->isDeactivated()}
+                                <div class="link">
+                                    <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
+                                </div>
+                            {else}
+                                <div class="link">
+                                    <a id="userMenuTrigger" style="display: flex; align-items: center; cursor: pointer;">
+                                        <div id="userMenuName">{$thisUser->getFirstName()}</div>
+                                        <img id="userMenuAvatar" src="{$thisUser->getAvatarUrl('miniscule')}">
+                                        <div id="userMenuArrow"></div>
+                                    </a>
+                                </div>
+                                <!-- userMenuTooltip content moved to patch_page.js -->
+                            {/if}
                         {else}
-							<div class="link header_divider_stick" id="search_box">
-								<div id="search_box_fr">
-									<form id="search_form" action="/search" method="get">
-										<div id="search_and_one_more_wrapper">
-											<input autocomplete="off" type="search" maxlength="79" name="q" placeholder="{tr("header_search")}" title="{tr("header_search")} [Alt+Shift+F]" accesskey="f">
-											<a class="friendslink" href="/friends{$thisUser->getId()}?act=online" style="transform: translateX(-44px) translateY(2px); width: 43px;"><div class="friends_online">0</div></a>
-										</div>
-										<button class="search_box_button">
-											<span>{tr("header_search")}</span>
-										</button>
-									</form>
-								</div>
-								<div id="searchBoxFastTips"></div>
-							</div>
-							<div class="link headBack" style="display: none;">
-								<a href="/">unknown</a>
-							</div>
-							<div class="link">
-								<a href="/search?q=&section=users"><vkifyloc name="people"></vkifyloc></a>
-							</div>
-							<div class="link">
-								<a href="/search?section=groups"><vkifyloc name="groups"></vkifyloc></a>
-							</div>
-							<div class="link">
-								<a href="/apps?act=list"><vkifyloc name="games"></vkifyloc></a>
-							</div>
-							<div class="link" id="headerMusicLinkDiv" style="padding-right: 35px;">
-								<div onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="headerMusicBtn paused" id="headerMusicBtn"></div>
-								<a><vkifyloc name="music"></vkifyloc></a>
-							</div>
-							<div class="link">
-								<a href="/support">{_header_help}</a>
-								<text class="supportAnswers" n:if="$ticketAnsweredCount > 0">+{$ticketAnsweredCount}</text>
-							</div>
-							<div class="link">
-                                <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
+                            <div class="link">
+                                <a href="/reg">{_header_registration}</a>
                             </div>
-                        {/if}
-                    {else}
-                        <div class="link">
-                            <a href="/login">{_header_login}</a>
+                        {/ifset}
                         </div>
-                        <div class="link">
-                            <a href="/reg">{_header_registration}</a>
-                        </div>
-                        <div class="link">
-                            <a href="/support">{_header_help}</a>
-                        </div>
-                    {/ifset}
+                    {/if}
                 </div>
             </div>
 
-            <div class="sidebar">
+            <div class="sidebar" n:if="!$hideSidebar">
                 <div class="navigation">
                     {ifset $thisUser}
                         {if !$thisUser->isBanned() XOR !$thisUser->isActivated() XOR $thisUser->isDeactivated()}
@@ -201,11 +180,6 @@
                             <a n:if="$thisUser->getLeftMenuItemStatus('notes')" href="/notes{$thisUser->getId()}" class="link">{_my_notes}</a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('groups')" href="/groups{$thisUser->getId()}" class="link">{_my_groups}</a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('news')" href="/feed" class="link" title="{_my_feed} [Alt+Shift+,]" accesskey=",">{_my_feed}</a>
-                            <a href="/notifications" class="link" title="{_my_feedback} [Alt+Shift+N]" accesskey="n">{_my_feedback}
-                                <object type="internal/link" n:if="$thisUser->getNotificationsCount() > 0">
-                                    +<b>{$thisUser->getNotificationsCount()}</b>
-                                </object>
-                            </a>
                             <a href="/settings" class="link">{_my_settings}</a>
                             
                             {if $thisUser->getLeftMenuItemStatus('docs') || $thisUser->getLeftMenuItemStatus('apps') || $thisUser->getLeftMenuItemStatus('fave')}
@@ -266,17 +240,36 @@
                                 <br><br>
                                 <a href="{$newsLink}">{_news_more}</a>
                             </div>
-                            
-                            <div n:if="OPENVK_ROOT_CONF['openvk']['preferences']['commerce'] && $thisUser->getCoins() != 0" id="votesBalance">
-                                {tr("you_still_have_x_points", $thisUser->getCoins())|noescape}
-                                <br /><br />
-                                
-                                <a href="/settings?act=finance">{_top_up_your_account} &#xbb;</a>
-                            </div>
-                            
+
                             <a n:if="OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['enable'] && $thisUser->getLeftMenuItemStatus('poster')" href="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['link']}" >
                                 <img src="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['src']}" alt="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['caption']}" class="psa-poster" style="max-width: 100%; margin-top: 10px;" />
                             </a>
+
+                            <div class="menu_divider" style="margin-left: 0; margin-top: 15px;"></div>
+
+                            <div class="left_menu_nav_wrap">
+                                <a href="/blog">{_footer_blog|firstUpper}</a>
+                                <a href="/support">{_footer_help|firstUpper}</a>
+                                <a href="/terms">{_footer_rules|firstUpper}</a>
+                                <a href="javascript:void(0);" id="moreOptionsLink">{_show_more}</a>
+                                
+                                <div id="moreOptionsContent" style="display: none;">
+                                    <div class="tippy-menu">
+                                        <a href="/about">{_footer_about_instance|firstUpper}</a>
+                                        <a href="/language" 
+                                            onclick="changeLangPopup(); return false;">
+                                            {var $currentLang = getLanguage()}
+                                            {var $found = false}
+                                            {foreach getLanguages() as $language}
+                                                {if $language['code'] === $currentLang && !$found}
+                                                    {_select_language}: {$language['native_name']}
+                                                    {var $found = true}
+                                                {/if}
+                                            {/foreach}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="floating_sidebar">
                                 <a id="minilink-friends" class="minilink" href="/friends{$thisUser->getId()}">
@@ -329,22 +322,18 @@
                             <input type="hidden" name="jReturnTo" value="{$_SERVER['REQUEST_URI']}" />
                             <input type="hidden" name="hash" value="{$csrfToken}" />
                             <input type="submit" value="{_log_in}" class="button" style="display: inline-block; font-family: Tahoma" />
-                            <a href="/reg"><input type="button" value="{_registration}" class="button" style="font-family: Tahoma" /></a><br><br>
-                            {if !OPENVK_ROOT_CONF['openvk']['preferences']['security']['disablePasswordRestoring']}<a href="/restore">{_forgot_password}</a>{/if}
+                            <a href="/reg"><input type="button" value="{_registration}" class="button button_blue" style="font-family: Tahoma" /></a><br><br>
+                            {if !OPENVK_ROOT_CONF['openvk']['preferences']['security']['disablePasswordRestoring']}
+                            <div class="forgot">
+                                <a href="/restore">{_forgot_password}</a>
+                            </div>
+                            {/if}
                         </form>
                     {/ifset}
                     </div>
                 </div>
 
             <div class="page_body">
-                <div id="wrapH">
-                    <div id="wrapHI">
-                        <div n:ifcontent class="page_yellowheader">
-                           {include header}
-                        </div>
-                    </div>
-                </div>
-
                 {ifset wrap}
                     <div class="msg msg_{$flashMessage->type}" n:ifset="$flashMessage">
                         <b>{$flashMessage->title}</b><br/>
@@ -357,6 +346,15 @@
                         <div class="wrap1">
                             <div id="auth" class="page-wrap">
                                 <div class="page_content">
+                                    {ifset header}
+                                        <h2 class="page_block_h2">
+                                            <div class="page_block_header clear_fix">
+                                                <div class="page_block_header_inner _header_inner">
+                                                    {include header}
+                                                </div>
+                                            </div>
+                                        </h2>
+                                    {/ifset}
                                     <div class="msg msg_{$flashMessage->type}" n:ifset="$flashMessage">
                                         <b>{$flashMessage->title}</b><br/>
                                         {$flashMessage->msg|noescape}
@@ -368,33 +366,42 @@
                         </div>
                     </div>
                 {/ifset}
+                {if !isset($thisUser)}
+                    <div class="footer_wrap">
+                        <div class="footer_nav">
+                            <div class="footer_copy">
+                                <a href="/about">{$instance_name}</a> © 2016
+                            </div>
+                            <div class="footer_lang">
+                                {var $currentUrl = $_SERVER["REQUEST_URI"]}
+                                {foreach array_slice(getLanguages(), 0, 3) as $language}
+                                    <a href="/language?lg={$language['code']}&hash={urlencode($csrfToken)}&jReturnTo={php echo rawurlencode($currentUrl)}" 
+                                       rel="nofollow" 
+                                       title="{$language['native_name']}" 
+                                       class="vkify-footer-lang">
+                                        {$language['native_name']}
+                                    </a>
+                                {/foreach}
+                                <a href="/language" 
+                                   onclick="changeLangPopup(); return false;" 
+                                   class="vkify-footer-lang">
+                                    all languages &raquo;
+                                </a>
+                            </div>
+                            <div class="footer_links">
+                                <a href="/about" class="link">{_footer_about_instance}</a>
+                                <a href="/support" class="link">{_footer_help}</a>
+                                <a href="/blog" class="link">{_footer_blog}</a>
+                                <a href="/terms" class="link">{_footer_rules}</a>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+                </div>
             </div>
-        </div>
-
-        <div class="page_footer">
-            {var $dbVersion = \Chandler\Database\DatabaseConnection::i()->getConnection()->getPdo()->getAttribute(\PDO::ATTR_SERVER_VERSION)}
-
-            <div class="navigation_footer">
-                <a href="/about" class="link">{_footer_about_instance}</a>
-                <a href="/support" class="link">{_footer_help}</a>
-                <a href="/blog" class="link">{_footer_blog}</a>
-                <a href="/terms" class="link">{_footer_rules}</a>
+            <div id="ajloader" class="loader">
+                <img src="/assets/packages/static/openvk/img/loading_mini.gif">
             </div>
-			<p>
-                    <a href="/" class="vkify-footer-lang">{$instance_name}</a> © 2006-2015
-                {var $currentUrl = $_SERVER["REQUEST_URI"]}
-                {foreach array_slice(getLanguages(), 0, 3) as $language}
-                    <a href="/language?lg={$language['code']}&hash={urlencode($csrfToken)}&jReturnTo={php echo rawurlencode($currentUrl)}" rel="nofollow" title="{$language['native_name']}" class="vkify-footer-lang">
-                        {$language['native_name']}
-                    </a>
-                {/foreach}
-                <a href="/language" onclick="changeLangPopup(); return false;" class="vkify-footer-lang">all languages &raquo;</a>
-            </p>
-        </div>
-
-        <div id="ajloader" class="loader">
-            <img src="/assets/packages/static/openvk/img/loading_mini.gif">
-        </div>
 
         {include "components/cookies.xml"}
 
@@ -468,8 +475,8 @@
                 "at_search": {$atSearch ?? false},
                 "max_attachments": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["wall"]["postSizes"]["maxAttachments"] ?? 10},
                 "max_filesize_mb": 100,
-                "current_id": {$thisUser ? $thisUser->getId() : 0},
-                "disable_ajax": {$disable_ajax ? $disable_ajax : 0},
+                "current_id": {isset($thisUser) ? $thisUser->getId() : 0},
+                "disable_ajax": {isset($disable_ajax) ? $disable_ajax : 0},
                 "max_add_fields": {ovkGetQuirk("users.max-fields")},
                 "docs_max": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["maxSize"]},
                 "docs_allowed": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["allowedFormats"]},
@@ -480,8 +487,29 @@
             {include bodyScripts}
         {/ifset}
         {script "js/router.js"}
+        
+        <script n:if="isset($thisUser)">
+            document.addEventListener('DOMContentLoaded', function() {
+                const moreOptionsLink = document.getElementById('moreOptionsLink');
+                const moreOptionsContent = document.getElementById('moreOptionsContent');
+                
+                if (moreOptionsLink && moreOptionsContent) {
+                    tippy(moreOptionsLink, {
+                        content: moreOptionsContent.innerHTML,
+                        allowHTML: true,
+                        interactive: true,
+                        trigger: 'mouseenter focus',
+                        theme: 'light vk',
+                        placement: 'bottom',
+                        arrow: true,
+                        maxWidth: 300
+                    });
+                }
+            });
+        </script>
     </body>
-	<script src="/themepack/vkify/1.0.0.0/resource/patch_page.js" crossorigin="anonymous"></script>
+	<script src="/themepack/vkify/1.0.0.0/resource/patch_page.js"></script>
+	<script src="/themepack/vkify/1.0.0.0/resource/router_patch.js"></script>
 	<script src="/themepack/vkify/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
 	<script>
 		window.openvk.locales = {

@@ -1,0 +1,157 @@
+.settings_panel {
+    margin: 0 20px;
+}
+
+.settings_list_row {
+    margin-bottom: 10px;
+}
+
+.settings_label {
+    color: #656565;
+    width: 145px;
+    padding: 6px 10px 6px 0;
+    float: left;
+    line-height: 16px;
+}
+
+.settings_labeled_text {
+    padding-top: 6px;
+    margin: 0 0 8px 155px;
+}
+
+.settings_list_row .settings_label,
+.settings_list_row .settings_labeled_text {
+    padding-top: 2px;
+    line-height: 16px;
+}
+
+.settings_line {
+    margin: 0;
+    padding: 15px 0 14px;
+    border-bottom: 1px solid #e7e8ec;
+}
+
+.settings_line.settings_line_no_padding {
+    padding: 0;
+}
+
+.settings_block_msg {
+    padding: 13px 20px 15px;
+    border-bottom: 1px solid #e7e8ec;
+    line-height: 150%;
+}
+
+.settings_block_footer {
+    border-top: 1px solid #e7e8ec;
+    background: #fafbfc;
+    line-height: 140%;
+    padding: 15px 0 17px;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    text-align: center;
+}
+
+.settings_list_row input:not([type="submit"], [type="checkbox"], [type="radio"]),.settings_list_row select {
+    width: 300px;
+}
+
+/* privacy */
+.settings_privacy {
+    margin: 0;
+    padding: 6px 20px 5px
+}
+
+.settings_privacy_row {
+    border: solid #e7e8ec;
+    border-width: 1px 0;
+    padding: 11px 0 14px;
+    margin: -1px 0 0
+}
+
+.settings_privacy_row:first-child {
+    border-top: none
+}
+
+.settings_privacy_row:last-child {
+    border-bottom: none
+}
+
+.settings_privacy_row.setting_row_selected.setting_row_animated {
+    background-color: transparent;
+    border-color: transparent
+}
+
+.settings_privacy_row.settings_privacy_row_oneline .settings_label {
+    padding: 11px 10px 0 0
+}
+
+[dir=rtl] .settings_privacy_row.settings_privacy_row_oneline .settings_label {
+    padding: 11px 0 0 10px
+}
+
+.settings_privacy_row--no-bottom-border {
+    border-bottom-width: 0
+}
+
+.settings_privacy_row .settings_label {
+    width: 245px;
+    padding: 2px 10px 0 0;
+    text-align: left;
+    line-height: 18px
+}
+
+.settings_row_button_wrap {
+    padding-left: 155px;
+    margin: 15px 0 25px 0;
+}
+
+.settings_save_footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.settings_panel .accent-box {
+    margin-top: 0;
+    margin-inline: 0;
+}
+
+/* payments */
+.settings_payments {
+	margin: 15px 20px 0;
+}
+
+.settings_padding {
+    padding-block: 20px
+}
+
+.voucher_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.voucher_form .settings_voucher_input {
+    margin-right: 10px;
+}
+
+.knowledgeBaseArticle h4 {
+	border: 0;
+	color: #000;
+	font-weight: 600;
+	padding: 0;
+	font-size: 14px;
+}
+.knowledgeBaseArticle p + h4 {
+    margin-top: 10px;
+}
+
+.delete_reason_list {
+    margin: 10px 0 20px;
+}
+
+/* edit page */
+.edit_panel {
+    padding-block: 20px;
+}
+.edit_panel .settings_label {
+    text-align:end;
+}

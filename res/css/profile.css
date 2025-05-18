@@ -1,0 +1,748 @@
+.page_block.photo_block {
+    padding: 15px;
+    clip-path: unset;
+}
+
+.avatar_block .button,
+.avatar_block .tippy-menu a {
+    transition: none;
+}
+
+.page_list_module .group_desc,
+.page_list_module .people_desc,
+.page_list_module .people_extra {
+    font-size: 12px;
+    max-height: 48px;
+    overflow: hidden;
+    color: #656565
+}
+
+.page_list_module .people_extra {
+    padding-bottom: 0;
+    color: #939393
+}
+
+.page_list_module .people_extra_lnk {
+    color: #939393
+}
+
+.page_list_module .thumb {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.page_list_module .cell_img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+    display: block
+}
+
+.page_list_module .line_cell {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    margin-top: 12px;
+    line-height: 130%
+}
+
+.page_list_module .line_cell:first-child {
+    margin-top: 0
+}
+
+.page_list_module .line_cell .desc_info,
+.page_list_module .line_cell .extra_info,
+.page_list_module .line_cell .info {
+    width: 147px;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding: 4px 0 0 12px
+}
+
+.page_list_module .line_cell .info {
+    padding-top: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.page_list_module .line_cell .info:hover {
+    text-decoration: underline
+}
+
+.page_list_module .group_name,
+.page_list_module .people_desc,
+.page_list_module .people_name {
+    margin-bottom: 2px
+}
+
+.page_album_link {
+    position: relative;
+    display: block
+}
+
+.page_album_thumb_wrap {
+    background-color: #ecf1f5;
+    text-align: center;
+    overflow: hidden
+}
+
+.page_album_thumb {
+    max-width: 100%;
+    vertical-align: top
+}
+
+.page_album_title {
+    font-size: 12.5px;
+    background: url(/themepack/vkify/1.0.0.0/resource/album_top_shadow.png);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: left;
+    padding: 35px 12px 9px;
+    overflow: hidden;
+    box-sizing: border-box
+}
+
+.page_album_title_text {
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    visibility: visible;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 1.2em
+}
+
+.page_album_size {
+    float: right;
+    font-size: 13.5px;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    margin: -1px 0 0 5px
+}
+
+.page_album_photos {
+    margin-left: 5px
+}
+
+.page_album_under_row {
+    padding-top: 5px;
+    clear: both
+}
+
+.page_album_nocover {
+    background: #ecf1f5 url(/themepack/vkify/1.0.0.0/resource/camera_big.png) no-repeat 50% 45%;
+    width: 279px;
+    height: 185px
+}
+
+.page_album_nocover .page_album_size {
+    display: none
+}
+
+.page_album_nocover .page_album_title {
+    background: none;
+    color: #8997a5
+}
+
+.page_album_nocover .page_album_thumb_wrap {
+    background: none
+}
+
+.album_module .page_album_row {
+    margin: 15px 0 -1px;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 2px;
+    overflow: hidden
+}
+
+.album_module .page_album_row:first-child {
+    margin: 0
+}
+
+.album_module .page_album_row:hover .page_album_description {
+    max-height: 60px
+}
+
+.album_module .page_album_thumb {
+    max-width: 200px;
+    object-fit: cover;
+    height: 100%;
+}
+
+.album_module .page_album_thumb_wrap {
+    height: 132px;
+    width: 200px
+}
+
+.album_module .page_album_nocover {
+    background-position: 50% 42%;
+    width: 200px;
+    height: 132px
+}
+
+.video_module .video_row_single {
+    margin: 0 auto !important
+}
+
+.video_module .video {
+    position: relative;
+    width: 200px;
+    height: 112px;
+    overflow: hidden;
+    border-radius: 2px
+}
+
+.video_module .video:hover {
+    text-decoration: none
+}
+
+.video_module .video div.page_video_play_icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    background: rgba(0, 0, 0, .5) url(/themepack/vkify/1.0.0.0/resource/video_play_small.png) 19px 13px no-repeat;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    z-index: 1;
+    border-radius: 50%;
+    -o-transition: background-color 100ms linear;
+    transition: background-color 100ms linear
+}
+
+.video_module .video div.page_video_play_icon:hover {
+    background-color: rgba(0, 0, 0, .6)
+}
+
+.video_module .video div.page_video_duration {
+    font-size: 12.5px;
+    padding: 3px 6px;
+    margin: 8px;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 2px;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    right: 0
+}
+
+.video_module .video .page_video_thumb {
+    width: 200px;
+    height: 112px;
+    display: inline-block;
+    background-size: cover;
+    background-position: 50%
+}
+
+.video_module .info {
+    padding: 6px 0 13px;
+    line-height: 140%;
+}
+
+.video_module .video_row:last-child .info {
+    padding-bottom: 0;
+    margin-bottom: -3px
+}
+
+.module_body .video_row {
+    width: 100%
+}
+
+.module_body .video_row .info {
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.people_module .module_body {
+    padding: 6px 10px 8px
+}
+
+.narrow_column .people_module .people_row {
+    width: 210px;
+    overflow: hidden
+}
+
+.module_body .people_row {
+    display: flex;
+}
+
+.module_body .people_cell {
+    width: 70px;
+    overflow: hidden;
+    padding: 6px 0 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+.module_body .people_cell_ava {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: 0 10px;
+    padding-bottom: 7px
+}
+
+.module_body .people_cell_img {
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%
+}
+
+.module_body .people_cell_name {
+    line-height: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.wide_column .people_module .module_body {
+    padding: 6px 11px 8px
+}
+
+.wide_column .people_module .module_body .people_cell {
+    width: 88px
+}
+
+.wide_column .people_module .module_body .people_cell_ava,
+.wide_column .people_module .module_body .people_cell_img {
+    width: 68px;
+    height: 68px
+}
+
+.left_big_block .header_top,
+.right_big_block .header_top {
+    padding: 4px 20px 0;
+    font-size: 13px;
+}
+
+.page_photos_module {
+    padding: 13px 20px 20px;
+    height: 123px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page_square_photo {
+    position: relative;
+    display: inline-block;
+    height: 123px;
+    width: 123px;
+    margin-left: 6px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%
+}
+
+.page_square_photo:first-child {
+    margin-left: 0
+}
+
+.profile_gifts .module_body {
+	text-align: center;
+	padding-top: 10px;
+}
+.profile_gifts_cont {
+	position: relative;
+	display: block;
+	height: 64px;
+	overflow: hidden;
+	white-space: nowrap;
+    display: flex;
+}
+.profile_gifts_cont .profile_gift_img {
+	width: 64px;
+	height: 64px;
+	margin-right: 4px;
+}
+
+#profile_link[style="width: 194px;"],
+.profile_link[style="width: 194px;"],
+.profile_link[style="display:block;width:96%;"] {
+    width: 100%;
+}
+
+#profile_links .button {
+    transition: none;
+}
+
+#profile_link .link {
+    color: #fff
+}
+
+#profile_link,
+.profile_link {
+    margin: 0 0 10px
+}
+
+#profile_links>.profile_link:last-of-type {
+    margin-bottom: 0
+}
+
+#profile_link:hover,
+.profile_link:hover {
+    background-color: #6888ad
+}
+
+#profile_link:active,
+.profile_link:active {
+    background-color: #5779a1;
+    padding-top: 8px;
+    padding-bottom: 7px
+}
+
+.page_name {
+    font-size: 19px;
+    line-height: 25px;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: -1px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #000
+}
+
+.profile_online {
+    color: #000;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    float: right;
+    font-size: 12.5px;
+    margin-top: 3px;
+    line-height: 18px;
+    color: #939393;
+    text-align: center;
+  }
+
+.page_status,
+td .nobold {
+    font-size: 13px
+}
+
+.ugc-table td {
+    padding: 5px 0
+}
+
+.ugc-table tr>td:nth-of-type(2) {
+    font-size: 13px;
+}
+
+#basicInfo {
+    padding: 5px 0 0
+}
+
+.accountInfo {
+    padding-bottom: 10px;
+    margin-left: 0;
+}
+
+#basicInfo {
+    padding-top: 10px;
+}
+
+.ugc-table tr>td:nth-of-type(1) {
+    width: 165px !important;
+}
+
+.right_big_block h4 {
+    color: #000;
+    font-size: 13px !important;
+    font-weight: normal;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    padding-right: 7px !important;
+    display: flex !important;
+    align-items: center;
+    white-space: nowrap;
+    padding-top: 10px !important;
+    border-bottom: none;
+}
+
+.right_big_block h4 a {
+    display: none
+}
+
+.right_big_block h4:after {
+    display: block;
+    content: '';
+    width: 100%;
+    float: right;
+    height: 1px;
+    margin-left: 10px;
+    background-color: #e7e8ec
+}
+
+
+.counts_module {
+    text-align: center;
+    border-top: 1px solid #e7e8ec;
+    max-height: 69px;
+    overflow: hidden;
+}
+
+.page_counter {
+    display: inline-block;
+    padding: 15px 5px;
+    text-decoration: none !important;
+}
+
+.page_counter .count {
+    font-size: 19px;
+    color: #42648b;
+    padding-bottom: 3px;
+    line-height: 21px;
+}
+
+.page_counter .label {
+    color: #828282;
+    line-height: 15px;
+    font-size: 13px;
+    width: fit-content;
+    text-transform: lowercase;
+}
+
+.page_counter:hover .label {
+    color: #42648b;
+}
+
+.profile_more_info_link {
+    display: block;
+    padding-left: 165px;
+    margin: 10px 0 0;
+    border-radius: 2px;
+    height: 34px;
+    line-height: 32px;
+}
+
+.profile_more_info_link:hover {
+    background-color: #f0f2f5;
+    text-decoration: none
+}
+
+.profileinfoblock {
+    padding-bottom: 5px;
+}
+
+.noPhotosTip {
+    text-align: center;
+    vertical-align: middle;
+    padding: 20px 15px;
+}
+
+.noPhotosTip img,
+.addPhotoTip_text {
+    vertical-align: middle;
+}
+
+.addPhotoTip_text {
+    padding: 5px 0 5px 12px;
+}
+
+div.avatar_block:hover .avatar_variants {
+    margin-bottom: 0;
+}
+
+.avatarDelete {
+    right: 0;
+}
+
+.commentsTextFieldWrap {
+    background-color: transparent;
+    border: 0;
+}
+
+.avatar_block_inner {
+    position: relative;
+}
+
+.avatar_controls .avatar_variants {
+    width: 200px;
+}
+
+.avatar_block .add_image_text {
+    position: absolute;
+    bottom: 0;
+    padding: 18px 0 24px;
+    text-align: center;
+    width: 100%;
+}
+
+.photo_block .button {
+    margin-top: 10px;
+}
+
+.completeness_block .completeness-gauge {
+    background: none;
+    width: auto;
+    border: 0;
+}
+
+.profile_warning_row {
+    color: #000
+}
+
+.profile_warning_row:hover {
+    text-decoration: none
+}
+
+.profile_warning_img {
+    float: left;
+    width: 21px;
+    height: 21px;
+    margin: 10px;
+    background: url(/themepack/vkify/1.0.0.0/resource/icons/add_info_icons.png) no-repeat 0 0
+}
+
+.profile_warning_img.bday {
+    background-position: 0 -25px
+}
+
+.profile_warning_img.school {
+    background-position: 0 -50px
+}
+
+.profile_warning_img.contacts {
+    background-position: 0 -75px
+}
+
+.profile_warning_img.clubs {
+    background-position: 0 -100px
+}
+
+.profile_warning_img.friends {
+    background-position: 0 -125px
+}
+
+.profile_warning_img.posts,
+.profile_warning_img.interests {
+    background-position: 0 -150px
+}
+
+.profile_warning_img.telegram {
+    background-position: 0 -175px
+}
+
+.page_info_wrap br {
+    display: none;
+}
+
+.profile_warning_hide_wrap {
+    float: right;
+    padding: 6px;
+    margin: 10px 6px;
+    opacity: 0.6;
+    filter: alpha(opacity=60)
+}
+
+.profile_warning_hide_wrap:hover {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.profile_warning_hide {
+    width: 9px;
+    height: 9px;
+    background: url(/themepack/vkify/1.0.0.0/resource/icons/attach_icons.png) no-repeat 0 0
+}
+
+.profile_warning_label {
+    overflow: hidden;
+    display: table-cell;
+    vertical-align: middle;
+    height: 25px;
+    padding: 8px 0
+}
+
+.page_info+div:has(.profile_info) {
+    box-shadow: none;
+    border: 1px solid #e3e4e8;
+    border-top: 0;
+    border-bottom: 1px solid #dadbde;
+    padding-top: 0;
+    margin: -20px -1px 0;
+}
+
+.frenMenu .button {
+    width: 100%;
+}
+
+.profile_msg_split .cut_left,
+.profile_msg_split .cut_right {
+    display: inline-block;
+}
+
+.profile_msg_split .cut_left {
+    width: 162px;
+}
+
+.profile_msg_split .cut_left .button {
+    border-radius: 2px 0 0 2px;
+    border-right: 1px solid #7496b9;
+    height: 30px
+}
+
+.profile_msg_split .cut_right {
+    width: 38px;
+    float: right;
+}
+
+.profile_msg_split .cut_right .button {
+    border-radius: 0 2px 2px 0;
+    height: 30px;
+    width: 38px;
+    padding-left: 11px
+}
+
+.profile_gift_icon {
+    background: url(/themepack/vkify/1.0.0.0/resource/icons/gift_icon.png) no-repeat;
+    background-position: left 2px;
+    padding-right: 21px;
+}
+
+.profile_more_btn {
+    background: url(/themepack/vkify/1.0.0.0/resource/icons/more_icon.png) no-repeat;
+    background-position: 100% 13px;
+    width: 36px;
+    padding-right: 7px;
+    border-right: 9px solid transparent;
+}
+
+.profile_actions_split form {
+    width: 157px;
+    display: inline-block;
+}
+
+.content_title_expanded+.page_info,
+.page_info+div:has(.profile_info) {
+    margin-top: -15px;
+}
+
+.content_divider [class^="content_title_"] {
+    margin: 0;
+}
+
+.left_big_block>.content_divider,
+.right_big_block>.content_divider {
+    background: none;
+    padding: 0;
+}

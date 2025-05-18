@@ -18,126 +18,81 @@
 {/block}
 
 {block content}
-    {if OPENVK_ROOT_CONF['openvk']['preferences']['registration']['enable'] || $referer}
-        <p n:if="!is_null($referer)" align="center">
-            {tr("invites_you_to", $referer->getFullName(), OPENVK_ROOT_CONF['openvk']['appearance']['name'])|noescape}
-        </p>
-	<div style="margin: 10px;">
-        <h2 class="header2">{_registration}</h2>
-	    <table cellspacing="10" cellpadding="0" border="0" align="center" style="margin: 9px;">
-	        <tbody>
-	            <tr>
-	                <td>
-	                <img src="assets/packages/static/openvk/img/favicons/favicon64.png" style="width: 32px;" align="middle">
-	                </td>
-	                <td>
-	                <b>{php echo OPENVK_ROOT_CONF['openvk']['appearance']['name']} {_registration_welcome_1}</b><br>
-                        {_registration_welcome_2}
-	                </td>
-	            </tr>
-	        </tbody>
-	    </table>
-        <form method="POST" enctype="multipart/form-data">
-            <table cellspacing="7" cellpadding="0" width="52%" border="0" align="center">
+    <div id="auth" class="page_block">
+        {if OPENVK_ROOT_CONF['openvk']['preferences']['registration']['enable'] || $referer}
+            {if !is_null($referer)}
+                <p align="center">
+                    {tr("invites_you_to", $referer->getFullName(), OPENVK_ROOT_CONF['openvk']['appearance']['name'])|noescape}
+                </p>
+            {/if}
+            <h2 class="login_header">{_registration}</h2>
+            <table cellspacing="10" cellpadding="0" border="0" align="center" style="margin: 9px;">
                 <tbody>
                     <tr>
-                        <h4 style="margin-left: 60px;">{_main}</h4>
-                    </tr>
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_name}: </span>
+                        <td>
+                            <img src="assets/packages/static/openvk/img/favicons/favicon64.png" style="width: 32px;" align="middle">
                         </td>
-                        <td class="regform-right">
-                            <input type="text" name="first_name" required />
+                        <td>
+                            <b>{php echo OPENVK_ROOT_CONF['openvk']['appearance']['name']} {_registration_welcome_1}</b><br>
+                            {_registration_welcome_2}
                         </td>
                     </tr>
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_surname}: </span>
-                        </td>
-                        <td class="regform-right">
-                            <input type="text" name="last_name" />
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_email}: </span>
-                        </td>
-                        <td class="regform-right">
-                            <input type="email" name="email" required />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_password}: </span>
-                        </td>
-                        <td class="regform-right">
-                            <input type="password" name="password" required />
-                        </td>
-                    </tr>
-		        </table>
-		        <table cellspacing="7" cellpadding="0" width="52%" border="0" align="center">
-                        <tr>
-                        <h4 style="margin-left: 60px;">{_other_fields}</h4>
-                        </tr>
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_birth_date}: </span>
-                        </td>
-                        <td class="regform-right">
-                            <input max={date('Y-m-d')} name="birthday" type="date"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="regform-left">
-                            <span class="nobold">{_pronouns}: </span>
-                        </td>
-                        <td class="regform-right">
-                            <select name="pronouns" required>
-                                <option value="male">{_male}</option>
-                                <option value="female">{_female}</option>
-                                <option value="neutral">{_neutral}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    {if !(strpos(captcha_template(), 'verified'))}
-                        <tr>
-                            <td class="regform-left">
-                                <span class="nobold">CAPTCHA: </span>
-                            </td>
-                            <td class="regform-right">
-                                {captcha_template()|noescape}
-                            </td>
-                        </tr>
-                    {/if}
-                </table>
-                    <div style="margin-left: 100px; margin-right: 100px; text-align: center;">
-                        <input type="hidden" name="hash" value="{$csrfToken}" />
-                        <input type="checkbox" required="true" name="confirmation" /> {_checkbox_in_registration|noescape}
-                        <br /><br />
-                        <input type="submit" value="{_registration}" class="button" /><br><br>
-                        </div>
                 </tbody>
-        </form>
+            </table>
+            <form id="login_form" method="POST" enctype="multipart/form-data">
+                <h4>{_main}</h4>
+                <input class="big_text" type="text" name="first_name" required placeholder="{_name}" />
+                <input class="big_text" type="text" name="last_name" placeholder="{_surname}" />
+                <input class="big_text" type="email" name="email" required placeholder="{_email}" />
+                <input class="big_text" type="password" name="password" required placeholder="{_password}" />
+                
+                <h4>{_other_fields}</h4>
+                <div style="margin-bottom: 10px;">
+                    <span class="nobold">{_birth_date}: </span>
+                    <input max={date('Y-m-d')} name="birthday" type="date"/>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <span class="nobold">{_pronouns}: </span>
+                    <select name="pronouns" required>
+                        <option value="male">{_male}</option>
+                        <option value="female">{_female}</option>
+                        <option value="neutral">{_neutral}</option>
+                    </select>
+                </div>
+                {if !(strpos(captcha_template(), 'verified'))}
+                    <div style="margin-bottom: 10px;">
+                        <span class="nobold">CAPTCHA: </span>
+                        {captcha_template()|noescape}
+                    </div>
+                {/if}
+                
+                <div style="margin-bottom: 10px; text-align: left;">
+                    <input type="checkbox" required="true" name="confirmation" /> {_checkbox_in_registration|noescape}
+                </div>
+                
+                <div class="login_buttons_wrap">
+                    <input type="hidden" name="hash" value="{$csrfToken}" />
+                    <input type="submit" value="{_registration}" class="button button_green" />
+                </div>
+            </form>
+        {else}
+            <h4>{_registration_closed}</h4>
+            <table cellspacing="10" cellpadding="0" border="0" align="center" style="margin: 9px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%;">
+                            <img src="/assets/packages/static/openvk/img/oof.apng" alt="{_registration_closed}" style="width: 100%;"/>
+                        </td>
+                        <td>
+                            {_registration_disabled_info}
+                            {if OPENVK_ROOT_CONF['openvk']['preferences']['registration']['disablingReason']}
+                                <br/><br/>{_admin_banned_link_reason}:<br>
+                                <b>{php echo OPENVK_ROOT_CONF['openvk']['preferences']['registration']['disablingReason']}</b>
+                            {/if}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {/if}
     </div>
-    {else}
-	    <h4>{_registration_closed}</h4>
-		<table cellspacing="10" cellpadding="0" border="0" align="center" style="margin: 9px;">
-	        <tbody>
-	            <tr>
-	                <td style="width: 20%;">
-	                    <img src="/assets/packages/static/openvk/img/oof.apng" alt="{_registration_closed}" style="width: 100%;"/>
-	                </td>
-	                <td>
-                        {_registration_disabled_info}
-                        {if OPENVK_ROOT_CONF['openvk']['preferences']['registration']['disablingReason']}
-                            <br/><br/>{_admin_banned_link_reason}:<br>
-                            <b>{php echo OPENVK_ROOT_CONF['openvk']['preferences']['registration']['disablingReason']}</b>
-                        {/if}
-	                </td>
-	            </tr>
-	        </tbody>
-	    </table>
-    {/if}
 {/block}

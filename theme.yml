@@ -6,9 +6,9 @@ override_templates: true
 inherits_master: false
 metadata:
     name:
-        _: "VKify"
-        en: "VKify"
-        ru: "VKify"
-        uk: "VKify"
-    author: "koke228"
-    description: "Some shit"
+        _: "VKify 2016"
+        en: "VKify 2016"
+        ru: "VKify 2016"
+        uk: "VKify 2016"
+    author: "VKify: koke228 (ovk.to/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify 2016: ayato"
+    description: "ВК 2016-17 гг."

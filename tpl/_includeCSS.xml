@@ -7,7 +7,6 @@
         {if $theme->inheritDefault()}
             {css "css/main.css"}
             {css "css/bsdn.css"}
-            {css "css/dialog.css"}
             {css "css/notifications.css"}
             {css "css/avatar-edit.css"}
             {css "css/audios.css"}
@@ -29,7 +28,7 @@
         {css "css/notifications.css"}
         {css "css/avatar-edit.css"}
         {css "css/audios.css"}
-
+        
         {if $isXmas}
             {css "css/xmas.css"}
         {/if}
@@ -49,12 +48,10 @@
 {else}
     {css "css/main.css"}
     {css "css/bsdn.css"}
-    {css "css/dialog.css"}
-    {css "css/nsfw-posts.css"}
     {css "css/notifications.css"}
+    {css "css/nsfw-posts.css"}
     {css "css/audios.css"}
-
-    {if $isXmas}
-        {css "css/xmas.css"}
+    {if $theme !== NULL}
+        <link rel="stylesheet" href="/themepack/{$theme->getId()}/{$theme->getVersion()}/stylesheet/styles.css" />
     {/if}
 {/ifset}

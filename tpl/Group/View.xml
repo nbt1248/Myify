@@ -1,6 +1,10 @@
 {extends "../@layout.xml"}
 {var $backdrops = $club->getBackDropPictureURLs()}
 
+{block headIncludes}
+    <link rel="stylesheet" href="/themepack/vkify/2.0.0.0/resource/profile.css">
+{/block}
+
 {block title}{$club->getName()}{/block} 
 
 {block header}

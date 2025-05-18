@@ -20,7 +20,7 @@
                 </div>
                 {include "../components/paginator.xml", conf => $paginatorConf}
             {else}
-				<div class="wall_none" style="border-top: 0px;">
+				<div class="page_block module_body" style="border-top: 0px;">
 					{_no_posts_abstract}
 				</div>
             {/if}

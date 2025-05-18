@@ -1,0 +1,22 @@
+{* 
+  Reusable UI menu component
+  
+  @param items        Array of menu items, each containing:
+                      - url: URL to navigate to
+                      - title: Menu item title/text or translation key name
+                      - active: Boolean indicating if item is selected
+                      - condition: (optional) Condition to show this item
+                      - translate: (optional) Boolean indicating if title is a translation key
+                      - id: (optional) ID for the menu item
+  @param id           (optional) ID for the menu element
+  @param additionalCssClass (optional) Additional CSS classes
+*}
+<div class="page_block tabs ui_rmenu ui_rmenu_pr {$additionalCssClass ?? ''}" id="{$id ?? 'wall_rmenu'}" role="list">
+    {foreach $items as $item}
+        {if !isset($item['condition']) || $item['condition']}
+            <a class="ui_rmenu_item {$item['active'] ? 'ui_rmenu_item_sel' : ''}" href="{$item['url']}" id="{$item['id']}">
+                <span>{if isset($item['translate']) && $item['translate'] === false}{$item['title']}{else}{_$item['title']}{/if}</span>
+            </a>
+        {/if}
+    {/foreach}
+</div> 
