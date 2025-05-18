@@ -1,10 +1,6 @@
 {extends "../@layout.xml"}
 {block title}{_welcome}{/block}
 
-{block header}
-    {_welcome}
-{/block}
-
 {block content}
     <div class="index_rcolumn">
         <div class="page_block login-container">

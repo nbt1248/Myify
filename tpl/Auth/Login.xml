@@ -1,10 +1,6 @@
 {extends "../@layout.xml"}
 {block title}{_log_in}{/block}
 
-{block header}
-    {_log_in}
-{/block}
-
 {block content}
     <div id="auth" class="page_block">
         <h2 class="login_header">{_log_in}</h2>

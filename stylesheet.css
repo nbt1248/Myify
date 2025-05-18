@@ -768,6 +768,10 @@ input[class=button] {
     display: flex;
 }
 
+.login_buttons_wrap .button_blue {
+    margin-right: 10px;
+}
+
 #login_form .button {
     width: 100%;
 }
