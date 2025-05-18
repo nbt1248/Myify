@@ -7,7 +7,7 @@
             {ifset title}{include title} - {/ifset}{$instance_name}
         </title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="/themepack/vkify/1.0.0.0/resource/favicon_vk.ico" />
+        <link rel="shortcut icon" href="/themepack/vkify16/1.0.0.0/resource/favicon_vk.ico" />
         <meta name="application-name" content="{$instance_name}" />
         <meta n:ifset="$csrfToken" name="csrf" value="{$csrfToken}" />
 
@@ -92,12 +92,12 @@
 
         <div class="toTop">
             <div id='to_up'>
-                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/vkify/1.0.0.0/resource/toTop.png">
+                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/vkify16/1.0.0.0/resource/toTop.png">
                 <span>{_to_top}</span>
             </div>
             
             <div id='to_back'>
-                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/vkify/1.0.0.0/resource/toTop.png">
+                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/vkify16/1.0.0.0/resource/toTop.png">
             </div>
         </div>
 
@@ -508,9 +508,9 @@
             });
         </script>
     </body>
-	<script src="/themepack/vkify/1.0.0.0/resource/patch_page.js"></script>
-	<script src="/themepack/vkify/1.0.0.0/resource/router_patch.js"></script>
-	<script src="/themepack/vkify/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
+	<script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
+	<script src="/themepack/vkify16/1.0.0.0/resource/router_patch.js"></script>
+	<script src="/themepack/vkify16/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
 	<script>
 		window.openvk.locales = {
         {foreach getLanguages() as $language}

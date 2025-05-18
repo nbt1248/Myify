@@ -2,7 +2,7 @@
 {var $backdrops = $club->getBackDropPictureURLs()}
 
 {block headIncludes}
-    <link rel="stylesheet" href="/themepack/vkify/2.0.0.0/resource/profile.css">
+    <link rel="stylesheet" href="/themepack/vkify16/2.0.0.0/resource/profile.css">
 {/block}
 
 {block title}{$club->getName()}{/block} 
@@ -84,7 +84,7 @@
         {/if}
 
         <a href="{$avatarLink|nocheck}">
-            <img src="{(is_null($avatarPhoto) ? '/themepack/vkify/1.0.0.0/resource/community_200.png' : $club->getAvatarUrl('normal'))}"
+            <img src="{(is_null($avatarPhoto) ? '/themepack/vkify16/1.0.0.0/resource/community_200.png' : $club->getAvatarUrl('normal'))}"
 				 id="bigAvatar"
 				 style="width: 100%; image-rendering: -webkit-optimize-contrast;"
 				 {if ($club->getAvatarPhoto())}
@@ -281,7 +281,7 @@
 								<div class="albumName">{$album->getName()}</div>
 							</div>
 								<img
-								src="{is_null($cover)?'/themepack/vkify/2.0.0.0/resource/m_noalbum.png':$cover->getURLBySizeId('small')}"
+								src="{is_null($cover)?'/themepack/vkify16/2.0.0.0/resource/m_noalbum.png':$cover->getURLBySizeId('small')}"
 								style="{is_null($cover)?'':'width: 178px;'|noescape}"
 								class="albumPreview" loading=lazy />
 						</div>

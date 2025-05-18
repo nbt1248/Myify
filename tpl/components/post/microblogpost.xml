@@ -25,7 +25,7 @@
                 <a href="{$author->getURL()}">
 					{if method_exists($author, 'getOwner')}
 						<img src="{str_contains($author->getAvatarUrl('miniscule'), 'camera_200.png') 
-							? '/themepack/vkify/1.0.0.0/resource/community_200.png' 
+							? '/themepack/vkify16/1.0.0.0/resource/community_200.png' 
 							: $author->getAvatarUrl('miniscule')}" 
 							width="{if $compact}25{else}50{/if}" 
 							class="post-avatar {if $compact}cCompactAvatars{/if}" />

@@ -30,7 +30,7 @@
     {else} 
     <meta name="robots" content="noindex, noarchive">
     {/if}
-	<link rel="stylesheet" href="/themepack/vkify/1.0.0.0/resource/css/profile.css">
+	<link rel="stylesheet" href="/themepack/vkify16/1.0.0.0/resource/css/profile.css">
 {/block}
 
 {block content}
@@ -57,7 +57,7 @@
                 </div>
             {/if}
             <a href="{$user->getAvatarLink()|nocheck}">
-                <img src="{if $hasAvatar}{$user->getAvatarUrl('normal')}{else}/themepack/vkify/1.0.0.0/resource/camera_200.png{/if}"
+                <img src="{if $hasAvatar}{$user->getAvatarUrl('normal')}{else}/themepack/vkify16/1.0.0.0/resource/camera_200.png{/if}"
                      alt="{$user->getCanonicalName()}"
                      id="bigAvatar"
                      style="width: 100%; image-rendering: -webkit-optimize-contrast;"
@@ -327,7 +327,7 @@
 							<div class="thumb">
 								<a href="club{$club->getId()}">
 									<img class="cell_img" src="{if str_contains($club->getAvatarUrl(), 'camera_200.png')}
-										/themepack/vkify/1.0.0.0/resource/community_200.png
+										/themepack/vkify16/1.0.0.0/resource/community_200.png
 									{else}
 										{$club->getAvatarUrl()}
 									{/if}" alt="{$club->getCanonicalName()}" />
@@ -358,7 +358,7 @@
 							<div class="thumb">
 								<a href="/event{$meeting->getId()}">
 									<img class="cell_img" src="{if str_contains($meeting->getAvatarUrl(), 'camera_200.png')}
-										/themepack/vkify/1.0.0.0/resource/community_200.png
+										/themepack/vkify16/1.0.0.0/resource/community_200.png
 									{else}
 										{$meeting->getAvatarUrl()}
 									{/if}" alt="{$meeting->getName()}" />
@@ -711,7 +711,7 @@
 			{else}
 				{if isset($thisUser) && $user->getId() == $thisUser->getId()}
 					<a href="/albums/create">
-						<div class="noPhotosTip"><img src="/themepack/vkify/1.0.0.0/resource/camera.png" alt="add_photos" class="addPhotoTip_icon"><span class="addPhotoTip_text">{_add_photos}</span></div>
+						<div class="noPhotosTip"><img src="/themepack/vkify16/1.0.0.0/resource/camera.png" alt="add_photos" class="addPhotoTip_icon"><span class="addPhotoTip_text">{_add_photos}</span></div>
 					</a>
 				{/if}
 			{/if}

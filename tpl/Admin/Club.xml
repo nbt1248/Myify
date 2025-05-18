@@ -33,7 +33,7 @@
                     <span id="avatar" class="aui-avatar aui-avatar-project aui-avatar-xlarge">
                         <span class="aui-avatar-inner">
 							<img src="{if str_contains($club->getAvatarUrl('miniscule'), 'camera_200.png')}
-								/themepack/vkify/1.0.0.0/resource/community_200.png
+								/themepack/vkify16/1.0.0.0/resource/community_200.png
 							{else}
 								{$club->getAvatarUrl('miniscule')}
 							{/if}" 

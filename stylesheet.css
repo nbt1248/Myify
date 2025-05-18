@@ -585,7 +585,7 @@ input[class=button] {
 .left_menu_nav_wrap #moreOptionsLink:after {
     display: inline-block;
     content: "";
-    background: url(/themepack/vkify/1.0.0.0/resource/icons/menu_arrow.png) no-repeat;
+    background: url(/themepack/vkify16/1.0.0.0/resource/icons/menu_arrow.png) no-repeat;
     background-position-x: 0%;
     background-position-y: 0%;
     background-position: right 0;
@@ -619,7 +619,7 @@ input[class=button] {
 .home_navigation .top_nav_btn_icon {
     display: block;
     margin: 11px auto;
-    background: url(/themepack/vkify/1.0.0.0/resource/head_icons.png) no-repeat;
+    background: url(/themepack/vkify16/1.0.0.0/resource/head_icons.png) no-repeat;
     background-position-x: 0%;
     background-position-y: 0%;
     height: 20px;
@@ -1061,7 +1061,7 @@ body.dimmed>.dimmer {
 .ovk-diag-head-close {
     float: right;
     padding: 21px 25px 21px 12px;
-    background: url(/themepack/vkify/1.0.0.0/resource/cross.png) no-repeat 12px 21px;
+    background: url(/themepack/vkify16/1.0.0.0/resource/cross.png) no-repeat 12px 21px;
     width: 12px;
     height: 12px;
     opacity: 0.75;
