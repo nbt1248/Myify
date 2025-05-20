@@ -42,8 +42,28 @@ function processVkifyLocTags() {
     });
 }
 
+function initPostActionTooltips() {
+    tippy('.post_actions_icon', {
+        content: (reference) => {
+            return reference.closest('.post_actions').querySelector('.tippy-menu');
+        },
+        allowHTML: true,
+        interactive: true,
+        trigger: 'mouseenter focus',
+        placement: 'bottom-end',
+        theme: 'light vk',
+        appendTo: 'parent',
+        delay: [0, 0],
+        onShown: (instance) => {
+            const tooltip = instance.popper.querySelector('.tippy-menu');
+            if (tooltip) tooltip.style.display = 'block';
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     processVkifyLocTags();
+    initPostActionTooltips();
     
     const patchRouter = function() {
         if (window.router && window.router.route) {
@@ -53,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 await originalRoute.apply(this, args);
                 
                 processVkifyLocTags();
+                initPostActionTooltips();
             };
             
             if (window.router.__appendPage) {
@@ -71,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.router.__integratePage = async function(...args) {
                     await originalIntegratePage.apply(this, args);
                     processVkifyLocTags();
+                    initPostActionTooltips();
                 };
             }
             

@@ -144,7 +144,6 @@
                                         <div id="userMenuArrow"></div>
                                     </a>
                                 </div>
-                                <!-- userMenuTooltip content moved to patch_page.js -->
                             {/if}
                         {else}
                             <div class="link">
@@ -413,6 +412,7 @@
         {script "js/scroll.js"}
         {script "js/player.js"}
         {script "js/al_wall.js"}
+        <script src="/themepack/vkify16/1.0.0.0/resource/patch_wall.js"></script>
         {script "js/al_docs.js"}
         {script "js/al_api.js"}
         {script "js/al_mentions.js"}
@@ -509,6 +509,7 @@
         </script>
     </body>
 	<script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
+    <script src="/themepack/vkify16/1.0.0.0/resource/tippys.js"></script>
 	<script src="/themepack/vkify16/1.0.0.0/resource/router_patch.js"></script>
 	<script src="/themepack/vkify16/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
 	<script>
