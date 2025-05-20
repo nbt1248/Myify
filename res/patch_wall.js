@@ -207,7 +207,7 @@ u(document).on("click", "#editPost2", async (e) => {
         })
 
         tippy(edit_place.find('#moreAttachTrigger').nodes[0], {
-            content: edit_place.find('#moreAttachTooltip').nodes[0],
+            content: edit_place.find('#moreAttachTooltip2').nodes[0],
             allowHTML: true,
             interactive: true,
             trigger: 'mouseenter',
