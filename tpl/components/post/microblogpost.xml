@@ -18,7 +18,7 @@
 
 {var $commentTextAreaId = $post === NULL ? rand(1,300) : $post->getId()}
 
-<div data-id="{$post->getPrettyId()}" n:class="post, $compact !== true ? page_block, $post->isExplicit() ? post-nsfw, $compact ? copy_quote">
+<div data-id="{$post->getPrettyId()}" n:class="post, scroll_node, $compact !== true ? page_block, $post->isExplicit() ? post-nsfw, $compact ? copy_quote">
     <div class="post_header">
         <a class="post_image{if !$post->isPostedOnBehalfOfGroup() && $author->isOnline()} online{/if}" href="{$author->getURL()}">
             {if method_exists($author, 'getOwner')}
