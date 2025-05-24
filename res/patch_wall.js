@@ -2,12 +2,18 @@ u(document).on("click", "#editPost2", async (e) => {
     const target = u(e.target)
     const post = target.closest(".post")
     const content = post.find(".post_content")
-    const edit_place_l = post.children('.post_edit')
+    
+    // For comments (which have .reply class), we need to look inside .reply_content
+    // For regular posts, we want direct children to avoid nested reposts
+    const edit_place_l = post.hasClass('reply') 
+        ? post.find('.reply_content > .post_edit')
+        : post.children('.post_edit')
+        
     const edit_place = u(edit_place_l.first())
     const id = post.attr('data-id').split('_')
 
     let type = 'post'
-    if (post.hasClass('comment')) {
+    if (post.hasClass('reply')) {
         type = 'comment'
     }
 
@@ -61,11 +67,11 @@ u(document).on("click", "#editPost2", async (e) => {
                                     ${tr('show_more')}
                                 </a>
                                 <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
-                                        ${type == 'post' ? `<a id="__documentAttachment">
+                                        <a id="__documentAttachment">
                                             <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
                                             ${tr('document')}
                                         </a>
-                                        <a id="__notesAttachment">
+                                        ${type == 'post' ? `<a id="__notesAttachment">
                                             <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png" />
                                             ${tr('note')}
                                         </a>

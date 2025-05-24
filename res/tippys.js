@@ -65,4 +65,11 @@ document.addEventListener('DOMContentLoaded', function () {
             tippy.hideAll();
         }
     });
+
+    tippy('.reply_action', {
+        content: (reference) => reference.getAttribute('data-tippy-content'),
+        allowHTML: true,
+        placement: 'top',
+        delay: [0, 0]
+    });
 });
