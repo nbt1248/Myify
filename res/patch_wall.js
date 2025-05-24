@@ -1,13 +1,8 @@
 u(document).on("click", "#editPost2", async (e) => {
     const target = u(e.target)
-    let post = target.closest(".post")
-    
-    if (post.hasClass('copy_quote')) {
-        post = post.closest(".post:not(.copy_quote)")
-    }
-    
+    const post = target.closest(".post.page_block")
     const content = post.find(".post_content")
-    const edit_place_l = post.find('.post_edit')
+    const edit_place_l = post.find('.post.page_block > .post_edit')
     const edit_place = u(edit_place_l.first())
     const id = post.attr('data-id').split('_')
 
@@ -30,7 +25,7 @@ u(document).on("click", "#editPost2", async (e) => {
         const api_post = api_req.items[0]
         
         edit_place.html(`
-            <div class='edit_menu module_body'>
+            <div class='edit_menu'>
                 <form id="write">
                     <textarea placeholder="${tr('edit')}" name="text" style="width: 100%;resize: none;" class="expanded-textarea small-textarea">${api_post.text}</textarea>
                     
@@ -51,39 +46,40 @@ u(document).on("click", "#editPost2", async (e) => {
                         </div>
 
                         <input type="hidden" id="source" name="source" value="none" />
-                        <div class="post-bottom-acts">
-                            <div class="page_add_media">
-                                <a id="__photoAttachment">
-                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png" />
-                                </a>
-                                <a id="__videoAttachment">
-                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png" />
-                                </a>
-                                <a id="__audioAttachment">
-                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png" />
-                                </a>
-                                <a class="post-attach-menu__trigger" id="moreAttachTrigger">
-                                    ${tr('show_more')}
-                                </a>
-                                <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
-                                        ${type == 'post' ? `<a id="__documentAttachment">
-                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
-                                            ${tr('document')}
-                                        </a>
-                                        <a id="__notesAttachment">
-                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png" />
-                                            ${tr('note')}
-                                        </a>
-                                        <a id='__sourceAttacher'>
-                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png" />
-                                            ${tr('source')}
-                                        </a>` : ''}
-                                </div>
+                        <div class="page_add_media">
+                            <a id="__photoAttachment">
+                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png" />
+                                ${tr('photo')}
+                            </a>
+                            <a id="__videoAttachment">
+                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png" />
+                                ${tr('video')}
+                            </a>
+                            <a id="__audioAttachment">
+                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png" />
+                                ${tr('audio')}
+                            </a>
+                            <a class="post-attach-menu__trigger" id="moreAttachTrigger">
+                                ${tr('show_more')}
+                            </a>
+                            <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
+                                    ${type == 'post' ? `<a id="__documentAttachment">
+                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
+                                        ${tr('document')}
+                                    </a>
+                                    <a id="__notesAttachment">
+                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png" />
+                                        ${tr('note')}
+                                    </a>
+                                    <a id='__sourceAttacher'>
+                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png" />
+                                        ${tr('source')}
+                                    </a>` : ''}
                             </div>
-                            <div class='edit_menu_buttons post-bottom-buttons'>
-                                <input class='button button_light' type='button' id='__edit_cancel' value='${tr('cancel')}'>
-                                <input class='button' type='button' id='__edit_save' value='${tr('save')}'>
-                            </div>
+                        </div>
+                        <div class='edit_menu_buttons'>
+                            <input class='button' type='button' id='__edit_save' value='${tr('save')}'>
+                            <input class='button' type='button' id='__edit_cancel' value='${tr('cancel')}'>
                         </div>
                     </div>
                 </form>
@@ -224,24 +220,3 @@ u(document).on("click", "#editPost2", async (e) => {
 
     post.addClass('editing')
 })
-function reportPost(postId) {
-uReportMsgTxt  = tr("going_to_report_post");
-uReportMsgTxt += "<br/>"+tr("report_question_text");
-uReportMsgTxt += "<br/><br/><b>"+tr("report_reason")+"</b>: <input type='text' id='uReportMsgInput' placeholder='" + tr("reason") + "' />"
-
-MessageBox(tr("report_question"), uReportMsgTxt, [tr("confirm_m"), tr("cancel")], [
-    (function() {
-        res = document.querySelector("#uReportMsgInput").value;
-        xhr = new XMLHttpRequest();
-        xhr.open("GET", "/report/" + postId + "?reason=" + res + "&type=post", true);
-        xhr.onload = (function() {
-            if(xhr.responseText.indexOf("reason") === -1)
-                MessageBox(tr("error"), tr("error_sending_report"), ["OK"], [Function.noop]);
-            else
-                MessageBox(tr("action_successfully"), tr("will_be_watched"), ["OK"], [Function.noop]);
-        });
-        xhr.send(null);
-    }),
-    Function.noop
-]);
-}
