@@ -1932,3 +1932,8 @@ select:focus {
     top: 20px;
     right: 18px;
 }
+
+.attachment .media {
+    width: 100%;
+    height: 100%;
+}
