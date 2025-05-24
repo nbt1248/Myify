@@ -7,14 +7,14 @@ u(document).on("click", "#editPost2", async (e) => {
     const id = post.attr('data-id').split('_')
 
     let type = 'post'
-    if(post.hasClass('comment')) {
+    if (post.hasClass('comment')) {
         type = 'comment'
     }
 
-    if(edit_place.html() == '') {
+    if (edit_place.html() == '') {
         target.addClass('lagged')
         const params = {}
-        if(type == 'post') {
+        if (type == 'post') {
             params['posts'] = post.attr('data-id')
         } else {
             params['owner_id'] = 1
@@ -23,9 +23,9 @@ u(document).on("click", "#editPost2", async (e) => {
 
         const api_req = await window.OVKAPI.call(`wall.${type == 'post' ? 'getById' : 'getComment'}`, params)
         const api_post = api_req.items[0]
-        
+
         edit_place.html(`
-            <div class='edit_menu'>
+            <div class='edit_menu module_body'>
                 <form id="write">
                     <textarea placeholder="${tr('edit')}" name="text" style="width: 100%;resize: none;" class="expanded-textarea small-textarea">${api_post.text}</textarea>
                     
@@ -46,46 +46,45 @@ u(document).on("click", "#editPost2", async (e) => {
                         </div>
 
                         <input type="hidden" id="source" name="source" value="none" />
-                        <div class="page_add_media">
-                            <a id="__photoAttachment">
-                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png" />
-                                ${tr('photo')}
-                            </a>
-                            <a id="__videoAttachment">
-                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png" />
-                                ${tr('video')}
-                            </a>
-                            <a id="__audioAttachment">
-                                <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png" />
-                                ${tr('audio')}
-                            </a>
-                            <a class="post-attach-menu__trigger" id="moreAttachTrigger">
-                                ${tr('show_more')}
-                            </a>
-                            <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
-                                    ${type == 'post' ? `<a id="__documentAttachment">
-                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
-                                        ${tr('document')}
-                                    </a>
-                                    <a id="__notesAttachment">
-                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png" />
-                                        ${tr('note')}
-                                    </a>
-                                    <a id='__sourceAttacher'>
-                                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png" />
-                                        ${tr('source')}
-                                    </a>` : ''}
+                        <div class="post-bottom-acts">
+                            <div class="page_add_media">
+                                <a id="__photoAttachment">
+                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png" />
+                                </a>
+                                <a id="__videoAttachment">
+                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png" />
+                                </a>
+                                <a id="__audioAttachment">
+                                    <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png" />
+                                </a>
+                                <a class="post-attach-menu__trigger" id="moreAttachTrigger">
+                                    ${tr('show_more')}
+                                </a>
+                                <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
+                                        ${type == 'post' ? `<a id="__documentAttachment">
+                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
+                                            ${tr('document')}
+                                        </a>
+                                        <a id="__notesAttachment">
+                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png" />
+                                            ${tr('note')}
+                                        </a>
+                                        <a id='__sourceAttacher'>
+                                            <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png" />
+                                            ${tr('source')}
+                                        </a>` : ''}
+                                </div>
                             </div>
-                        </div>
-                        <div class='edit_menu_buttons'>
-                            <input class='button' type='button' id='__edit_save' value='${tr('save')}'>
-                            <input class='button' type='button' id='__edit_cancel' value='${tr('cancel')}'>
+                            <div class='edit_menu_buttons post-bottom-buttons'>
+                                <input class='button button_light' type='button' id='__edit_cancel' value='${tr('cancel')}'>
+                                <input class='button' type='button' id='__edit_save' value='${tr('save')}'>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>`)
 
-        if(api_post.copyright) {
+        if (api_post.copyright) {
             edit_place.find('.post-source').html(`
                 <span>${tr('source')}: <a>${escapeHtml(api_post.copyright.link)}</a></span>
                 <div id='remove_source_button'></div>
@@ -97,7 +96,7 @@ u(document).on("click", "#editPost2", async (e) => {
             })
         }
 
-        if(api_post.copy_history && api_post.copy_history.length > 0) {
+        if (api_post.copy_history && api_post.copy_history.length > 0) {
             edit_place.find('.post-repost').html(`
                 <span>${tr('has_repost')}.</span>
             `)
@@ -107,14 +106,14 @@ u(document).on("click", "#editPost2", async (e) => {
         api_post.attachments.forEach(att => {
             const type = att.type
             let aid = att[type].owner_id + '_' + att[type].id
-            if(att[type] && att[type].access_key) {
+            if (att[type] && att[type].access_key) {
                 aid += "_" + att[type].access_key
             }
 
-            if(type == 'video' || type == 'photo') {
+            if (type == 'video' || type == 'photo') {
                 let preview = ''
 
-                if(type == 'photo') {
+                if (type == 'photo') {
                     preview = att[type].sizes[1].url
                 } else {
                     preview = att[type].image[0].url
@@ -125,14 +124,14 @@ u(document).on("click", "#editPost2", async (e) => {
                     'preview': preview,
                     'id': aid
                 }, edit_place)
-            } else if(type == 'poll') {
+            } else if (type == 'poll') {
                 __appendToTextarea({
                     'type': type,
                     'alignment': 'vertical',
                     'html': tr('poll'),
                     'id': att[type].id,
                     'undeletable': true,
-                }, edit_place) 
+                }, edit_place)
             } else {
                 const found_block = post.find(`div[data-att_type='${type}'][data-att_id='${aid}']`)
                 __appendToTextarea({
@@ -153,43 +152,43 @@ u(document).on("click", "#editPost2", async (e) => {
             const copyright = edit_place.find(`.edit_menu input[name='source']`)
             const collected_attachments = collect_attachments(edit_place.find('.post-buttons')).join(',')
             const params = {}
-            
+
             params['owner_id'] = id[0]
             params['post_id'] = id[1]
             params['message'] = text_node.nodes[0].value
 
-            if(nsfw_mark.length > 0) {
+            if (nsfw_mark.length > 0) {
                 params['explicit'] = Number(nsfw_mark.nodes[0].checked)
             }
-            
+
             params['attachments'] = collected_attachments
-            if(collected_attachments.length < 1) {
+            if (collected_attachments.length < 1) {
                 params['attachments'] = 'remove'
             }
 
-            if(as_group.length > 0 && as_group.nodes[0].checked) {
+            if (as_group.length > 0 && as_group.nodes[0].checked) {
                 params['from_group'] = 1
             }
 
-            if(copyright.nodes[0].value != 'none') {
+            if (copyright.nodes[0].value != 'none') {
                 params['copyright'] = copyright.nodes[0].value
             }
 
             u(ev.target).addClass('lagged')
             // больше двух запросов !
             try {
-                if(type == 'post') {
+                if (type == 'post') {
                     await window.OVKAPI.call('wall.edit', params)
                 } else {
                     params['comment_id'] = id[1]
                     await window.OVKAPI.call('wall.editComment', params)
                 }
-            } catch(e) {
+            } catch (e) {
                 fastError(e.message)
                 u(ev.target).removeClass('lagged')
                 return
             }
-            
+
             const new_post_html = await (await fetch(`/iapi/getPostTemplate/${id[0]}_${id[1]}?type=${type}`, {
                 'method': 'POST'
             })).text()
@@ -199,7 +198,7 @@ u(document).on("click", "#editPost2", async (e) => {
 
             bsdnHydrate()
         })
-    
+
         edit_place.find('.edit_menu #__edit_cancel').on('click', (e) => {
             post.removeClass('editing')
         })
@@ -220,3 +219,24 @@ u(document).on("click", "#editPost2", async (e) => {
 
     post.addClass('editing')
 })
+function reportPost(postId) {
+    uReportMsgTxt = tr("going_to_report_post");
+    uReportMsgTxt += "<br/>" + tr("report_question_text");
+    uReportMsgTxt += "<br/><br/><b>" + tr("report_reason") + "</b>: <input type='text' id='uReportMsgInput' placeholder='" + tr("reason") + "' />"
+
+    MessageBox(tr("report_question"), uReportMsgTxt, [tr("confirm_m"), tr("cancel")], [
+        (function () {
+            res = document.querySelector("#uReportMsgInput").value;
+            xhr = new XMLHttpRequest();
+            xhr.open("GET", "/report/" + postId + "?reason=" + res + "&type=post", true);
+            xhr.onload = (function () {
+                if (xhr.responseText.indexOf("reason") === -1)
+                    MessageBox(tr("error"), tr("error_sending_report"), ["OK"], [Function.noop]);
+                else
+                    MessageBox(tr("action_successfully"), tr("will_be_watched"), ["OK"], [Function.noop]);
+            });
+            xhr.send(null);
+        }),
+        Function.noop
+    ]);
+}
