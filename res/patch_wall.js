@@ -1,6 +1,11 @@
 u(document).on("click", "#editPost2", async (e) => {
     const target = u(e.target)
-    const post = target.closest(".post:not(.copy_quote)")
+    let post = target.closest(".post")
+    
+    if (post.hasClass('copy_quote')) {
+        post = post.closest(".post:not(.copy_quote)")
+    }
+    
     const content = post.find(".post_content")
     const edit_place_l = post.find('.post_edit')
     const edit_place = u(edit_place_l.first())
@@ -10,8 +15,6 @@ u(document).on("click", "#editPost2", async (e) => {
     if(post.hasClass('comment')) {
         type = 'comment'
     }
-
-
 
     if(edit_place.html() == '') {
         target.addClass('lagged')
