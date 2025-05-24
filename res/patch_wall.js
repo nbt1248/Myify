@@ -1,8 +1,8 @@
 u(document).on("click", "#editPost2", async (e) => {
     const target = u(e.target)
-    const post = target.closest(".post.page_block")
+    const post = target.closest(".post")
     const content = post.find(".post_content")
-    const edit_place_l = post.find('.post.page_block > .post_edit')
+    const edit_place_l = post.children('.post_edit')
     const edit_place = u(edit_place_l.first())
     const id = post.attr('data-id').split('_')
 

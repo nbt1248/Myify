@@ -1672,7 +1672,7 @@ select:focus {
     overflow: visible;
 }
 
-.post.editing .post_content {
+.post.editing > .post_content,.post:not(.editing) > .post_edit {
     display: none;
 }
 
