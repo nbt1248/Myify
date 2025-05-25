@@ -125,8 +125,18 @@
                                 <a class="top_nav_btn" id="top_notify_btn" href="/notifications" class="link" title="{_my_feedback} [Alt+Shift+N]" accesskey="n">
                                     <div class="top_nav_btn_icon"></div>
                                 </a>
-                                <div class="top_nav_btn" id="headerMusicLinkDiv">
-                                    <a onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="top_nav_btn_icon paused" id="headerMusicBtn"></a>
+                                <div class="top_nav_audio" id="headerMusicLinkDiv">
+                                    <div class="top_nav_btn" id="headerMusicBtn">
+                                        <a class="top_nav_btn_icon"></a>
+                                    </div>
+                                    <div class="top_audio_player" id="top_audio_player">
+                                        <div class="top_audio_player_btn top_audio_player_prev"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_btn top_audio_player_play _top_audio_player_play"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_btn top_audio_player_next"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_title_wrap">
+                                            <div class="top_audio_player_title"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             {/if}
                         </div>
@@ -138,7 +148,7 @@
                                 </div>
                             {else}
                                 <div class="link">
-                                    <a id="userMenuTrigger" style="display: flex; align-items: center; cursor: pointer;">
+                                    <a id="userMenuTrigger">
                                         <div id="userMenuName">{$thisUser->getFirstName()}</div>
                                         <img id="userMenuAvatar" src="{$thisUser->getAvatarUrl('miniscule')}">
                                         <div id="userMenuArrow"></div>

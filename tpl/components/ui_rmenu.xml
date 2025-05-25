@@ -28,7 +28,7 @@
     {/if}
     {foreach $items as $item}
         {if !isset($item['condition']) || $item['condition']}
-            <a class="ui_rmenu_item {$item['active'] ? 'ui_rmenu_item_sel' : ''}" href="{$item['url']}" id="{$item['id']}">
+            <a class="ui_rmenu_item {$item['active'] ? 'ui_rmenu_item_sel' : ''}" {if !$item['active']}href="{$item['url']}"{/if} id="{$item['id']}">
                 <span>{if isset($item['translate']) && $item['translate'] === false}{$item['title']}{else}{_$item['title']}{/if}</span>
             </a>
         {/if}

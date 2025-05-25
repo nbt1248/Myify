@@ -1,47 +1,3 @@
-function createLoader() {
-    const iconFrames = [
-        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwW0A42rsRTipvVnt7kmDE2LeiaLCeq6C4bbsEHu1e+MvrcM9j/MFU4oCADs=", // prgicon1.gif в Base64
-        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIrnI9pwm0B42rsRTipvVnt7kmDE2LeiaKkArQg646V1wIZWdf3nMcU30t5CgA7", // prgicon2.gif в Base64
-        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIxnI9pwr3NHpRuwGivVDsL7nVKBZZmAqRgwBopsLbDGwfuqw7sbs84rOP1fkBh74QoAAA7", // prgicon3.gif в Base64
-        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwG0C42rsRTipvVnt7kmDE2LeiaLBeopr0JpvLBjvPFzyDee6zduIUokCADs=", // prgicon4.gif в Base64
-    ];
-
-    let step = 0;
-    let timer = null;
-    const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link');
-    favicon.rel = 'icon';
-    document.head.appendChild(favicon);
-
-    const updateFavicon = () => {
-        step = (step + 1) % 4;
-        favicon.href = iconFrames[step];
-        timer = setTimeout(updateFavicon, 150);
-    };
-
-    const gifFavicon = () => {
-        favicon.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKOBYiGjgWKVo4Fi1aOBYt2jgWJxAAAAAKOBYimjgWLUo4Fi76OBYu6jgWLYAAAAAAAAAAAAAAAAAAAAAKOBYlqjgWL3o4Fi/6OBYv+jgWL/o4FiwKOBYhijgWLeo4Fi/6OBYv+jgWL/o4FizAAAAAAAAAAAAAAAAKOBYkujgWL8o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL6o4Fi/6OBYv+jgWL/o4Fi/qOBYlIAAAAAAAAAAKOBYh6jgWLuo4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYocAAAAAAAAAAAAAAACjgWK5o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWIMAAAAAAAAAACjgWJco4Fi/6OBYv+jgWL/o4Fiq6OBYv+jgWL/o4Fi/6OBYv+jgWKyo4Fi/6OBYv+jgWL/o4FiVwAAAACjgWINo4Fi6KOBYv+jgWL/o4FivwAAAACjgWL1o4Fi/6OBYv+jgWL7o4FiB6OBYumjgWL/o4Fi/6OBYuOjgWIJo4FigqOBYv+jgWL/o4Fi/6OBYjqjgWICo4Fi9aOBYv+jgWL/o4Fi+AAAAACjgWKTo4Fi/6OBYv+jgWL/o4FicKOBYvWjgWL/o4Fi/6OBYtwAAAAAo4FiQaOBYv+jgWL/o4Fi/6OBYv4AAAAAo4FiMaOBYv+jgWL/o4Fi/6OBYt6jgWLeo4Fi/6OBYv+jgWKFAAAAAKOBYsijgWL/o4Fi/6OBYu+jgWK9AAAAAAAAAACjgWK6o4Fi/6OBYv+jgWLVAAAAAAAAAACjgWIFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo4FiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAALYAAAAAAADDAgAAAAIAAB7/AAAAAAAA4AAAAP/gAAAAAAAAeAAAAP8AAAD//wAAAB4AAAAAAAAAAA==';
-    };
-
-    return {
-        start() {
-            document.body.style.cursor = 'progress';
-            if (/firefox/i.test(navigator.userAgent.toLowerCase())) {
-                gifFavicon();
-            } else {
-                updateFavicon();
-            }
-        },
-        stop() {
-            clearTimeout(timer);
-            document.body.style.cursor = 'default';
-            favicon.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKOBYiGjgWKVo4Fi1aOBYt2jgWJxAAAAAKOBYimjgWLUo4Fi76OBYu6jgWLYAAAAAAAAAAAAAAAAAAAAAKOBYlqjgWL3o4Fi/6OBYv+jgWL/o4FiwKOBYhijgWLeo4Fi/6OBYv+jgWL/o4FizAAAAAAAAAAAAAAAAKOBYkujgWL8o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL6o4Fi/6OBYv+jgWL/o4Fi/qOBYlIAAAAAAAAAAKOBYh6jgWLuo4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYocAAAAAAAAAAAAAAACjgWK5o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWIMAAAAAAAAAACjgWJco4Fi/6OBYv+jgWL/o4Fiq6OBYv+jgWL/o4Fi/6OBYv+jgWKyo4Fi/6OBYv+jgWL/o4FiVwAAAACjgWINo4Fi6KOBYv+jgWL/o4FivwAAAACjgWL1o4Fi/6OBYv+jgWL7o4FiB6OBYumjgWL/o4Fi/6OBYuOjgWIJo4FigqOBYv+jgWL/o4Fi/6OBYjqjgWICo4Fi9aOBYv+jgWL/o4Fi+AAAAACjgWKTo4Fi/6OBYv+jgWL/o4FicKOBYvWjgWL/o4Fi/6OBYtwAAAAAo4FiQaOBYv+jgWL/o4Fi/6OBYv4AAAAAo4FiMaOBYv+jgWL/o4Fi/6OBYt6jgWLeo4Fi/6OBYv+jgWKFAAAAAKOBYsijgWL/o4Fi/6OBYu+jgWK9AAAAAAAAAACjgWK6o4Fi/6OBYv+jgWLVAAAAAAAAAACjgWIFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo4FiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAALYAAAAAAADDAgAAAAIAAB7/AAAAAAAA4AAAAP/gAAAAAAAAeAAAAP8AAAD//wAAAB4AAAAAAAAAAA==';       }
-    };
-}
-
-window.favloader = createLoader();
-
-
-
 function setTip(obj, text, interactive = false) {
     tippy(obj, {
         content: `<text style="font-size: 11px;">${text}</text>`,
@@ -319,95 +275,6 @@ window.showAudioUploadPopup = function () {
     }, 0);
 }
 
-window.player.ajCreate = function () {
-    const previous_time_x = localStorage.getItem('audio.lastX') ?? 100
-    const previous_time_y = localStorage.getItem('audio.lastY') ?? scrollY
-    const miniplayer_template = u(`
-		<div id='ajax_audio_player' class='ctx_place'>
-			<div id="aj_player">
-				<div id="aj_player_internal_controls">
-					<div id="aj_player_play">
-						<div id="aj_player_play_btn" class="paused"></div>
-					</div>
-					<div id="aj_player_track" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;transform: translateY(-2px);">
-						<div id="aj_player_track_name">
-							<a id="aj_player_track_title" class="noOverflow" style="max-width: 300px;user-select: none;cursor: unset;">
-								<b>Unknown</b>
-								<br>
-								<span>Untitled</span>
-							</a>
-						</div>
-					</div>
-				  </div>
-				<div id="aj_player_close_btn"></div>
-			</div>
-		</div>
-	`)
-    u('body').append(miniplayer_template)
-    miniplayer_template.attr('style', `left:${previous_time_x}px;top:${previous_time_y}px`)
-    miniplayer_template.find('#aj_player_close_btn').on('click', (e) => {
-        this.ajClose()
-    })
-    $('#ajax_audio_player').draggable({
-        cursor: 'grabbing',
-        containment: 'window',
-        cancel: '#aj_player_track .selectableTrack, #aj_player_volume .selectableTrack, #aj_player_buttons',
-        stop: function (e) {
-            if (window.player.ajaxPlayer.length > 0) {
-                const left = parseInt(window.player.ajaxPlayer.nodes[0].style.left)
-                const top = parseInt(window.player.ajaxPlayer.nodes[0].style.top)
-
-                localStorage.setItem('audio.lastX', left)
-                localStorage.setItem('audio.lastY', top)
-            }
-        }
-    })
-}
-
-window.addEventListener('load', () => { document.querySelector('#searchBoxFastTips').innerHTML = `<div class="fastpreload"></div>`; });
-function stataj() {
-    function statAjPlayer() {
-        const header = document.querySelector('.page_header');
-        const ajPlayer = document.getElementById('ajax_audio_player');
-        const headerRect = header.getBoundingClientRect();
-        const headerBottomRightX = headerRect.right;
-        const ajplayerscr = document.createElement("style");
-        ajplayerscr.type = 'text/css';
-        ajplayerscr.textContent = `.scrolled #ajax_audio_player {top: 15px !important;}`;
-        document.head.appendChild(ajplayerscr);
-        if (document.documentElement.clientWidth - header.getBoundingClientRect().right < 170) {
-            document.querySelector('#ajax_audio_player').style = `left: ${headerBottomRightX - 815}px;top: ${document.documentElement.clientHeight - 50}px;`;
-            ajplayerscr.textContent = `.scrolled #ajax_audio_player {top: ${document.documentElement.clientHeight - 50}px !important;}`;
-            localStorage.setItem('audio.lastX', headerBottomRightX - 815);
-        } else {
-            document.querySelector('#ajax_audio_player').style = `left: ${headerBottomRightX + 2}px;top: 49px;`;
-            ajplayerscr.textContent = `.scrolled #ajax_audio_player {top: 15px !important;}`;
-            localStorage.setItem('audio.lastX', headerBottomRightX + 2);
-        }
-    }
-    statAjPlayer();
-    window.addEventListener('load', statAjPlayer);
-    window.addEventListener('load', () => { document.querySelector('#searchBoxFastTips').innerHTML = `<div class="fastpreload"></div>`; });
-    window.addEventListener('resize', statAjPlayer);
-    $('#ajax_audio_player').draggable("destroy")
-}
-if (document.getElementById('ajax_audio_player')) {
-    stataj();
-} else {
-    const observer = new MutationObserver((mutationsList, observer) => {
-        const element = document.querySelector('#ajax_audio_player');
-        if (element) {
-            stataj();
-            observer.disconnect();
-        }
-    });
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-    });
-}
-
 async function loadMoreAudio() {
     if (window.musHtml) {
         window.musHtml.querySelector('.audiosContainer .loadMore').innerHTML = `<img src="data:image/gif;base64,R0lGODlhIAAIAKECAEVojoSctMHN2QAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgADACwAAAAAIAAIAAACFZyPqcvtD6KMr445LcRUN9554kiSBQAh+QQFCgADACwCAAIAEgAEAAACD4xvM8DNiJRz8Mj5ari4AAAh+QQFCgADACwCAAIAHAAEAAACGJRvM8HNCqKMCCnn4JT1XPwMG9cJH6iNBQAh+QQFCgADACwMAAIAEgAEAAACD5RvM8HNiJRz8Mj5qri4AAAh+QQFCgADACwWAAIACAAEAAACBZSPqYsFACH5BAUUAAMALAAAAAAgAAgAAAIOnI+py+0Po5y02ouzPgUAOw==" />`;
@@ -557,7 +424,7 @@ const vkfavicon = {
     "fav": "/themepack/vkify16/1.0.0.0/resource/favicon_vk.ico",
     "fav_chat": "/themepack/vkify16/1.0.0.0/resource/fav_chat.ico",
     "playiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAvkQAAL/4AADBsAAAw2wAAMUoAADG6AAAyKgAAMpsAADMNAAAzfwAAM/EAADRlAAA02AAANU0AADXCAAA2Nw==",
-    "pauseiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    "pauseiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
 }
 
 if (window.location.href.includes('im?sel=')) {
@@ -674,6 +541,48 @@ window.toggle_comment_textarea = function (id) {
     }
 }
 
+function createLoader() {
+    const iconFrames = [
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwW0A42rsRTipvVnt7kmDE2LeiaLCeq6C4bbsEHu1e+MvrcM9j/MFU4oCADs=", // prgicon1.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIrnI9pwm0B42rsRTipvVnt7kmDE2LeiaKkArQg646V1wIZWdf3nMcU30t5CgA7", // prgicon2.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAIxnI9pwr3NHpRuwGivVDsL7nVKBZZmAqRgwBopsLbDGwfuqw7sbs84rOP1fkBh74QoAAA7", // prgicon3.gif в Base64
+        "data:image/gif;base64,R0lGODlhEAAQAPEDAEVojoSctMHN2QAAACH5BAEAAAMALAAAAAAQABAAAAItnI9pwG0C42rsRTipvVnt7kmDE2LeiaLBeopr0JpvLBjvPFzyDee6zduIUokCADs=", // prgicon4.gif в Base64
+    ];
+
+    let step = 0;
+    let timer = null;
+    const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link');
+    favicon.rel = 'icon';
+    document.head.appendChild(favicon);
+
+    const updateFavicon = () => {
+        step = (step + 1) % 4;
+        favicon.href = iconFrames[step];
+        timer = setTimeout(updateFavicon, 150);
+    };
+
+    const gifFavicon = () => {
+        favicon.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKOBYiGjgWKVo4Fi1aOBYt2jgWJxAAAAAKOBYimjgWLUo4Fi76OBYu6jgWLYAAAAAAAAAAAAAAAAAAAAAKOBYlqjgWL3o4Fi/6OBYv+jgWL/o4FiwKOBYhijgWLeo4Fi/6OBYv+jgWL/o4FizAAAAAAAAAAAAAAAAKOBYkujgWL8o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL6o4Fi/6OBYv+jgWL/o4Fi/qOBYlIAAAAAAAAAAKOBYh6jgWLuo4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYocAAAAAAAAAAAAAAACjgWK5o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWIMAAAAAAAAAACjgWJco4Fi/6OBYv+jgWL/o4Fiq6OBYv+jgWL/o4Fi/6OBYv+jgWKyo4Fi/6OBYv+jgWL/o4FiVwAAAACjgWINo4Fi6KOBYv+jgWL/o4FivwAAAACjgWL1o4Fi/6OBYv+jgWL7o4FiB6OBYumjgWL/o4Fi/6OBYuOjgWIJo4FigqOBYv+jgWL/o4Fi/6OBYjqjgWICo4Fi9aOBYv+jgWL/o4Fi+AAAAACjgWKTo4Fi/6OBYv+jgWL/o4FicKOBYvWjgWL/o4Fi/6OBYtwAAAAAo4FiQaOBYv+jgWL/o4Fi/6OBYv4AAAAAo4FiMaOBYv+jgWL/o4Fi/6OBYt6jgWLeo4Fi/6OBYv+jgWKFAAAAAKOBYsijgWL/o4Fi/6OBYu+jgWK9AAAAAAAAAACjgWK6o4Fi/6OBYv+jgWLVAAAAAAAAAACjgWIFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo4FiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAALYAAAAAAADDAgAAAAIAAB7/AAAAAAAA4AAAAP/gAAAAAAAAeAAAAP8AAAD//wAAAB4AAAAAAAAAAA==';
+    };
+
+    return {
+        start() {
+            document.body.style.cursor = 'progress';
+            if (/firefox/i.test(navigator.userAgent.toLowerCase())) {
+                gifFavicon();
+            } else {
+                updateFavicon();
+            }
+        },
+        stop() {
+            clearTimeout(timer);
+            document.body.style.cursor = 'default';
+            favicon.href = 'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKOBYiGjgWKVo4Fi1aOBYt2jgWJxAAAAAKOBYimjgWLUo4Fi76OBYu6jgWLYAAAAAAAAAAAAAAAAAAAAAKOBYlqjgWL3o4Fi/6OBYv+jgWL/o4FiwKOBYhijgWLeo4Fi/6OBYv+jgWL/o4FizAAAAAAAAAAAAAAAAKOBYkujgWL8o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL6o4Fi/6OBYv+jgWL/o4Fi/qOBYlIAAAAAAAAAAKOBYh6jgWLuo4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYocAAAAAAAAAAAAAAACjgWK5o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWL/o4Fi/6OBYv+jgWIMAAAAAAAAAACjgWJco4Fi/6OBYv+jgWL/o4Fiq6OBYv+jgWL/o4Fi/6OBYv+jgWKyo4Fi/6OBYv+jgWL/o4FiVwAAAACjgWINo4Fi6KOBYv+jgWL/o4FivwAAAACjgWL1o4Fi/6OBYv+jgWL7o4FiB6OBYumjgWL/o4Fi/6OBYuOjgWIJo4FigqOBYv+jgWL/o4Fi/6OBYjqjgWICo4Fi9aOBYv+jgWL/o4Fi+AAAAACjgWKTo4Fi/6OBYv+jgWL/o4FicKOBYvWjgWL/o4Fi/6OBYtwAAAAAo4FiQaOBYv+jgWL/o4Fi/6OBYv4AAAAAo4FiMaOBYv+jgWL/o4Fi/6OBYt6jgWLeo4Fi/6OBYv+jgWKFAAAAAKOBYsijgWL/o4Fi/6OBYu+jgWK9AAAAAAAAAACjgWK6o4Fi/6OBYv+jgWLVAAAAAAAAAACjgWIFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAo4FiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAALYAAAAAAADDAgAAAAIAAB7/AAAAAAAA4AAAAP/gAAAAAAAAeAAAAP8AAAD//wAAAB4AAAAAAAAAAA==';       }
+    };
+}
+
+window.favloader = createLoader();
+
 $(document).ready(function () {
     let vkdropdownJustClosed = false;
     $(document).on('mousedown', 'select', function (e) {
@@ -737,8 +646,6 @@ $(document).ready(function () {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // vkifyloc processing now happens in router_patch.js
-
     u(document).on('click', `.ovk-diag-body #upload_container #uploadMusicPopup`, async (e) => {
         const current_upload_page = '/player/upload'
         let error = null
@@ -874,42 +781,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     };
     window.player.initEvents();
-
-    const headerMusicBtn = document.querySelector('.headerMusicBtn');
-
-    if (headerMusicBtn) {
-        headerMusicBtn.addEventListener('click', function () {
-            if (headerMusicBtn.classList.contains('paused')) {
-                window.player.play();
-                headerMusicBtn.classList.remove('paused');
-            } else {
-                window.player.pause();
-                headerMusicBtn.classList.add('paused');
-            }
-        });
-    }
-
-    if (window.player && window.player.audioPlayer) {
-        const headerMusicBtn = document.querySelector('#headerMusicBtn');
-        setInterval(() => {
-            const nowplaying = document.querySelectorAll('.audioEntry.nowPlaying');
-            if (window.player.is_closed == true) {
-                headerMusicBtn.classList.add('closed');
-                document.querySelector('#headerMusicLinkDiv a').style.color = "rgb(218, 225, 232)"
-                if (nowplaying) { nowplaying.forEach(btn => { btn.classList.remove('nowPaused') }) };
-            }
-            if (window.player.audioPlayer.paused == true) {
-                headerMusicBtn.classList.add('paused');
-                document.querySelector('#headerMusicLinkDiv a').style.color = "rgb(218, 225, 232)"
-                if (nowplaying) { nowplaying.forEach(btn => { btn.classList.add('nowPaused') }) };
-            }
-            else {
-                headerMusicBtn.classList.remove('paused');
-                document.querySelector('#headerMusicLinkDiv a').style.color = "#FFF"
-                if (nowplaying) { nowplaying.forEach(btn => { btn.classList.remove('nowPaused') }) };
-            }
-        }, 50);
-    }
     const friendsd = await window.OVKAPI.call("friends.get", { "user_id": window.openvk.current_id, "fields": "first_name,last_name,photo_50", "count": 100 })
     const friendsmap = friendsd.items
         .slice(0, friendsd.count)
@@ -932,6 +803,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     </a>
   `;
     });
+
+    const playerElement = document.querySelector('#ajax_audio_player');
+    if (playerElement) {
+        playerElement.remove();
+    }
 
     const mushtml = `
 <div style="" class="rightlist">
@@ -1008,22 +884,47 @@ window.addEventListener('DOMContentLoaded', async () => {
     <input onclick="tippy.hideAll();" value="${tr('close')}" class="button" type="submit">
 </div>
 `
-
     tippy(document.querySelector('#headerMusicLinkDiv'), {
         content: mushtml,
         allowHTML: true,
-        trigger: 'click',
+        trigger: 'click', 
         interactive: true,
         placement: 'bottom',
         theme: 'musicpopup',
         width: 627,
         arrow: true,
-        getReferenceClientRect: () => document.querySelector('#headerMusicBtn').getBoundingClientRect(),
+        getReferenceClientRect: () => {
+            const topPlayer = document.querySelector('.top_audio_player');
+            const rect = topPlayer.getBoundingClientRect();
+            return {
+                width: document.documentElement.clientWidth,
+                height: rect.height,
+                top: rect.top,
+                bottom: rect.bottom,
+                left: 0,
+                right: document.documentElement.clientWidth,
+            };
+        },
         maxWidth: 627,
-        offset: [-192, 17],
         appendTo: document.body,
+        popperOptions: {
+            modifiers: [{
+                name: 'offset',
+                options: {
+                    offset: [0, 10],
+                }
+            }]
+        },
         onHidden(instance) {
             window.musHtml = undefined;
+            document.querySelector('.top_audio_player').classList.remove('audio_top_btn_active');
+        },
+        onShow(instance) {
+            const clickedElement = instance.reference;
+            if (clickedElement.closest('.top_audio_player')) {
+                return false;
+            }
+            document.querySelector('.top_audio_player').classList.add('audio_top_btn_active');
         },
         async onMount(instance) {
             window.musHtml = instance.popper;
@@ -1077,105 +978,80 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    function bindajtip(mushtml) {
-        tippy.delegate("body", {
-            target: '#aj_player_track',
-            content: mushtml,
-            allowHTML: true,
-            trigger: 'click',
-            interactive: true,
-            placement: 'left',
-            theme: 'musicpopup',
-            arrow: true,
-            getReferenceClientRect: () => document.querySelector('#ajax_audio_player').getBoundingClientRect(),
-            maxWidth: 627,
-            width: 627,
-            offset: [220, 19],
-            appendTo: document.body,
-            popperOptions: {
-                strategy: 'fixed'
-            },
-            onHidden(instance) {
-                window.musHtml = undefined;
-            },
-            async onMount(instance) {
-                window.musHtml = instance.popper;
-                const style = document.createElement("style");
-                style.id = "fullajplayerstyles";
-                style.textContent = `
-            #ajax_audio_player {
-                background-color: #66819e !important;
-                opacity: 1 !important;
+    // Move top player functionality outside of tippy
+    const topPlayer = document.querySelector('#top_audio_player');
+    const headerMusicBtn = document.querySelector('#headerMusicBtn');
+    const topPlayerTitle = topPlayer.querySelector('.top_audio_player_title');
+    const topPlayerPlay = topPlayer.querySelector('.top_audio_player_play');
+    const topPlayerPrev = topPlayer.querySelector('.top_audio_player_prev');
+    const topPlayerNext = topPlayer.querySelector('.top_audio_player_next');
+
+    let currentTrackId = null;
+    
+    function updateTopPlayer() {
+        if (window.player && window.player.currentTrack) {
+            topPlayer.classList.add('top_audio_player_enabled');
+            headerMusicBtn.style.display = 'none';
+            
+            // Only fade if the track has changed
+            if (currentTrackId !== window.player.currentTrack.id) {
+                currentTrackId = window.player.currentTrack.id;
+                topPlayerTitle.style.opacity = '0';
+                setTimeout(() => {
+                    topPlayerTitle.textContent = `${window.player.currentTrack.performer} — ${window.player.currentTrack.name}`;
+                    topPlayerTitle.style.opacity = '1';
+                }, 60);
             }
-            #aj_player_track_name * {
-                color: #FFF !important;
-            }
-            #ajax_audio_player #aj_player_play #aj_player_play_btn.paused {
-              background-position: -203px -28px !important;
-            }
-            #ajax_audio_player #aj_player_play #aj_player_play_btn {
-              background-position: -183px -28px !important;
-            }
-			#ajax_audio_player #aj_player_close_btn {
-			  filter: brightness(100);
-			}
-        `;
-                document.head.appendChild(style);
-                instance.popperInstance.update()
-                const placeholder = instance.popper.querySelector('.vkifytracksplaceholder') || instance.popper.querySelector('.audiosContainer.audiosSideContainer.audiosPaddingContainer');
-                let playingNowLnk
-                if (placeholder) {
-                    const parsedAudio = parseAudio();
-                    const trackList = `${parsedAudio.scrollContainer}`;
-                    placeholder.outerHTML = trackList;
-                    playingNowLnk = parsedAudio.nowPlayingUrl.replace(/^\//, '');
-                    if (instance.popper.querySelector('.loadMore')) {
-                        instance.popper.querySelector('.musfooter .playingNow').innerHTML = `<img src="data:image/gif;base64,R0lGODlhIAAIAKECAEVojoSctMHN2QAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgADACwAAAAAIAAIAAACFZyPqcvtD6KMr445LcRUN9554kiSBQAh+QQFCgADACwCAAIAEgAEAAACD4xvM8DNiJRz8Mj5ari4AAAh+QQFCgADACwCAAIAHAAEAAACGJRvM8HNCqKMCCnn4JT1XPwMG9cJH6iNBQAh+QQFCgADACwMAAIAEgAEAAACD5RvM8HNiJRz8Mj5qri4AAAh+QQFCgADACwWAAIACAAEAAACBZSPqYsFACH5BAUUAAMALAAAAAAgAAgAAAIOnI+py+0Po5y02ouzPgUAOw==">`;
-                        instance.popper.querySelector('.loadMore').onclick = async function () { await loadMoreAudio(); };
-                    }
-                }
-                u(`.audiosContainer .audioEmbed .audioEntry, .audios_padding .audioEmbed`).removeClass('nowPlaying');
-                u(`.audiosContainer .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry, .audios_padding .audioEmbed[data-realid='${window.player.current_track_id}'] .audioEntry`).addClass('nowPlaying');
-                window.player.__updateFace();
-                window.player.audioPlayer.onvolumechange();
-                const acont = instance.popper.querySelector('.audiosContainer.audiosSideContainer.audiosPaddingContainer');
-                const aplaying = acont?.querySelector('.audioEntry.nowPlaying');
-                if (acont && aplaying) {
-                    const aplayingRect = aplaying.getBoundingClientRect();
-                    const acontRect = acont.getBoundingClientRect();
-                    acont.scrollTo({
-                        top: aplayingRect.top - acontRect.top + acont.scrollTop - (acont.clientHeight / 2) + (aplayingRect.height / 2),
-                        behavior: 'smooth'
-                    });
-                }
-                if (/^(playlist\d+_\d+|audios-?\d+)(\?.*)?$/.test(playingNowLnk)) {
-                    if (/^(audios-?\d+)(\?.*)?$/.test(playingNowLnk)) {
-                        try {
-                            let plName = (await window.OVKAPI.call("users.get", { "user_ids": Number(playingNowLnk.match(/[^\d]*(\d+)/)[1]), "fields": "first_name" }))[0].first_name;
-                            instance.popper.querySelector('.musfooter .playingNow').innerHTML = `${window.vkifylang.currentlyplaying}<a onclick="tippy.hideAll();" href=${playingNowLnk}>${tr('audios')} <b>${escapeHtml(plName)}</b></a>`
-                        } catch (error) {
-                            console.error('failed to load playing now', error)
-                            instance.popper.querySelector('.musfooter .playingNow').innerHTML = ``
-                        }
-                    } if (/^(playlist\d+_\d+)(\?.*)?$/.test(playingNowLnk)) {
-                        try {
-                            let plName = (await window.OVKAPI.call("audio.getAlbums", { "owner_id": Number(playingNowLnk.match(/_(\d+)$/)[0]) })).items.find(item => item.id === Number(playingNowLnk.match(/_(\d+)$/)[1])).title;
-                            instance.popper.querySelector('.musfooter .playingNow').innerHTML = `${window.vkifylang.currentlyplaying}<a onclick="tippy.hideAll();" href=${playingNowLnk}>${tr('playlist')} <b>${escapeHtml(plName)}</b></a>`
-                        } catch (error) {
-                            console.error('failed to load playing now', error)
-                            instance.popper.querySelector('.musfooter .playingNow').innerHTML = ``
-                        }
-                    }
-                } else {
-                    instance.popper.querySelector('.musfooter .playingNow').innerHTML = ``
-                }
-            },
-            onHide(instance) {
-                document.querySelector("#fullajplayerstyles").remove()
-            }
-        });
+            
+            topPlayer.classList.toggle('top_audio_player_playing', !window.player.audioPlayer.paused);
+        } else {
+            topPlayer.classList.remove('top_audio_player_enabled');
+            topPlayerTitle.textContent = '';
+            headerMusicBtn.removeAttribute('style');
+            currentTrackId = null;
+        }
+    }
+
+    // Update top player when track changes
+    const originalUpdateFace = window.player.__updateFace;
+    window.player.__updateFace = function() {
+        originalUpdateFace.call(this);
+        updateTopPlayer();
     };
-    bindajtip(mushtml);
+
+    // Add button click handlers
+    topPlayerPlay.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent tippy from opening
+        if (window.player.audioPlayer.paused) {
+            window.player.play();
+        } else {
+            window.player.pause();
+        }
+        updateTopPlayer();
+    });
+
+    topPlayerPrev.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent tippy from opening
+        if (window.player.currentTrack) {
+            window.player.playPreviousTrack();
+        }
+    });
+
+    topPlayerNext.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent tippy from opening
+        if (window.player.currentTrack) {
+            window.player.playNextTrack();
+        }
+    });
+
+    // Update on play/pause
+    if (window.player && window.player.audioPlayer) {
+        window.player.audioPlayer.addEventListener('play', updateTopPlayer);
+        window.player.audioPlayer.addEventListener('pause', updateTopPlayer);
+        
+        // Initial update
+        updateTopPlayer();
+    }
 
     $(document).on("click", ".statusButton.musicIcon", function (event) {
         event.preventDefault();
