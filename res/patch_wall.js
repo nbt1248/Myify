@@ -66,7 +66,7 @@ u(document).on("click", "#editPost2", async (e) => {
                                 <a class="post-attach-menu__trigger" id="moreAttachTrigger">
                                     ${tr('show_more')}
                                 </a>
-                                <div class="tippy-menu" id="moreAttachTooltip2" style="display: none">
+                                <div class="tippy-menu" id="moreAttachTooltip2">
                                         <a id="__documentAttachment">
                                             <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png" />
                                             ${tr('document')}
@@ -215,11 +215,7 @@ u(document).on("click", "#editPost2", async (e) => {
             interactive: true,
             trigger: 'mouseenter',
             placement: 'bottom',
-            theme: 'light vk',
-            onShown: () => {
-                const tooltip = document.getElementById('moreAttachTooltip2');
-                if (tooltip) tooltip.style.display = 'block';
-            }
+            theme: 'light vk'
         });
     }
 

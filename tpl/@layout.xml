@@ -144,6 +144,17 @@
                                         <div id="userMenuArrow"></div>
                                     </a>
                                 </div>
+                                <div id="userMenuTooltip">
+                                    <div class="tippy-menu">
+                                        <a href="/id{$thisUser->getId()}">{_my_page}</a>
+                                        <div class="separator"></div>
+                                        <a href="/edit">{_edit}</a>
+                                        <a href="/settings">{_menu_settings}</a>
+                                        <a href="/support">{_menu_help}</a>
+                                        <div class="separator"></div>
+                                        <a href="/logout?hash={urlencode($csrfToken)}">{_menu_logout}</a>
+                                    </div>
+                                </div>
                             {/if}
                         {else}
                             <div class="link">
@@ -252,7 +263,7 @@
                                 <a href="/terms">{_footer_rules|firstUpper}</a>
                                 <a href="javascript:void(0);" id="moreOptionsLink">{_show_more}</a>
                                 
-                                <div id="moreOptionsContent" style="display: none;">
+                                <div id="moreOptionsContent">
                                     <div class="tippy-menu">
                                         <a href="/about">{_footer_about_instance|firstUpper}</a>
                                         <a href="/language" 
@@ -333,12 +344,17 @@
                 </div>
 
             <div class="page_body">
+                    <script n:ifset="$flashMessage">
+                        NewNotification(
+                            {$flashMessage->title},
+                            {$flashMessage->msg},
+                            null,
+                            () => {},
+                            5000,
+                            false
+                        );
+                    </script>
                 {ifset wrap}
-                    <div class="msg msg_{$flashMessage->type}" n:ifset="$flashMessage">
-                        <b>{$flashMessage->title}</b><br/>
-                        {$flashMessage->msg|noescape}
-                    </div>
-
                     {include wrap}
                 {else}
                     <div class="wrap2">
@@ -354,10 +370,6 @@
                                             </div>
                                         </h2>
                                     {/ifset}
-                                    <div class="msg msg_{$flashMessage->type}" n:ifset="$flashMessage">
-                                        <b>{$flashMessage->title}</b><br/>
-                                        {$flashMessage->msg|noescape}
-                                    </div>
 
                                     {include content}
                                 </div>
@@ -487,26 +499,6 @@
             {include bodyScripts}
         {/ifset}
         {script "js/router.js"}
-        
-        <script n:if="isset($thisUser)">
-            document.addEventListener('DOMContentLoaded', function() {
-                const moreOptionsLink = document.getElementById('moreOptionsLink');
-                const moreOptionsContent = document.getElementById('moreOptionsContent');
-                
-                if (moreOptionsLink && moreOptionsContent) {
-                    tippy(moreOptionsLink, {
-                        content: moreOptionsContent.innerHTML,
-                        allowHTML: true,
-                        interactive: true,
-                        trigger: 'mouseenter focus',
-                        theme: 'light vk',
-                        placement: 'bottom',
-                        arrow: true,
-                        maxWidth: 300
-                    });
-                }
-            });
-        </script>
     </body>
 	<script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
     <script src="/themepack/vkify16/1.0.0.0/resource/tippys.js"></script>

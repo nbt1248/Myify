@@ -50,6 +50,12 @@
             'active' => $isBackDrop
         ]
     ]}
+
+    {var $ownblockData = [
+        'url' => "/id" . $user->getId(),
+        'name' => $user->getFirstName() . " " . $user->getLastName(),
+        'img' => $user->getAvatarURL()
+    ]}
     
 
     <div n:if="$user->hasPendingNumberChange()" class="msg">
@@ -61,7 +67,7 @@
     <div class="wide_column_left">
         <div class="narrow_column_wrap">
             <div class="narrow_column">
-                {include "../components/ui_rmenu.xml", items => $menuItems}
+                {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => $ownblockData}
             </div>
         </div>
         <div class="wide_column_wrap">
@@ -331,7 +337,7 @@
                                 <input type="hidden" name="hash" value="{$csrfToken}" />
                                 <center>
                                     <button name="subact" value="save" class="button">{_backdrop_save}</button>
-                                    <button name="subact" value="remove" class="button">{_backdrop_remove}</button>
+                                    <button name="subact" value="remove" class="button button_gray">{_backdrop_remove}</button>
                                 </center>
                             </div>
                         </div>

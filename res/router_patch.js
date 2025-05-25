@@ -42,28 +42,8 @@ function processVkifyLocTags() {
     });
 }
 
-function initPostActionTooltips() {
-    tippy('.post_actions_icon', {
-        content: (reference) => {
-            return reference.closest('.post_actions').querySelector('.tippy-menu');
-        },
-        allowHTML: true,
-        interactive: true,
-        trigger: 'mouseenter focus',
-        placement: 'bottom-end',
-        theme: 'light vk',
-        appendTo: 'parent',
-        delay: [0, 0],
-        onShown: (instance) => {
-            const tooltip = instance.popper.querySelector('.tippy-menu');
-            if (tooltip) tooltip.style.display = 'block';
-        }
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     processVkifyLocTags();
-    initPostActionTooltips();
     
     const patchRouter = function() {
         if (window.router && window.router.route) {
@@ -73,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 await originalRoute.apply(this, args);
                 
                 processVkifyLocTags();
-                initPostActionTooltips();
+                reinitializeTooltips();
             };
             
             if (window.router.__appendPage) {
@@ -83,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (parsedContent && parsedContent.documentElement) {
                         loadPageSpecificCSS(parsedContent.documentElement.outerHTML);
+                        reinitializeTooltips();
                     }
                 };
             }
@@ -92,13 +73,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.router.__integratePage = async function(...args) {
                     await originalIntegratePage.apply(this, args);
                     processVkifyLocTags();
-                    initPostActionTooltips();
+                    reinitializeTooltips();
                 };
             }
             
             console.log('Router patched for proper CSS loading and localization');
         }
     };
+    
+    function reinitializeTooltips() {
+        // First destroy all existing tooltips
+        const tippyInstances = document.querySelectorAll('[data-tippy-root]');
+        tippyInstances.forEach(instance => {
+            const tippyTarget = document.querySelector(`[aria-describedby="${instance.id}"]`);
+            if (tippyTarget && tippyTarget._tippy) {
+                tippyTarget._tippy.destroy();
+            }
+            instance.remove();
+        });
+
+        // Then initialize tooltips only if they haven't been initialized yet
+        if (window.initializeTippys) {
+            window.initializeTippys();
+        }
+    }
     
     if (window.router) {
         patchRouter();

@@ -21,7 +21,8 @@ let locales = {
 		"newUserSubhead": "Instant registration",
 		"left_edge": "Left edge:",
 		"right_edge": "Right edge:",
-		'oldposts_disabled_desc': "VKify 2016 does not support the old posts view."
+		'oldposts_disabled_desc': "VKify 2016 does not support the old posts view.",
+		"back_to_page": "back to page"
 	},
 	'ru': {
 		"language": "Язык",
@@ -45,7 +46,8 @@ let locales = {
 		"newUserSubhead": "Мгновенная регистрация",
 		"left_edge": "Левая граница:",
 		"right_edge": "Правая граница:",
-		'oldposts_disabled_desc': "VKify 2016 не поддерживает старый вид постов."
+		'oldposts_disabled_desc': "VKify 2016 не поддерживает старый вид постов.",
+		"back_to_page": "вернутся к странице"
 	}
 }
 

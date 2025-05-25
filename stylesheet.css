@@ -872,7 +872,8 @@ input[type=checkbox] {
 }
 
 input[type=radio] {
-    background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='7.5' fill='white' stroke='%23C5D0DB'/%3E%3C/svg%3E%0A")no-repeat 2px
+    background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='7.5' fill='white' stroke='%23C5D0DB'/%3E%3C/svg%3E%0A")no-repeat 2px;
+    margin-top: -2px;
 }
 
 input[type=checkbox]:checked,
@@ -998,13 +999,13 @@ textarea {
     font-size: 13px;
     border: 1px solid #d3d9de;
     padding: 5px 9px 7px;
-    border-radius: 1px
+    border-radius: 1px;
+    line-height: 16px;
 }
 
 textarea {
     background-color: #fff;
     color: #000;
-    padding: 3px 5px;
     margin: 0;
     border: 1px solid #d3d9de;
 }
@@ -1556,6 +1557,50 @@ center span:only-child,
     border-left: 2px solid #5181b8
 }
 
+.ui_rmenu_sep {
+	border-top: 1px solid #e7e8ec;
+	margin: 6px 15px;
+}
+
+.ui_ownblock {
+    display: block;
+    padding: 9px 15px
+}
+
+.ui_ownblock:hover {
+    text-decoration: none;
+    background-color: #f0f2f5
+}
+
+.ui_ownblock_img {
+    float: left;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    margin-right: 10px
+}
+
+.ui_ownblock_info {
+    white-space: nowrap;
+    font-size: 12.5px;
+    line-height: 16px
+}
+
+.ui_ownblock_label {
+    color: #2a5885;
+    padding-top: 2px
+}
+
+.ui_ownblock_label,
+.ui_ownblock_hint {
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.ui_ownblock_hint {
+    color: #777e8c
+}
+
 /* header */
 h2.page_block_h2 {
     margin: 0px;
@@ -1620,7 +1665,7 @@ h2.page_block_h2 {
 
 
 .vkdropdown {
-    margin: 1px 0 0;
+    margin: 1px 0 0 1px;
     background-color: #fff;
     border: 1px solid #c9d0d6;
     box-sizing: border-box;
@@ -1629,8 +1674,8 @@ h2.page_block_h2 {
 
 .vkdropopt {
     color: #000;
-    padding: 7px 0 9px 12px;
-    font-size: 14px;
+    padding: 7px 0 9px 9px;
+    font-size: 13px;
     list-style-type: none;
     cursor: pointer;
     position: relative;
@@ -1647,7 +1692,6 @@ h2.page_block_h2 {
 
 select {
     border: 1px solid #d3d9de;
-    padding: 7px 9px;
     border-radius: 3px;
     background-color: #fff;
 }
@@ -2060,4 +2104,12 @@ select:focus {
     font-size: 12.5px;
     padding: 4px 0 0;
     margin-bottom: -1px;
+}
+
+.tippy-menu {
+    display: none;
+}
+
+.tippy-box .tippy-menu {
+    display: block;
 }

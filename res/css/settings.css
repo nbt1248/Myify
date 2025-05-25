@@ -26,13 +26,13 @@
 }
 
 .settings_line {
-    margin: 0;
-    padding: 15px 0 14px;
-    border-bottom: 1px solid #e7e8ec;
+	margin: 12px 0 15px;
+	background: #e7e8ec;
+	height: 1px;
 }
 
 .settings_line.settings_line_no_padding {
-    padding: 0;
+    margin: 0;
 }
 
 .settings_block_msg {
@@ -51,8 +51,19 @@
     text-align: center;
 }
 
-.settings_list_row input:not([type="submit"], [type="checkbox"], [type="radio"]),.settings_list_row select {
+.settings_list_row input:not([type="submit"], [type="checkbox"], [type="radio"]),.settings_list_row select,.settings_list_row textarea {
     width: 300px;
+}
+
+.settings_list_row select + label {
+    margin-top: 10px;
+}
+.settings_list_row label {
+    margin-bottom: 10px;
+}
+
+.settings_list_row label.checkbox {
+    display: block;
 }
 
 /* privacy */
@@ -152,6 +163,54 @@
 .edit_panel {
     padding-block: 20px;
 }
-.edit_panel .settings_label {
+.edit_panel .settings_label,.group_settings .settings_label {
     text-align:end;
+}
+.group_settings .settings_label {
+	width: 165px;
+	padding: 6px 12px 7px 0;
+}
+.group_settings .settings_labeled_text {
+	margin: 0 0 8px 177px;
+	padding-top: 6px;
+}
+.group_settings .settings_labeled_text:has(textarea,input[type="text"],select) {
+    padding-top: 0;
+}
+
+/* followers */
+.group_l_row {
+	position: relative;
+	border-bottom: 1px solid #e7e8ec;
+	padding: 15px 0;
+}
+.group_u_bigph_wrap {
+	position: relative;
+	overflow: hidden;
+	width: 80px;
+	height: 80px;
+	float: left;
+	margin-right: 12px;
+}
+.group_u_photo_img {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.group_u_actions {
+	float: right;
+	padding-top: 9px;
+}
+.group_u_info {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-top: 9px;
+}
+.group_u_desc, .group_u_btns_text {
+	padding-top: 6px;
+	color: #939393;
+}
+.group_u_info_row {
+	padding-top: 7px;
 }
