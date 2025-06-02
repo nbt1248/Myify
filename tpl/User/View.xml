@@ -44,29 +44,31 @@
     {else}
     
     <div class="left_small_block">
-        <div class="page_block avatar_block photo_block">
+        <div class="page_block photo_block">
             {var $hasAvatar = !str_contains($user->getAvatarUrl('miniscule'), "/assets/packages/static/openvk/img/camera_200.png")}
-            <div class="avatar_block_inner">
-            {if $thisUser && $user->getId() == $thisUser->getId()}
-                <a {if $hasAvatar}style="display:none"{/if} class="add_image_text" id="add_image">{_add_image}</a>
-                <div {if !$hasAvatar}style="display:none"{/if} class="avatar_controls">
-                    <div class="avatarDelete hoverable"></div>
-                    <div class="avatar_variants">
-                        <a class="_add_image hoverable" id="add_image"><span>{_upload_new_picture}</span></a>
-                    </div>
-                </div>
-            {/if}
-            <a href="{$user->getAvatarLink()|nocheck}">
-                <img src="{if $hasAvatar}{$user->getAvatarUrl('normal')}{else}/themepack/vkify16/1.0.0.0/resource/camera_200.png{/if}"
-                     alt="{$user->getCanonicalName()}"
-                     id="bigAvatar"
-                     style="width: 100%; image-rendering: -webkit-optimize-contrast;"
-                     {if ($user->getAvatarPhoto())}
-                     onclick="OpenMiniature(event, {$user->getAvatarUrl('normal')}, null, {$user->getAvatarPhoto()->getPrettyId()}, null)"
-                     {/if}
-                />
-            </a>
-            </div>
+			<div class="avatar_block">
+				<div class="avatar_block_inner">
+				{if $thisUser && $user->getId() == $thisUser->getId()}
+					<a {if $hasAvatar}style="display:none"{/if} class="add_image_text" id="add_image">{_add_image}</a>
+					<div {if !$hasAvatar}style="display:none"{/if} class="avatar_controls">
+						<div class="avatarDelete hoverable"></div>
+						<div class="avatar_variants">
+							<a class="_add_image hoverable" id="add_image"><span>{_upload_new_picture}</span></a>
+						</div>
+					</div>
+				{/if}
+				<a href="{$user->getAvatarLink()|nocheck}">
+					<img src="{if $hasAvatar}{$user->getAvatarUrl('normal')}{else}/themepack/vkify16/1.0.0.0/resource/camera_200.png{/if}"
+						alt="{$user->getCanonicalName()}"
+						id="bigAvatar"
+						style="width: 100%; image-rendering: -webkit-optimize-contrast;"
+						{if ($user->getAvatarPhoto())}
+						onclick="OpenMiniature(event, {$user->getAvatarUrl('normal')}, null, {$user->getAvatarPhoto()->getPrettyId()}, null)"
+						{/if}
+					/>
+				</a>
+				</div>
+			</div>
 			        <div n:ifset="$thisUser" class="profile_actions">
 						{if $user->getId() != $thisUser->getId()}
 			{if OPENVK_ROOT_CONF['openvk']['preferences']['commerce']}
@@ -191,9 +193,6 @@
             
             {if isset($thisUser) && $user->getId() === $thisUser->getId() && sizeof($completeness->unfilled) > 0}
                 <div class="profile_warning_row" n:if="in_array('interests', $completeness->unfilled)">
-                    <div class="profile_warning_hide_wrap">
-                        <div class="profile_warning_hide"></div>
-                    </div>
                     <div class="profile_warning_img interests"></div>
                     <div class="profile_warning_label">
                         <a href="/edit?act=interests">{_interests} <span class="unfilled_rating">+20%</span></a>
@@ -201,9 +200,6 @@
                 </div>
                 
                 <div class="profile_warning_row" n:if="in_array('email', $completeness->unfilled)">
-                    <div class="profile_warning_hide_wrap">
-                        <div class="profile_warning_hide"></div>
-                    </div>
                     <div class="profile_warning_img email"></div>
                     <div class="profile_warning_label">
                         <a href="/edit?act=contacts">Email <span class="unfilled_rating">+20%</span></a>
@@ -211,9 +207,6 @@
                 </div>
                 
                 <div class="profile_warning_row" n:if="in_array('phone', $completeness->unfilled)">
-                    <div class="profile_warning_hide_wrap">
-                        <div class="profile_warning_hide"></div>
-                    </div>
                     <div class="profile_warning_img phone"></div>
                     <div class="profile_warning_label">
                         <a href="/edit?act=contacts">{_phone} <span class="unfilled_rating">+20%</span></a>
@@ -221,9 +214,6 @@
                 </div>
                 
                 <div class="profile_warning_row" n:if="in_array('telegram', $completeness->unfilled)">
-                    <div class="profile_warning_hide_wrap">
-                        <div class="profile_warning_hide"></div>
-                    </div>
                     <div class="profile_warning_img telegram"></div>
                     <div class="profile_warning_label">
                         <a href="/edit?act=contacts">Telegram <span class="unfilled_rating">+15%</span></a>
@@ -231,9 +221,6 @@
                 </div>
                 
                 <div class="profile_warning_row" n:if="in_array('status', $completeness->unfilled)">
-                    <div class="profile_warning_hide_wrap">
-                        <div class="profile_warning_hide"></div>
-                    </div>
                     <div class="profile_warning_img status"></div>
                     <div class="profile_warning_label">
                         <a href="/edit">{_status} <span class="unfilled_rating">+15%</span></a>
@@ -475,7 +462,6 @@
 						<div class="audio_row" n:foreach="$audios as $audio">
 							<a class="audio fl_l" href="/audios{$user->getId()}">
 								<div class="page_audio_play_icon"></div>
-								<span class="page_audio_thumb" style="background-image: url('/path/to/default/audio/thumbnail.png');"></span>
 							</a>
 							<div class="info clear">
 								{include "../Audio/player.xml", audio => $audio}
@@ -527,7 +513,7 @@
 						<h2 class="page_name">{$user->getFullName()} <a class="page_verified" n:if="$user->isVerified()" href="/verify"></a></h2>
 
 						{if !$audioStatus}
-							{if !is_null($user->getStatus())}
+							{if $user->getStatus()}
 								<div n:class="page_status, $thatIsThisUser ? page_status_edit_button" n:attr="id => $thatIsThisUser ? page_status_text : NULL">{$user->getStatus()}</div>
 							{elseif $thatIsThisUser}
 								<div class="page_status">

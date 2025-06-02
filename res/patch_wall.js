@@ -1,4 +1,7 @@
-u(document).on("click", "#editPost2", async (e) => {
+u(document).on("click", "#editPost", async (e) => {
+    // Prevent the original handler from executing
+    e.stopImmediatePropagation();
+    
     const target = u(e.target)
     const post = target.closest(".post")
     const content = post.find(".post_content")
@@ -181,7 +184,6 @@ u(document).on("click", "#editPost2", async (e) => {
             }
 
             u(ev.target).addClass('lagged')
-            // больше двух запросов !
             try {
                 if (type == 'post') {
                     await window.OVKAPI.call('wall.edit', params)
@@ -216,7 +218,7 @@ u(document).on("click", "#editPost2", async (e) => {
             trigger: 'mouseenter',
             placement: 'bottom',
             theme: 'light vk'
-        });
+        })
     }
 
     post.addClass('editing')

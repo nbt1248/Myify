@@ -9,7 +9,7 @@
 </div>
 
 {if sizeof($comments) > 0}
-    <div class='scroll_container'>
+    <div class='scroll_container page_block'>
         <div class='scroll_node' n:foreach="$comments as $comment">
             {include "comment.xml", comment => $comment}
         </div>

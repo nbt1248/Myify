@@ -34,7 +34,7 @@
                         'name' => $club->getName(),
                         'img' => $club->getAvatarURL()
                     ]}
-                    {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => $ownblockData}
+                    {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => "club"}
                 </div>
             </div>
             <div class="wide_column_wrap">

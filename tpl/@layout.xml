@@ -30,6 +30,7 @@
         {css "js/node_modules/jquery-ui/themes/base/resizable.css"}
         {script "js/node_modules/@popperjs/core/dist/umd/popper.min.js"}
         {script "js/node_modules/tippy.js/dist/tippy-bundle.umd.min.js"}
+        {css "js/node_modules/tippy.js/animations/shift-toward-subtle.css"}
         {script "js/node_modules/handlebars/dist/handlebars.min.js"}
         {script "js/node_modules/react/dist/react-with-addons.min.js"}
         {script "js/node_modules/react-dom/dist/react-dom.min.js"}
@@ -126,9 +127,9 @@
                                     <div class="top_nav_btn_icon"></div>
                                 </a>
                                 <div class="top_nav_audio" id="headerMusicLinkDiv">
-                                    <div class="top_nav_btn" id="headerMusicBtn">
-                                        <a class="top_nav_btn_icon"></a>
-                                    </div>
+                                    <a class="top_nav_btn" id="headerMusicBtn">
+                                        <div class="top_nav_btn_icon"></div>
+                                    </a>
                                     <div class="top_audio_player" id="top_audio_player">
                                         <div class="top_audio_player_btn top_audio_player_prev"><div class="top_audio_player_btn_icon"></div></div>
                                         <div class="top_audio_player_btn top_audio_player_play _top_audio_player_play"><div class="top_audio_player_btn_icon"></div></div>
@@ -357,7 +358,7 @@
                     <script n:ifset="$flashMessage">
                         NewNotification(
                             {$flashMessage->title},
-                            {$flashMessage->msg},
+                            {$flashMessage->msg ?? ''},
                             null,
                             () => {},
                             5000,
@@ -443,6 +444,7 @@
         {script "js/al_navigation.js"}
         {script "js/al_comments.js"}
         {script "js/al_music.js"}
+	    <script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
         {script "js/al_despacito_wall.js"}
         {script "js/al_photos.js"}
 
@@ -510,7 +512,6 @@
         {/ifset}
         {script "js/router.js"}
     </body>
-	<script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
     <script src="/themepack/vkify16/1.0.0.0/resource/tippys.js"></script>
 	<script src="/themepack/vkify16/1.0.0.0/resource/router_patch.js"></script>
 	<script src="/themepack/vkify16/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>

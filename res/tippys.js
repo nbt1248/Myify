@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const commonConfig = {
         allowHTML: true,
         interactive: true,
+        animation: 'shift-toward-subtle',
+        duration: [100, 100],
         theme: 'light vk',
         placement: 'bottom',
         appendTo: document.body
@@ -26,9 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Fallback to ID lookup
                         const menu = document.getElementById(contentCallback);
                         return menu || document.createElement('div');
-                    },
-            ...options
+                    }
         };
+
+        // Apply custom options after the default config
+        Object.assign(config, options);
 
         return tippy(selector, config);
     }
@@ -46,9 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
         interactive: true,
         trigger: 'mouseenter focus',
         placement: 'bottom-end',
+        animation: 'shift-toward-subtle',
         theme: 'light vk',
+        duration: [100, 100],
         appendTo: 'parent',
-        delay: [0, 0],
         onCreate: (instance) => {
             instance.reference.setAttribute('data-tippy-initialized', 'true');
         },
@@ -101,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             (reference) => reference.getAttribute('data-tippy-content'),
             {
                 placement: 'top',
-                delay: [0, 0]
+                theme: 'dark'
             }
         );
     };

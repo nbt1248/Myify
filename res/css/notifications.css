@@ -1,0 +1,96 @@
+@keyframes notification_ballon_appears {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes notification_ballon_disappears {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+.notifications_global_wrap {
+    bottom: 0;
+    left: 0;
+    padding: 0 0 2px;
+    z-index: 1001;
+    position: fixed;
+}
+
+.notification_ballon {
+	background-color: rgba(0, 0, 0, 0.7);
+	height: unset;
+	color: white !important;
+	display: inline-block;
+	animation-name: notification_ballon_appears;
+	animation-duration: 0.5s;
+	cursor: pointer;
+	width: 320px;
+	background: rgba(54, 56, 59, .96);
+	border-radius: 4px;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
+	font-size: 12.5px;
+	cursor: pointer;
+}
+.notification_ballon.disappears {
+	animation-name: notification_ballon_disappears;
+	animation-duration: 0.5s;
+}
+
+.notification_ballon_wrap {
+	margin: 0 0 8px 10px;
+}
+.notification_ballon notification_title {
+	margin: 0;
+	padding: 10px 12px 0;
+	font-size: 12.5px;
+	font-weight: 700;
+	display: block;
+}
+.notification_ballon notification_title .close {
+	width: 10px;
+	height: 16px;
+	padding: 12px;
+	float: right;
+	overflow: auto;
+	margin: -10px -12px -11px 12px;
+	opacity: 0.65;
+	color: #fff;
+	transition-duration: 0.3s;
+	font-size: 0;
+}
+.notification_ballon notification_title .close::before {
+	display: block;
+	content: '';
+	background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2210%22%20height%3D%2210%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%203.727L8.464.264a.9.9%200%201%201%201.272%201.272L6.273%205l3.463%203.464a.9.9%200%201%201-1.272%201.272L5%206.273%201.536%209.736A.9.9%200%201%201%20.264%208.464L3.727%205%20.264%201.536A.9.9%200%201%201%201.536.264L5%203.727z%22%20fill%3D%22%23FFF%22%20fill-rule%3D%22nonzero%22%2F%3E%3C%2Fsvg%3E') no-repeat;
+	height: 10px;
+	width: 10px;
+}
+.notification_ballon notification_title .close:hover {
+	opacity: 1;
+	filter: none;
+}
+.notification_ballon wrap {
+	display: flex;
+	flex-direction: row;
+	padding: 11px 12px 12px;
+}
+.notification_ballon wrap content {
+	font-size: 12.5px;
+	line-height: 16px;
+}
+.notification_ballon wrap avatar img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+}

@@ -51,9 +51,8 @@
 ]}
 
     <div class="wide_column_left">
-        <div class="wide_column_left">
-            <div class="narrow_column_wrap">
-                <div class="narrow_column">
+        <div class="narrow_column_wrap">
+            <div class="narrow_column">
                 {include "../components/ui_rmenu.xml", items => $menuItems}
             </div>
         </div>

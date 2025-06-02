@@ -6,7 +6,7 @@
 {/block}
 
 {block content}
-    <div class="border-block center">
+    <div class="page_block module_body center">
         <h4>{_ec_title}</h4>
         <p>{tr("ec_1", htmlentities($thisUser->getCanonicalName()))|noescape}<br/></p>
         <p>{_ec_2}</p>

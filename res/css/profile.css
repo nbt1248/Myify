@@ -325,12 +325,6 @@
     height: 68px
 }
 
-.left_big_block .header_top,
-.right_big_block .header_top {
-    padding: 4px 20px 0;
-    font-size: 13px;
-}
-
 .page_photos_module {
     padding: 13px 20px 20px;
     height: 123px;
@@ -633,7 +627,8 @@ div.avatar_block:hover .avatar_variants {
 }
 
 .profile_warning_img.posts,
-.profile_warning_img.interests {
+.profile_warning_img.interests,
+.profile_warning_img.status {
     background-position: 0 -150px
 }
 

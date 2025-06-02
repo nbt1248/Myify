@@ -13,6 +13,15 @@ window.showBlueWarning = function (content) {
     NewNotification(tr('warning'), content, null, () => { }, 10000, false);
 }
 
+Object.defineProperty(window.player, 'ajCreate', {
+    value: function() {
+        console.log('ajCreate override called');
+        // override: do nothing
+    },
+    writable: false,
+    configurable: false
+});
+
 window.changeLangPopup = function () {
     window.langPopup = new CMessageBox({
         title: tr('select_language'),
@@ -68,7 +77,7 @@ window.showAudioUploadPopup = function () {
         title: tr('upload_audio'),
         body: `
 <div id="upload_container">
-            <div id="firstStep" style="width: 500px;margin-right: 20px;">
+            <div id="firstStep">
                 <b><a href="javascript:void(0)">${tr('limits')}</a></b>
                 <ul>
                     <li>${tr("audio_requirements", 1, 30, 25)}</li>
@@ -80,7 +89,7 @@ window.showAudioUploadPopup = function () {
 					</div>
 				</div>
 
-            <div id="lastStep" style="display:none;width: 500px;margin-right: 20px;">
+            <div id="lastStep" style="display:none">
                 <div id="lastStepContainers"></div>
                 <div id="lastStepButtons" style="text-align: center;margin-top: 10px;">
                     <input class="button" type="button" id="uploadMusicPopup" value="${tr('upload_button')}">
@@ -103,11 +112,11 @@ window.showAudioUploadPopup = function () {
 
 		hideFirstPage() {
 			u('#firstStep').attr('style', 'display:none')
-			u('#lastStep').attr('style', 'display:block;width: 500px;margin-right: 20px;')
+			u('#lastStep').attr('style', 'display:block;')
 		}
 
 		showFirstPage() {
-			u('#firstStep').attr('style', 'display:block;width: 500px;margin-right: 20px;')
+			u('#firstStep').attr('style', 'display:block;')
 			u('#lastStep').attr('style', 'display:none')
 		}
 
@@ -804,11 +813,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   `;
     });
 
-    const playerElement = document.querySelector('#ajax_audio_player');
-    if (playerElement) {
-        playerElement.remove();
-    }
-
     const mushtml = `
 <div style="" class="rightlist">
     <div class="verticalGrayTabs">
@@ -881,7 +885,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 </div>
 <div class="vkifytracksplaceholder"></div>
     <div class="musfooter"><span class="playingNow"></span>
-    <input onclick="tippy.hideAll();" value="${tr('close')}" class="button" type="submit">
+    <a id="ajclosebtn" onclick="tippy.hideAll();"><vkifyloc name="clear_playlist"></vkifyloc></a>
 </div>
 `
     tippy(document.querySelector('#headerMusicLinkDiv'), {
@@ -891,27 +895,44 @@ window.addEventListener('DOMContentLoaded', async () => {
         interactive: true,
         placement: 'bottom',
         theme: 'musicpopup',
-        width: 627,
+        maxWidth: 660,
         arrow: true,
         getReferenceClientRect: () => {
             const topPlayer = document.querySelector('.top_audio_player');
+            const playButton = document.querySelector('.top_audio_player_play');
+            const headerMusicBtn = document.querySelector('#headerMusicBtn');
+
+            if (!window.player || !window.player.currentTrack) {
+                const rect = headerMusicBtn.getBoundingClientRect();
+                return {
+                    width: rect.width,
+                    height: rect.height,
+                    top: rect.top,
+                    bottom: rect.bottom,
+                    left: rect.left,
+                    right: rect.right,
+                };
+            }
+
             const rect = topPlayer.getBoundingClientRect();
+            const playRect = playButton.getBoundingClientRect();
+            const centerX = playRect.left + (playRect.width / 2) - 2;
+            
             return {
-                width: document.documentElement.clientWidth,
+                width: 0,
                 height: rect.height,
                 top: rect.top,
                 bottom: rect.bottom,
-                left: 0,
-                right: document.documentElement.clientWidth,
+                left: centerX,
+                right: centerX,
             };
         },
-        maxWidth: 627,
         appendTo: document.body,
         popperOptions: {
             modifiers: [{
                 name: 'offset',
                 options: {
-                    offset: [0, 10],
+                    offset: [0, 0],
                 }
             }]
         },
@@ -921,9 +942,6 @@ window.addEventListener('DOMContentLoaded', async () => {
         },
         onShow(instance) {
             const clickedElement = instance.reference;
-            if (clickedElement.closest('.top_audio_player')) {
-                return false;
-            }
             document.querySelector('.top_audio_player').classList.add('audio_top_btn_active');
         },
         async onMount(instance) {
@@ -1052,6 +1070,10 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Initial update
         updateTopPlayer();
     }
+
+    $(document).on("click", "#ajclosebtn", function (event) {
+        window.player.ajClose();
+    });
 
     $(document).on("click", ".statusButton.musicIcon", function (event) {
         event.preventDefault();
@@ -1187,6 +1209,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
         window.favloader.stop();
     }
+
 });
 
 const searchbox = document.querySelector('#search_box form input[type="search"]');

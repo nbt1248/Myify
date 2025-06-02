@@ -7,7 +7,7 @@
     {/ifset}
     {ifset $extra}
     <div class="page_block_header_extra _header_extra">
-      {$extra}
+      {$extra|noescape}
     </div>
     {/ifset}
     <div class="page_block_header_inner _header_inner">
