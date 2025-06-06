@@ -1406,18 +1406,50 @@ a {
 
 .bigPlayer .volumePanel {
     margin-left: 60px;
+    padding-top: 17px;
 }
 
-.selectableTrack {
-    overflow: hidden
+.bigPlayer .selectableTrack {
+    cursor: pointer;
 }
 
-.slider {
+.bigPlayer .selectableTrack {
+    overflow: hidden;
+    margin: 0;
+}
+
+.selectableTrack .selectableTrackLoadProgress {
+	top: -2px;
+	height: 100%;
+	z-index: 0;
+}
+
+.selectableTrack .selectableTrackLoadProgress .load_bar {
+	height: 100%;
+	background: #b8c7d7;
+	border-bottom: none;
+}
+
+.bigPlayer #bigPlayerLengthSliderWrapper {
+	z-index: 1;
+}
+
+.bigPlayer .trackPanel .track .selectableTrack > div,.bigPlayer .volumePanel .selectableTrack > div {
+	width: 100%;
+	font-size: 0;
+}
+
+.bigPlayer .selectableTrack:hover {
+	margin: -1.5px 0;
+}
+
+.bigPlayer .slider {
     position: relative;
     overflow: visible;
+    border-radius: 4px;
 }
 
-.slider::before {
+.bigPlayer .slider::before {
     content: "";
     position: absolute;
     top: 0;
@@ -1462,6 +1494,10 @@ a {
 .bigPlayer .trackPanel {
 	width: 100%;
 	margin-left: 7px;
+}
+
+.bigPlayer .trackPanel .track {
+    margin-top: 3px;
 }
 
 .bigPlayer .trackInfo .trackName {

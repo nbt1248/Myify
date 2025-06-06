@@ -30,7 +30,7 @@
 	background-color: rgba(0, 0, 0, 0.7);
 	height: unset;
 	color: white !important;
-	display: inline-block;
+	display: block;
 	animation-name: notification_ballon_appears;
 	animation-duration: 0.5s;
 	cursor: pointer;
