@@ -321,11 +321,11 @@ function cleanUpAudioList() {
 function parseAudio(onlyscnodes = false) {
     cleanUpAudioList();
     const audioDump = localStorage.getItem('audio.lastDump');
-    const nothingtemplate = `<div class="vkifytracksplaceholder" style=""><center style="background: white;border: #DEDEDE solid 1px;font-size: 11px;margin-top: 9px;margin-bottom: 3px;height: 362px;width: 430px;">
-                                <span style="color: #707070;margin: 172px 0;display: block;">
+    const nothingtemplate = `<div class="vkifytracksplaceholder" style="margin: auto;">
+                                <span style="color: #707070;">
                                     ${tr('no_data_description')}
                                 </span>
-                            </center></div>`
+                            </div>`
     if (audioDump) {
         try {
             if (JSON.parse(audioDump)) {
@@ -655,6 +655,47 @@ $(document).ready(function () {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
+    // Override track slider behavior for music popup
+    u(document).off("mousemove click mouseup", ".tippy-content .bigPlayer .trackPanel .selectableTrack, .tippy-content .audioEntry .subTracks .lengthTrackWrapper .selectableTrack");
+    u(document).on("mousemove click mouseup", ".tippy-content .bigPlayer .trackPanel .selectableTrack, .tippy-content .audioEntry .subTracks .lengthTrackWrapper .selectableTrack", (e) => {
+        // Prevent the original handler from running
+        e.stopImmediatePropagation();
+        
+        if(window.player.isAtAudiosPage() && window.player.current_track_id == 0)
+            return
+
+        if(u('.ui-draggable-dragging').length > 0) {
+            return
+        }
+
+        function __defaultAction(i_time) {
+            window.player.listen_coef -= 0.5
+            window.player.audioPlayer.currentTime = i_time
+        }
+
+        const taggart = u(e.target).closest('.selectableTrack')
+        const parent  = taggart.parent()
+        const rect = taggart.nodes[0].getBoundingClientRect()
+        const width = e.clientX - rect.left
+        const time = Math.ceil((width * window.player.currentTrack.length) / (rect.right - rect.left))
+        
+        if(e.type == "mousemove") {
+            let buttonsPresseed = _bsdnUnwrapBitMask(e.buttons)
+            if(buttonsPresseed[0])
+                __defaultAction(time)
+        }
+
+        if(e.type == 'click' || e.type == 'mouseup') {
+            __defaultAction(time)
+        }
+
+        if(parent.find('.tip_result').length < 1) {
+            parent.append(`<div class='tip_result'></div>`)
+        }
+
+        parent.find('.tip_result').html(fmtTime(time)).attr('style', `left:min(${width - 15}px, 578px)`)
+    });
+
     u(document).on('click', `.ovk-diag-body #upload_container #uploadMusicPopup`, async (e) => {
         const current_upload_page = '/player/upload'
         let error = null
@@ -692,8 +733,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
         audioUploadPopup.close();
         router.route(end_redir);
+    });
 
-    })
     window.player.__highlightActiveTrack = function () {
         if (!window.player.isAtCurrentContextPage()) {
             if (u(`.tippy-content .audiosContainer .audioEmbed[data-realid='${window.player.current_track_id}']`).length > 0) {
@@ -814,22 +855,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
 
     const mushtml = `
-<div style="" class="rightlist">
-    <div class="verticalGrayTabs">
-        <div class="with_padding">
-            <a onclick="tippy.hideAll();" href="/audios${window.openvk.current_id}">${tr('my_music')}</a>
-            <a onclick="tippy.hideAll();" href="/player/upload">${tr('upload_audio')}</a>
-            <a onclick="tippy.hideAll();" href="/search?section=audios" id="ki">${tr('audio_new')}</a>
-            <a onclick="tippy.hideAll();" href="/search?section=audios&order=listens" id="ki">${tr('audio_popular')}</a>
-            <hr>
-            <a onclick="tippy.hideAll();" href="/playlists${window.openvk.current_id}" id="ki">${tr('my_playlists')}</a>
-            <a onclick="tippy.hideAll();" href="/audios/newPlaylist">${tr('new_playlist')}</a>
-        </div>
-        <div class="friendsAudiosList">
-        ${friendshtml}
-        </div>
-    </div>
-</div>
 <div class="bigPlayer ctx_place">
     <div class="bigPlayerWrapper">
         <div class="playButtons">
@@ -883,9 +908,29 @@ window.addEventListener('DOMContentLoaded', async () => {
         </div>
     </div>
 </div>
-<div class="vkifytracksplaceholder"></div>
-    <div class="musfooter"><span class="playingNow"></span>
-    <a id="ajclosebtn" onclick="tippy.hideAll();"><vkifyloc name="clear_playlist"></vkifyloc></a>
+<div class="audio_content_wrap">
+    <div class="audio_content">
+        <div class="vkifytracksplaceholder"></div>
+            <div class="musfooter"><span class="playingNow"></span>
+            <a id="ajclosebtn" onclick="tippy.hideAll();"><vkifyloc name="clear_playlist"></vkifyloc></a>
+        </div>
+    </div>
+    <div class="rightlist">
+        <div class="verticalGrayTabs">
+            <div class="with_padding">
+                <a onclick="tippy.hideAll();" href="/audios${window.openvk.current_id}">${tr('my_music')}</a>
+                <a onclick="tippy.hideAll();" href="/player/upload">${tr('upload_audio')}</a>
+                <a onclick="tippy.hideAll();" href="/search?section=audios" id="ki">${tr('audio_new')}</a>
+                <a onclick="tippy.hideAll();" href="/search?section=audios&order=listens" id="ki">${tr('audio_popular')}</a>
+                <hr>
+                <a onclick="tippy.hideAll();" href="/playlists${window.openvk.current_id}" id="ki">${tr('my_playlists')}</a>
+                <a onclick="tippy.hideAll();" href="/audios/newPlaylist">${tr('new_playlist')}</a>
+            </div>
+            <div class="friendsAudiosList">
+            ${friendshtml}
+            </div>
+        </div>
+    </div>
 </div>
 `
     tippy(document.querySelector('#headerMusicLinkDiv'), {
@@ -895,14 +940,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         interactive: true,
         placement: 'bottom',
         theme: 'musicpopup',
-        maxWidth: 660,
-        arrow: true,
+        maxWidth: 795,
+        arrow: false,
         getReferenceClientRect: () => {
-            const topPlayer = document.querySelector('.top_audio_player');
-            const playButton = document.querySelector('.top_audio_player_play');
-            const headerMusicBtn = document.querySelector('#headerMusicBtn');
-
-            if (!window.player || !window.player.currentTrack) {
+            const searchBox = document.querySelector('.home_search');
+            if (!searchBox) {
+                // Fallback to original behavior if search box not found
+                const headerMusicBtn = document.querySelector('#headerMusicBtn');
                 const rect = headerMusicBtn.getBoundingClientRect();
                 return {
                     width: rect.width,
@@ -914,17 +958,14 @@ window.addEventListener('DOMContentLoaded', async () => {
                 };
             }
 
-            const rect = topPlayer.getBoundingClientRect();
-            const playRect = playButton.getBoundingClientRect();
-            const centerX = playRect.left + (playRect.width / 2) - 2;
-            
+            const rect = searchBox.getBoundingClientRect();
             return {
-                width: 0,
+                width: 795,
                 height: rect.height,
                 top: rect.top,
                 bottom: rect.bottom,
-                left: centerX,
-                right: centerX,
+                left: rect.left,
+                right: rect.left + 795,
             };
         },
         appendTo: document.body,
@@ -1410,3 +1451,39 @@ if (today.getDate() === 1 && today.getMonth() === 3) {
         if (u(this).find('#liked').length) { Doge.show(); }
     });
 }
+
+u(document).on("mousemove click mouseup", ".bigPlayer .trackPanel .selectableTrack, .audioEntry .subTracks .lengthTrackWrapper .selectableTrack, #aj_player_track_length .selectableTrack", (e) => {
+    if(window.player.isAtAudiosPage() && window.player.current_track_id == 0)
+        return
+
+    if(u('.ui-draggable-dragging').length > 0) {
+        return
+    }
+
+    function __defaultAction(i_time) {
+        window.player.listen_coef -= 0.5
+        window.player.audioPlayer.currentTime = i_time
+    }
+
+    const taggart = u(e.target).closest('.selectableTrack')
+    const parent  = taggart.parent()
+    const rect = taggart.nodes[0].getBoundingClientRect()
+    const width = e.clientX - rect.left
+    const time = Math.ceil((width * window.player.currentTrack.length) / (rect.right - rect.left))
+    if(e.type == "mousemove") {
+        let buttonsPresseed = _bsdnUnwrapBitMask(e.buttons)
+        if(buttonsPresseed[0])
+            __defaultAction(time)
+    }
+
+    if(e.type == 'click' || e.type == 'mouseup') {
+        __defaultAction(time)
+    }
+
+    if(parent.find('.tip_result').length < 1) {
+        parent.append(`<div class='tip_result'></div>`)
+    }
+
+    const maxLeft = taggart.closest('.tippy-content') ? 578 : 315.5;
+    parent.find('.tip_result').html(fmtTime(time)).attr('style', `left:min(${width - 15}px, ${maxLeft}px)`)
+})
