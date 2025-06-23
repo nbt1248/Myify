@@ -21,7 +21,7 @@ let locales = {
 		"newUserSubhead": "Instant registration",
 		"left_edge": "Left edge:",
 		"right_edge": "Right edge:",
-		'oldposts_disabled_desc': "VKify 2016 does not support the old posts view.",
+		'oldposts_disabled_desc': "Myify does not support the old posts view.",
 		"back_to_page": "back to page",
 		"clear_playlist": "Clear playlist"
 	},
@@ -47,8 +47,8 @@ let locales = {
 		"newUserSubhead": "Мгновенная регистрация",
 		"left_edge": "Левая граница:",
 		"right_edge": "Правая граница:",
-		'oldposts_disabled_desc': "VKify 2016 не поддерживает старый вид постов.",
-		"back_to_page": "вернуться к странице",
+		'oldposts_disabled_desc': "Myify не поддерживает старый вид постов.",
+		"back_to_page": "вернутся к странице",
 		"clear_playlist": "Очистить плейлист"
 	}
 }
@@ -56,7 +56,7 @@ let locales = {
 window.vkifylocalize = function(langcode) {
 	if (!(langcode in locales)) {
 		try {
-		fetch(`/themepack/vkify16/2.0.0.0/resource/langs/${langcode}.json`)
+		fetch(`/themepack/myify/2.0.0.0/resource/langs/${langcode}.json`)
 			.then(response => {
 				if (!response.ok) {
 					console.error('failed to load vkify theme localization:', response.status, ' using en...');
