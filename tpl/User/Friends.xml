@@ -34,35 +34,7 @@
     {/if}
 {/block} 
 
-{block header}
-    {if isset($thisUser) && $thisUser->getId() == $user->getId()}
-        {_my_friends}
-    {else}
-        <a href="{$user->getURL()}">{$user->getCanonicalName()}</a> »
-        {if $act == "incoming"}
-            {_incoming_req}
-        {elseif $act == "outcoming"}
-            {_outcoming_req}
-        {elseif $act == "followers"}
-            {_followers}
-        {elseif $act == "online"}
-            {_friends_online}
-        {else}
-            {_friends}
-        {/if}
-    {/if}
-	<style>
-	.container_gray {
-	  background: #FFF !important;
-	  padding: 10px !important;
-	}
-	.container_gray .content {
-	  border: none !important;
-	}
-	</style>
-{/block}
-
-{block tabs}
+{block rtabs}
     {var $menuItems = [
         [
             'url' => '/friends' . $thisUser->getId(),
@@ -93,16 +65,22 @@
             'url' => '/invite',
             'title' => 'invite',
             'active' => false,
-            'condition' => isset($thisUser) && $thisUser->getId() == $user->getId(),
-            'extraItem' => [
-                'content' => ''
-            ]
+            'condition' => isset($thisUser) && $thisUser->getId() == $user->getId()
         ]
     ]}
     {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => 'user'}
 {/block}
 
 {* BEGIN ELEMENTS DESCRIPTION *}
+
+{block size}
+    {var $title = !is_null($thisUser) && $user->getId() === $thisUser->getId()
+        ? ($act == "incoming" || $act == "outcoming" ? "req"
+            : ($act == "followers" ? "followers"
+                : ($act == "online" ? "friends_online" : "all_friends")))
+        : "friends"}
+    {include "../components/page_block_header.xml", title => $title, count => $count}
+{/block}
 
 {block link|strip|stripHtml}
     {$x->getURL()}
@@ -121,22 +99,17 @@
 {/block}
 
 {block description}
-    <table>
-        <tbody>
-            <tr>
-                <td width="120" valign="top"><span class="nobold">{_pronouns}: </span></td>
-                <td>{$x->isFemale() ? tr("female") : ($x->isNeutral() ? tr("neutral") : tr("male"))}</td>
-            </tr>
-            <tr>
-                <td width="120" valign="top"><span class="nobold">{_relationship}:</span></td>
-                <td>{$x->getLocalizedMaritalStatus()}</td>
-            </tr>
-            <tr>
-                <td width="120" valign="top"><span class="nobold">{_registration_date}: </span></td>
-                <td>{$x->getRegistrationTime()}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="labeled">
+        {$x->isFemale() ? tr("female") : ($x->isNeutral() ? tr("neutral") : tr("male"))}</td>
+    </div>
+    <div class="labeled">
+        {$x->getCity()}
+    </div>
+    {if $x->getSubscriptionStatus($thisUser) === 3}
+        <div class="labeled message">
+            <a href="/im?sel={$x->getId()}" rel="nofollow">{_send_message}</a>
+        </div>
+    {/if}
 {/block}
 
 {block actions}
@@ -147,21 +120,21 @@
                 <input type="hidden" name="act" value="add" />
                 <input type="hidden" name="id"  value="{$x->getId()}" />
                 <input type="hidden" name="hash" value="{$csrfToken}" />
-                <input type="submit" class="profile_link" value="{_friends_add}" />
+                <input type="submit" class="button button_wide button_small" value="{_friends_add}" />
             </form>
         {elseif $subStatus === 1}
             <form action="/setSub/user" method="post" class="profile_link_form" id="_submitUserSubscriptionAction">
                 <input type="hidden" name="act" value="add" />
                 <input type="hidden" name="id"  value="{$x->getId()}" />
                 <input type="hidden" name="hash" value="{$csrfToken}" />
-                <input type="submit" class="profile_link" value="{_friends_accept}" />
+                <input type="submit" class="button button_wide button_small" value="{_friends_accept}" />
             </form>
             {if $act !== 'followers'}
                 <form action="/setSub/user" method="post" class="profile_link_form" id="_submitUserSubscriptionAction">
                     <input type="hidden" name="act" value="rej" />
                     <input type="hidden" name="id"  value="{$x->getId()}" />
                     <input type="hidden" name="hash" value="{$csrfToken}" />
-                    <input type="submit" class="profile_link" value="{_friends_leave_in_flw}" />
+                    <input type="submit" class="button button_wide button_small" value="{_friends_leave_in_flw}" />
                 </form>
             {/if}
         {elseif $subStatus === 2}
@@ -169,15 +142,14 @@
                 <input type="hidden" name="act" value="rem" />
                 <input type="hidden" name="id"  value="{$x->getId()}" />
                 <input type="hidden" name="hash" value="{$csrfToken}" />
-                <input type="submit" class="profile_link" value="{_friends_reject}" />
+                <input type="submit" class="button button_wide button_small button_gray" value="{_friends_reject}" />
             </form>
         {elseif $subStatus === 3}
-            <a href="/im?sel={$x->getId()}" class="profile_link" rel="nofollow">{_send_message}</a>
             <form action="/setSub/user" method="post" class="profile_link_form" id="_submitUserSubscriptionAction">
                 <input type="hidden" name="act" value="rem" />
                 <input type="hidden" name="id"  value="{$x->getId()}" />
                 <input type="hidden" name="hash" value="{$csrfToken}" />
-                <input type="submit" class="profile_link" value="{_friends_delete}" />
+                <input type="submit" class="button button_wide button_small button_gray" value="{_friends_delete}" />
             </form>
         {/if}
     {/if}

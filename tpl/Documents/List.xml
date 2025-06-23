@@ -48,7 +48,7 @@
                 {/if}
             {/capture}
             {include "../components/page_block_header.xml", title => "documents", extra => $uploadBtnExtra}
-            <div class="page_block docs_page_wrapper">
+            <div class="page_block page_padding">
             <div n:class="docs_page_content, $is_gallery ? docs_page_gallery">
                 <div n:attr="id => !$is_gallery && sizeof($tags) > 0 ? search_page">
                     <div n:class="container_white, scroll_container, !$is_gallery && sizeof($tags) > 0 ? page_wrap_content_main">

@@ -655,6 +655,165 @@ $(document).ready(function () {
     }
 });
 
+// Search Bar Component JavaScript
+window.uiSearch = {
+    // Initialize search functionality
+    init: function() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.bindEvents();
+        });
+    },
+
+    // Bind events to search elements
+    bindEvents: function() {
+        // Handle input changes for all search fields
+        document.addEventListener('input', (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains('ui_search_field')) {
+                this.handleInputChange(e.target);
+            }
+        });
+
+        // Handle reset button clicks
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains('ui_search_reset')) {
+                this.reset(e.target, false, e);
+            }
+        });
+
+        // Handle form submissions
+        document.addEventListener('submit', (e) => {
+            if (e.target && e.target.closest && e.target.closest('.ui_search')) {
+                this.handleSubmit(e);
+            }
+        });
+
+        // Handle focus/blur for styling
+        document.addEventListener('focus', (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains('ui_search_field')) {
+                this.handleFocus(e.target);
+            }
+        }, true);
+
+        document.addEventListener('blur', (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains('ui_search_field')) {
+                this.handleBlur(e.target);
+            }
+        }, true);
+    },
+
+    // Handle input field changes
+    handleInputChange: function(input) {
+        const searchContainer = input.closest('.ui_search');
+        if (!searchContainer) return;
+
+        const value = input.value.trim();
+
+        // Toggle empty state
+        if (value === '') {
+            searchContainer.classList.add('ui_search_field_empty');
+        } else {
+            searchContainer.classList.remove('ui_search_field_empty');
+        }
+
+        // Update reset button visibility
+        this.updateResetButton(searchContainer, value);
+    },
+
+    // Handle focus events
+    handleFocus: function(input) {
+        const searchContainer = input.closest('.ui_search');
+        if (searchContainer) {
+            searchContainer.classList.add('ui_search_focused');
+        }
+    },
+
+    // Handle blur events
+    handleBlur: function(input) {
+        const searchContainer = input.closest('.ui_search');
+        if (searchContainer) {
+            searchContainer.classList.remove('ui_search_focused');
+        }
+    },
+
+    // Update reset button visibility and state
+    updateResetButton: function(container, value) {
+        const resetButton = container.querySelector('.ui_search_reset');
+        if (!resetButton) return;
+
+        if (value === '') {
+            resetButton.style.visibility = 'hidden';
+            resetButton.style.opacity = '0';
+        } else {
+            resetButton.style.visibility = 'visible';
+            resetButton.style.opacity = '0.75';
+        }
+    },
+
+    // Reset search field
+    reset: function(resetButton, clearFocus = false, event = null) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        const searchContainer = resetButton.closest('.ui_search');
+        if (!searchContainer) return false;
+
+        const input = searchContainer.querySelector('.ui_search_field');
+        if (!input) return false;
+
+        // Clear the input
+        input.value = '';
+
+        // Update container state
+        searchContainer.classList.add('ui_search_field_empty');
+
+        // Hide reset button
+        this.updateResetButton(searchContainer, '');
+
+        // Focus input if requested
+        if (!clearFocus) {
+            input.focus();
+        }
+
+        // Trigger input event for any listeners
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+
+        return false;
+    },
+
+    // Handle form submission
+    handleSubmit: function(event) {
+        const form = event.target;
+        const searchContainer = form.closest('.ui_search');
+        if (!searchContainer) return;
+
+        const input = form.querySelector('.ui_search_field');
+        if (!input || !input.value.trim()) {
+            event.preventDefault();
+            return false;
+        }
+
+        // Add loading state
+        this.setLoadingState(searchContainer, true);
+
+        // Allow form to submit normally
+        return true;
+    },
+
+    // Set loading state
+    setLoadingState: function(container, loading) {
+        if (loading) {
+            container.classList.add('ui_search_loading');
+        } else {
+            container.classList.remove('ui_search_loading');
+        }
+    }
+};
+
+// Initialize search functionality
+window.uiSearch.init();
+
 window.addEventListener('DOMContentLoaded', async () => {
     // Watch for .tip_result elements in tippy content and override their max left value
     const observer = new MutationObserver((mutations) => {

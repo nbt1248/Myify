@@ -19,29 +19,35 @@
 
 {block tabs}
     {if !is_null($thisUser) && $user->getId() === $thisUser->getId()}
-        <div n:attr='id => ($admin ? false : "activetabs")' class="tab">
-            <a n:attr='id => ($admin ? false : "act_tab_a")' href="/groups{$user->getId()}">
-                {_groups}
-            </a>
-        </div>
-        <div n:attr='id => (!$admin ? false : "activetabs")' class="tab">
-            <a n:attr='id => (!$admin ? false : "act_tab_a")' href="/groups{$user->getId()}?act=managed">
-                {_managed}
-            </a>
-        </div>
-    {/if}
-{/block}
+        {var $count = $user->getClubCount()}
+        {var $tabs = [
+            [
+                'url' => "/groups{$user->getId()}",
+                'title' => 'groups',
+                'active' => !$admin,
+                'id' => 'groups_tab_all',
+                'count' => $count
+            ],
+            [
+                'url' => "/groups{$user->getId()}?act=managed",
+                'title' => 'managed',
+                'active' => $admin,
+                'id' => 'groups_tab_managed',
+                'count' => $user->getClubCount(true)
+            ]
+        ]}
+        {var $createGroupButton = '<a class="button" href="/groups_create">' . tr('create_group') . '</a>'}
+        {include "../components/page_tabs_header.xml", tabs => $tabs, id => 'groups_top_tabs', extra => $createGroupButton}
 
-{block size}
-    <div style="padding-bottom: 0px; {if is_null($thisUser) || $user->getId() !== $thisUser->getId()}padding-top: 0px;{/if}" class="summaryBar">
-        <div class="summary">
-            {if !is_null($thisUser) && $user->getId() === $thisUser->getId()}
-                {tr("groups_list", $thisUser->getClubCount())}
-            {else}
-                {tr("groups", $user->getClubCount())}
-            {/if}
-        </div>
-    </div>
+        {include "../components/search_bar.xml",
+            id => 'groups_search_header',
+            placeholder => tr('search_by_groups'),
+            action => '/search',
+            section => 'groups',
+            class => 'groups_search_header',
+            onsubmit => 'this.submit(); return false;'
+        }
+    {/if}
 {/block}
 
 {block link|strip|stripHtml}
@@ -54,31 +60,23 @@
 	{else}
 		{$x->getAvatarUrl('miniscule')}
 		{/if}" 
-		alt="{$x->getCanonicalName()}" width="75" loading=lazy
+		alt="{$x->getCanonicalName()}" width="80" loading=lazy
 	/>
 {/block}
 
 {block name}{/block}
 
 {block infotable}
-    <table id="basicInfo" class="ugc-table group_info" cellspacing="0" cellpadding="0" border="0">
-        <tbody>
-            <tr>
-                <td class="label"><span class="nobold">{_name}: </span></td>
-                <td class="data">
-                    <a href="{$x->getURL()}">{$x->getName()}</a>
-                    <img n:if="$x->isVerified()"
-                         class="name-checkmark"
-                         src="/assets/packages/static/openvk/img/checkmark.png"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <td class="label"><span class="nobold">{_size}:</span></td>
-                <td class="data"><a href="/club{$x->getId()}/followers">{tr("participants", $x->getFollowersCount())}</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="labeled name">
+        <a href="{$x->getURL()}">{$x->getName()}</a>
+        <img n:if="$x->isVerified()"
+                class="name-checkmark"
+                src="/assets/packages/static/openvk/img/checkmark.png"
+        />
+    </div>
+    <div class="labeled">
+         <a href="/club{$x->getId()}/followers">{tr("participants", $x->getFollowersCount())}</a></td>
+    </div>
 {/block}
 
 {block description}
@@ -86,53 +84,43 @@
 {/block}
 
 {block actions}
-    <a href="{$x->getURL()}" class="profile_link">{_check_community}</a>
-    {if $x->canBeModifiedBy($thisUser ?? NULL)}
-        {var $clubPinned = $thisUser->isClubPinned($x)}
-        <a href="/groups_pin?club={$x->getId()}&hash={rawurlencode($csrfToken)}" class="profile_link" n:if="$clubPinned || $thisUser->getPinnedClubCount() <= 10" id="_pinGroup" data-group-name="{$x->getName()}" data-group-url="{$x->getUrl()}">
-            {if $clubPinned}
-                {_remove_from_left_menu}
-            {else}
-                {_add_to_left_menu}
+    <div class="post_actions">
+        <div class="post_actions_icon"></div>
+        <div class="tippy-menu">
+            <a href="{$x->getURL()}">{_check_community}</a>
+            {if $x->canBeModifiedBy($thisUser ?? NULL)}
+                {var $clubPinned = $thisUser->isClubPinned($x)}
+                <a href="/groups_pin?club={$x->getId()}&hash={rawurlencode($csrfToken)}" n:if="$clubPinned || $thisUser->getPinnedClubCount() <= 10" id="_pinGroup" data-group-name="{$x->getName()}" data-group-url="{$x->getUrl()}">
+                    {if $clubPinned}
+                        {_remove_from_left_menu}
+                    {else}
+                        {_add_to_left_menu}
+                    {/if}
+                </a>
             {/if}
-        </a>
-    {/if}
-    {if $x->getSubscriptionStatus($thisUser) == false}
-        <form class="profile_link_form" action="/setSub/club" method="post">
-            <input type="hidden" name="act" value="add" />
-            <input type="hidden" name="id" value="{$x->getId()}" />
-            <input type="hidden" name="hash" value="{$csrfToken}" />
-            <input type="submit" class="profile_link" value="{_join_community}" />
-        </form>
-    {else}
-        <form class="profile_link_form" action="/setSub/club" method="post">
-            <input type="hidden" name="act" value="rem" />
-            <input type="hidden" name="id" value="{$x->getId()}" />
-            <input type="hidden" name="hash" value="{$csrfToken}" />
-            <input type="submit" class="profile_link" value="{_leave_community}" />
-        </form>
-    {/if}
+            {if $x->getSubscriptionStatus($thisUser) == false}
+                <a href="javascript:void(0)" onclick="this.closest('.tippy-menu').querySelector('form[data-action=add]').submit()">{_join_community}</a>
+                <form style="display: none" data-action="add" action="/setSub/club" method="post">
+                    <input type="hidden" name="act" value="add" />
+                    <input type="hidden" name="id" value="{$x->getId()}" />
+                    <input type="hidden" name="hash" value="{$csrfToken}" />
+                </form>
+            {else}
+                <a href="javascript:void(0)" onclick="this.closest('.tippy-menu').querySelector('form[data-action=rem]').submit()">{_leave_community}</a>
+                <form style="display: none" data-action="rem" action="/setSub/club" method="post">
+                    <input type="hidden" name="act" value="rem" />
+                    <input type="hidden" name="id" value="{$x->getId()}" />
+                    <input type="hidden" name="hash" value="{$csrfToken}" />
+                </form>
+            {/if}
+        </div>
+    </div>
 {/block}
 
 {block bottom}
     {if !is_null($thisUser) && $user->getId() === $thisUser->getId()}
-        <div class="groups_options">
-            <div id="gp_container" style="width: 200px; margin-right: 39px;">
-                <h4>{_open_new_group}</h4>
-                <span>{_open_group_desc}</span>
-                <form action="/groups_create">
-                    <button class="button">{_create_group}</button>
-                </form>
-            </div>
-            <div id="gp_container" style="width: 344px;">
-                <h4>{_search_group}</h4>
-                <span>{_search_group_desc}</span>
-                <form action="/search">
-                    <input name="section" type="hidden" value="groups">
-                    <input name="q" class="header_search_input" value="" style="background: none; width: 155px; padding-left: 3px;">
-                    <button class="button">{_search_by_groups}</button>
-                </form>
-            </div>
+        <div class="page_block" style="text-align:center;padding:120px 0;">
+            продам гараж
         </div>
     {/if}
 {/block}

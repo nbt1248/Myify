@@ -7,7 +7,13 @@
             {ifset specpage}
                 {include specpage, x => $dat}
             {else}
-                <div class="container_gray {ifset noscroll}no_scroll_container{else}scroll_container{/ifset}">
+                {ifset size}
+                    {include size, x => $dat}
+                {/ifset}
+                <div n:ifset="tabs" n:ifcontent>
+                    {include tabs}
+                </div>
+                <div class="page_block list_view">
                     {var $data = is_array($iterator) ? $iterator : iterator_to_array($iterator)}
 
                     {ifset top}
@@ -15,34 +21,29 @@
                     {/ifset}
 
                     {if sizeof($data) > 0}
-                        <div class="scroll_node content" n:foreach="$data as $dat">
-                            <table>
-                                <tbody n:attr="id => is_null($table_body_id) ? NULL : $table_body_id">
-                                    <tr>
-                                        <td valign="top">
-                                            <a href="{include link, x => $dat}">
-                                                {include preview, x => $dat}
-                                            </a>
-                                        </td>
-                                        <td valign="top" style="width: 100%">
-                                            {ifset infotable}
-                                                {include infotable, x => $dat}
-                                            {else}
-                                            <a href="{include link, x => $dat}">
-                                                <b>
-                                                    {include name, x => $dat}
-                                                </b>
-                                            </a>
-                                            <br/>
-                                                {include description, x => $dat}
-                                            {/ifset}
-                                        </td>
-                                        <td n:ifset="actions" valign="top" class="action_links" style="min-width: 150px;">
-                                            {include actions, x => $dat}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="people_row" n:foreach="$data as $dat" n:attr="id => is_null($table_body_id) ? NULL : $table_body_id">
+                            <div class="img">
+                                <a href="{include link, x => $dat}">
+                                    {include preview, x => $dat}
+                                </a>
+                            </div>
+                            <div n:ifset="actions" class="action_links controls">
+                                {include actions, x => $dat}
+                            </div>
+                            <div class="info">
+                                {ifset infotable}
+                                    {include infotable, x => $dat}
+                                {else}
+                                    <div class="labeled name">
+                                        <a href="{include link, x => $dat}">
+                                            <b>
+                                                {include name, x => $dat}
+                                            </b>
+                                        </a>
+                                    </div>
+                                    {include description, x => $dat}
+                                {/ifset}
+                            </div>
                         </div>
                             {include "components/paginator.xml", conf => (object) [
                                 "page"     => $page,
@@ -62,12 +63,8 @@
             {/ifset}
         </div>
         <div class="right_small_block">
-            <div n:ifset="tabs" n:ifcontent>
-                {include tabs}
-            </div>
-
-            {ifset size}
-                {include size, x => $dat}
+            {ifset rtabs}
+                {include rtabs}
             {/ifset}
 
             {ifset before_content}

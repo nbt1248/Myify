@@ -222,3 +222,8 @@
 .group_u_info_row {
 	padding-top: 7px;
 }
+
+.game_edit {
+    width: fit-content;
+    margin: 0 auto;
+}

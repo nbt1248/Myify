@@ -1,42 +1,57 @@
 {extends "../@layout.xml"}
 {block title}{_invite}{/block}
 
-{block header}
-    {_invite}
-{/block}
-
 {block content}
-	<style>
-	.page-wrap {
-		padding: 0 !important;
-		padding-top: 12px !important;
-	}
-	.page_content {
-	  display: inline-block;
-	  width: 100% !important;
-	}
-	</style>
-    <div class="tabs stupid-fix">
-        <div class="tab" id="ki">
-            <a href="/friends{$thisUser->getId()}" id="ki">{_all_friends}</a>
+    {var $menuItems = [
+        [
+            'url' => '/friends' . $thisUser->getId(),
+            'title' => 'all_friends',
+            'active' => false,
+            'extraItem' => [
+                'content' => $act === 'friends' ? $count : ''
+            ]
+        ],
+        [
+            'url' => '?act=online',
+            'title' => 'online',
+            'active' => false,
+            'extraItem' => [
+                'content' => $act === 'online' ? $count : ''
+            ]
+        ],
+        [
+            'url' => '?act=incoming',
+            'title' => 'req',
+            'active' => false,
+            'extraItem' => [
+                'content' => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming') ? $count : ''
+            ]
+        ],
+        [
+            'url' => '/invite',
+            'title' => 'invite',
+            'active' => true
+        ]
+    ]}
+    <div class="wide_column_left">
+        <div class="narrow_column_wrap">
+            <div class="narrow_column">
+                {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => 'user'}
+            </div>
         </div>
-        <div class="tab" id="ki">
-            <a href="/friends{$thisUser->getId()}?act=online" id="ki">{_online}</a>
+        <div class="wide_column_wrap">
+            <div class="wide_column">
+                {include "../components/page_block_header.xml", title => "invite"}
+                <div class="invitebox page_block page_padding">
+                    {_you_can_invite}<br />
+                    <br />
+                    <center>
+                        <input type="text" readonly value="https://{$_SERVER["HTTP_HOST"]}/reg?ref={rawurlencode($thisUser->getRefLinkId())}" size="50" />
+                    </center>
+                    <p>{_you_can_invite_2}</p>
+                </div>
+            </div>
         </div>
-        <div class="tab" id="ki">
-            <a href="/friends{$thisUser->getId()}?act=incoming" id="ki">{_req}</a>
-        </div>
-        <div class="tab" id="activetabs">
-            <a href="/invite" id="act_tab_a">{_invite}</a>
-        </div>
-    </div>
-    <div class="invitebox">
-        {_you_can_invite}<br />
-        <br />
-		<center>
-			<input type="text" readonly value="https://{$_SERVER["HTTP_HOST"]}/reg?ref={rawurlencode($thisUser->getRefLinkId())}" size="50" />
-		</center>
-        <p>{_you_can_invite_2}</p>
     </div>
 
 {/block}

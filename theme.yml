@@ -6,9 +6,9 @@ override_templates: true
 inherits_master: false
 metadata:
     name:
-        _: "VKify 2016 (UNSTABLE)"
-        en: "VKify 2016 (UNSTABLE)"
-        ru: "VKify 2016 (НЕСТАБИЛЬНА)"
-        uk: "VKify 2016 (НЕСТАБІЛЬНА)"
+        _: "VKify 2016 (unstable)"
+        en: "VKify 2016 (unstable)"
+        ru: "VKify 2016 (нестабильна)"
+        uk: "VKify 2016 (нестабільна)"
     author: "VKify: koke228 (ovk.to/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify 2016: ayato"
     description: "ВК 2016-17 гг."
