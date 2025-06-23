@@ -1126,6 +1126,13 @@ div.container_gray>form>table {
     width: 45%
 }
 
+label:has(input[type="checkbox"], input[type="radio"]) {
+	display: flex;
+	width: fit-content;
+	align-items: center;
+    margin: 5px 0;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
     background-color: transparent;
@@ -1134,7 +1141,7 @@ input[type="radio"] {
     -ms-appearance: none;
     width:15px;
     height:15px;
-    margin:1px 7px 0 0;
+    margin:0 7px 0 0;
     outline: 0;
     cursor: pointer;
     vertical-align: middle;
@@ -1146,6 +1153,8 @@ input[type="checkbox"] {
 }
 input[type="radio"] {
     background: url(/themepack/vkify16/1.0.0.0/resource/icons/dev_radio.png) 0 0 no-repeat;
+    height: 14px;
+    width: 14px;
 }
 
 input[type=checkbox]:checked {
@@ -1159,13 +1168,18 @@ input[type="checkbox"]:hover {
 }
 
 input[type="radio"]:checked {
-    background-position: 0 -15px
+    background-position: 0 -14px
 }
 input[type="radio"]:checked:hover {
-    background-position: 0 -45px;
+    background-position: 0 -42px
 }
 input[type="radio"]:hover {
     background-position:0 -28px
+}
+
+#showIgnored {
+	float: right;
+	margin: 2px 2px 0 0;
 }
 
 .content_subtitle,
