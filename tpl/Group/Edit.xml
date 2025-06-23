@@ -1,146 +1,132 @@
 {extends "../@layout.xml"}
 {block title}{_edit_group}{/block}
 
-{block headIncludes}
-    <link rel="stylesheet" href="/themepack/vkify16/1.0.0.0/resource/css/settings.css">
+{block header}
+    <a href="{$club->getURL()}">{$club->getName()}</a> » {_edit_group}
 {/block}
 
 {block content}
-    <div class="wide_column_left">
-        <div class="wide_column_left">
-            <div class="narrow_column_wrap">
-                <div class="narrow_column">
-                    {var $menuItems = [
-                        [
-                            'url' => "javascript:void(0)",
-                            'title' => 'main',
-                            'active' => true
-                        ],
-                        [
-                            'url' => "/club{$club->getId()}/backdrop",
-                            'title' => 'backdrop_short',
-                            'active' => false
-                        ],
-                        [
-                            'url' => "/club{$club->getId()}/followers",
-                            'title' => 'followers',
-                            'active' => false
-                        ]
-                    ]}
-                    {var $ownblockData = [
-                        'url' => "/club" . $club->getId(),
-                        'name' => $club->getName(),
-                        'img' => $club->getAvatarURL()
-                    ]}
-                    {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => "club"}
-                </div>
-            </div>
-            <div class="wide_column_wrap">
-                <div class="wide_column">
-                    <div class="page_block">
-                        {include "../components/page_block_header.xml", title => "main_information"}
-                        <form method="POST" enctype="multipart/form-data">
-                            <div class="settings_panel settings_padding clear_fix group_settings    ">
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_name}</div>
-                                    <div class="settings_labeled_text">
-                                        <input type="text" name="name" value="{$club->getName()}" />
-                                    </div>
-                                </div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_description}</div>
-                                    <div class="settings_labeled_text">
-                                        <textarea type="text" name="about" style="resize:vertical;">{$club->getDescription()}</textarea>
-                                    </div>
-                                </div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_page_address}</div>
-                                    <div class="settings_labeled_text">
-                                        <input type="text" name="shortcode" value="{$club->getShortcode()}" />
-                                    </div>
-                                </div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_website}</div>
-                                    <div class="settings_labeled_text">
-                                        <input type="text" name="website" value="{$club->getWebsite()}" />
-                                    </div>
-                                </div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_avatar}</div>
-                                    <div class="settings_labeled_text">
-                                        <label class="button">{_browse}
-                                            <input type="file" id="ava" name="ava" style="display: none;" onchange="filename.innerHTML=ava.files[0].name" />
-                                        </label>
-                                        <div id="filename" style="margin-top: 10px;"></div>
-                                    </div>
-                                </div>
-                                <div class="settings_line"></div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_wall}</div>
-                                    <div class="settings_labeled_text">
-                                        <select name="wall">
-                                            <option value="1" n:attr="selected => $club->getWallType() == 1">{_group_allow_post_for_everyone}</option>
-                                            <option value="2" n:attr="selected => $club->getWallType() == 2">{_group_limited_post}</option>
-                                            <option value="0" n:attr="selected => $club->getWallType() == 0">{_group_closed_post}</option>
-                                        </select>
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="hide_from_global_feed" value="1" n:attr="checked => $club->isHideFromGlobalFeedEnabled(), disabled => $club->isHidingFromGlobalFeedEnforced()" />
-                                            {_group_hide_from_global_feed}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="settings_line"></div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_discussions}</div>
-                                    <div class="settings_labeled_text">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="everyone_can_create_topics" value="1" n:attr="checked => $club->isEveryoneCanCreateTopics()" />
-                                            {_everyone_can_create_topics}
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="display_topics_above_wall" value="1" n:attr="checked => $club->isDisplayTopicsAboveWallEnabled()" />
-                                            {_display_list_of_topics_above_wall}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="settings_line"></div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_group_administrators_list}</div>
-                                    <div class="settings_labeled_text">
-                                        {var $areAllAdminsHidden = $club->getManagersCount(true) == 0}
-                                        <label class="checkbox">
-                                            <input type="radio" name="administrators_list_display" value="0" n:attr="checked => $club->getAdministratorsListDisplay() == 0, disabled => $areAllAdminsHidden" />
-                                            {_group_display_only_creator}
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="radio" name="administrators_list_display" value="1" n:attr="checked => $club->getAdministratorsListDisplay() == 1, disabled => $areAllAdminsHidden" />
-                                            {_group_display_all_administrators}
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="radio" name="administrators_list_display" value="2" n:attr="checked => $club->getAdministratorsListDisplay() == 2" />
-                                            {_group_dont_display_administrators_list}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="settings_line"></div>
-                                <div class="settings_list_row">
-                                    <div class="settings_label">{_audios}</div>
-                                    <div class="settings_labeled_text">
-                                        <label>
-                                            <input type="checkbox" name="upload_audios" value="1" n:attr="checked => $club->isEveryoneCanUploadAudios()" />
-                                            {_everyone_can_upload_audios}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="settings_save_footer">
-                                    <input type="hidden" name="hash" value="{$csrfToken}" />
-                                    <input type="submit" value="{_save}" class="button" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div class="tabs">
+        <div id="activetabs" class="tab">
+            <a id="act_tab_a" href="javascript:void(0)">
+                {_main}
+            </a>
         </div>
+        <div class="tab">
+            <a href="/club{$club->getId()}/backdrop">
+                {_backdrop_short}
+            </a>
+        </div>
+        <div class="tab">
+            <a href="/club{$club->getId()}/followers">
+                {_followers}
+            </a>
+        </div>
+    </div>
+    
+    <div class="container_gray">
+        <h4>{_main_information}</h4>
+        <form method="POST" enctype="multipart/form-data">
+            <table cellspacing="7" cellpadding="0" width="60%" border="0" align="center">
+                <tbody>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_name}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="name" value="{$club->getName()}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_description}: </span>
+                        </td>
+                        <td>
+                            <textarea type="text" name="about" style="resize:vertical;">{$club->getDescription()}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_page_address}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="shortcode" value="{$club->getShortcode()}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_website}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="website" value="{$club->getWebsite()}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_avatar}: </span>
+                        </td>
+                        <td>
+                            <label class="button" style="">{_browse}
+                                <input type="file" id="ava" name="ava" style="display: none;" onchange="filename.innerHTML=ava.files[0].name" />
+                            </label>
+                            <div id="filename" style="margin-top: 10px;"></div>
+                        </td>
+                    </tr>
+		            <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_wall}: </span>
+                        </td>
+                        <td>
+                            <select name="wall">
+                                <option value="1" n:attr="selected => $club->getWallType() == 1" /> {_group_allow_post_for_everyone}</option>
+                                <option value="2" n:attr="selected => $club->getWallType() == 2" /> {_group_limited_post}</option>
+                                <option value="0" n:attr="selected => $club->getWallType() == 0" /> {_group_closed_post}</option>
+                            <select>
+
+                            <input type="checkbox" name="hide_from_global_feed" value="1" n:attr="checked => $club->isHideFromGlobalFeedEnabled(), disabled => $club->isHidingFromGlobalFeedEnforced()" /> {_group_hide_from_global_feed}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_discussions}: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="everyone_can_create_topics" value="1" n:attr="checked => $club->isEveryoneCanCreateTopics()" /> {_everyone_can_create_topics}<br>
+                            <input type="checkbox" name="display_topics_above_wall" value="1" n:attr="checked => $club->isDisplayTopicsAboveWallEnabled()" /> {_display_list_of_topics_above_wall}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_group_administrators_list}: </span>
+                        </td>
+                        <td>
+                            {var $areAllAdminsHidden = $club->getManagersCount(true) == 0}
+                            <input type="radio" name="administrators_list_display" value="0" n:attr="checked => $club->getAdministratorsListDisplay() == 0, disabled => $areAllAdminsHidden" /> {_group_display_only_creator}<br>
+                            <input type="radio" name="administrators_list_display" value="1" n:attr="checked => $club->getAdministratorsListDisplay() == 1, disabled => $areAllAdminsHidden" /> {_group_display_all_administrators}<br>
+                            <input type="radio" name="administrators_list_display" value="2" n:attr="checked => $club->getAdministratorsListDisplay() == 2" /> {_group_dont_display_administrators_list}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_audios}: </span>
+                        </td>
+                        <td>
+                            <label><input type="checkbox" name="upload_audios" value="1" n:attr="checked => $club->isEveryoneCanUploadAudios()" /> {_everyone_can_upload_audios}</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            <input type="hidden" name="hash" value="{$csrfToken}" />
+                            <input type="submit" value="{_save}" class="button" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
 {/block}
