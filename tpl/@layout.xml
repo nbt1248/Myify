@@ -7,7 +7,7 @@
             {ifset title}{include title} - {/ifset}{$instance_name}
         </title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="/themepack/vkify16/1.0.0.0/resource/favicon_vk.ico" />
+        <link rel="shortcut icon" href="/themepack/myify/1.0.0.0/resource/favicon_vk.ico" />
         <meta name="application-name" content="{$instance_name}" />
         <meta n:ifset="$csrfToken" name="csrf" value="{$csrfToken}" />
 
@@ -93,12 +93,12 @@
 
         <div class="toTop">
             <div id='to_up'>
-                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/vkify16/1.0.0.0/resource/toTop.png">
+                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/myify/1.0.0.0/resource/toTop.png">
                 <span>{_to_top}</span>
             </div>
             
             <div id='to_back'>
-                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/vkify16/1.0.0.0/resource/toTop.png">
+                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/myify/1.0.0.0/resource/toTop.png">
             </div>
         </div>
 
@@ -123,7 +123,18 @@
                         </div>
                         <div class="home_navigation">
                             {if isset($thisUser) && !$thisUser->isDeactivated()}
+                            <div n:if="OPENVK_ROOT_CONF['openvk']['preferences']['commerce'] && $thisUser->getCoins() != 0" id="votesBalance">
+                                <img style="width: 20px; margin-right: 5px;" src="/themepack/myify/1.0.0.0/resource/icons/hmailik.svg">
+                                {$thisUser->getCoins()|noescape}
+                                <a href="/settings?act=finance">+</a>
+                            </div>
                                 <a class="top_nav_btn" id="top_notify_btn" href="/notifications" class="link" title="{_my_feedback} [Alt+Shift+N]" accesskey="n">
+                                    <div class="top_nav_btn_icon"></div>
+                                </a>
+                                <a class="top_nav_btn" id="top_im_btn" href="/im" class="link" title="{_my_messages}" accesskey="n">
+                                    <div class="top_nav_btn_icon"></div>
+                                </a>
+                                <a class="top_nav_btn" id="top_apps_btn" href="/apps" class="link" title="{_apps}" accesskey="n">
                                     <div class="top_nav_btn_icon"></div>
                                 </a>
                                 <div class="top_nav_audio" id="headerMusicLinkDiv">
@@ -141,38 +152,6 @@
                                 </div>
                             {/if}
                         </div>
-                        <div class="end_navigation">
-                        {ifset $thisUser}
-                            {if $thisUser->isDeactivated()}
-                                <div class="link">
-                                    <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
-                                </div>
-                            {else}
-                                <div class="link">
-                                    <a id="userMenuTrigger">
-                                        <div id="userMenuName">{$thisUser->getFirstName()}</div>
-                                        <img id="userMenuAvatar" src="{$thisUser->getAvatarUrl('miniscule')}">
-                                        <div id="userMenuArrow"></div>
-                                    </a>
-                                </div>
-                                <div id="userMenuTooltip">
-                                    <div class="tippy-menu">
-                                        <a href="/id{$thisUser->getId()}">{_my_page}</a>
-                                        <div class="separator"></div>
-                                        <a href="/edit">{_edit}</a>
-                                        <a href="/settings">{_menu_settings}</a>
-                                        <a href="/support">{_menu_help}</a>
-                                        <div class="separator"></div>
-                                        <a href="/logout?hash={urlencode($csrfToken)}">{_menu_logout}</a>
-                                    </div>
-                                </div>
-                            {/if}
-                        {else}
-                            <div class="link">
-                                <a href="/reg">{_header_registration}</a>
-                            </div>
-                        {/ifset}
-                        </div>
                     {/if}
                 </div>
             </div>
@@ -182,7 +161,27 @@
                     {ifset $thisUser}
                         {if !$thisUser->isBanned() XOR !$thisUser->isActivated() XOR $thisUser->isDeactivated()}
                             <a href="/edit" class="link edit-button">{_edit_button}</a>
-                            <a href="{$thisUser->getURL()}" class="link" title="{_my_page} [Alt+Shift+.]" accesskey=".">{_my_page}</a>
+                            <div class="end_navigation">
+                        {ifset $thisUser}
+                            {if $thisUser->isDeactivated()}
+                                <div class="link">
+                                    <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
+                                </div>
+                            {else}
+                                <div class="link">
+                                    <a id="userMenuTrigger" href="{$thisUser->getURL()}" accesskey=".">
+                                        <img id="userMenuAvatar" src="{$thisUser->getAvatarUrl('miniscule')}">
+                                        <div id="userMenuName">{$thisUser->getFirstName()}</div>
+                                    </a>
+                                </div>
+                            {/if}
+                        {else}
+                            <div class="link">
+                                <a href="/reg">{_header_registration}</a>
+                            </div>
+                        {/ifset}
+                        </div>
+                            <a n:if="$thisUser->getLeftMenuItemStatus('news')" href="/feed" class="link" title="{_my_feed} [Alt+Shift+,]" accesskey=",">{_my_feed}</a>
                             <a href="/friends{$thisUser->getId()}" class="link">{_my_friends}
                                 <object type="internal/link" n:if="$thisUser->getRequestsCount() > 0">
                                     <a href="/friends{$thisUser->getId()}?act=incoming" class="linkunderline">
@@ -193,14 +192,8 @@
                             <a n:if="$thisUser->getLeftMenuItemStatus('photos')" href="/albums{$thisUser->getId()}" class="link">{_my_photos}</a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('videos')" href="/videos{$thisUser->getId()}" class="link">{_my_videos}</a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('audios')" href="/audios{$thisUser->getId()}" class="link">{_my_audios}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('messages')" href="/im" class="link">{_my_messages}
-                                <object type="internal/link" n:if="$thisUser->getUnreadMessagesCount() > 0">
-                                    +<b>{$thisUser->getUnreadMessagesCount()}</b>
-                                </object>
-                            </a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('notes')" href="/notes{$thisUser->getId()}" class="link">{_my_notes}</a>
                             <a n:if="$thisUser->getLeftMenuItemStatus('groups')" href="/groups{$thisUser->getId()}" class="link">{_my_groups}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('news')" href="/feed" class="link" title="{_my_feed} [Alt+Shift+,]" accesskey=",">{_my_feed}</a>
                             <a href="/settings" class="link">{_my_settings}</a>
                             
                             {if $thisUser->getLeftMenuItemStatus('docs') || $thisUser->getLeftMenuItemStatus('apps') || $thisUser->getLeftMenuItemStatus('fave')}
@@ -372,15 +365,6 @@
                         <div class="wrap1">
                             <div id="auth" class="page-wrap">
                                 <div class="page_content">
-                                    {ifset header}
-                                        <h2 class="page_block_h2">
-                                            <div class="page_block_header clear_fix">
-                                                <div class="page_block_header_inner _header_inner">
-                                                    {include header}
-                                                </div>
-                                            </div>
-                                        </h2>
-                                    {/ifset}
 
                                     {include content}
                                 </div>
@@ -435,7 +419,7 @@
         {script "js/scroll.js"}
         {script "js/player.js"}
         {script "js/al_wall.js"}
-        <script src="/themepack/vkify16/1.0.0.0/resource/patch_wall.js"></script>
+        <script src="/themepack/myify/1.0.0.0/resource/patch_wall.js"></script>
         {script "js/al_docs.js"}
         {script "js/al_api.js"}
         {script "js/al_mentions.js"}
@@ -444,7 +428,8 @@
         {script "js/al_navigation.js"}
         {script "js/al_comments.js"}
         {script "js/al_music.js"}
-	    <script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
+	    <script src="/themepack/myify/1.0.0.0/resource/patch_page.js"></script>
+        {script "js/al_despacito_wall.js"}
         {script "js/al_photos.js"}
 
         {ifset $thisUser}
@@ -511,9 +496,9 @@
         {/ifset}
         {script "js/router.js"}
     </body>
-    <script src="/themepack/vkify16/1.0.0.0/resource/tippys.js"></script>
-	<script src="/themepack/vkify16/1.0.0.0/resource/router_patch.js"></script>
-	<script src="/themepack/vkify16/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
+    <script src="/themepack/myify/1.0.0.0/resource/tippys.js"></script>
+	<script src="/themepack/myify/1.0.0.0/resource/router_patch.js"></script>
+	<script src="/themepack/myify/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
 	<script>
 		window.openvk.locales = {
         {foreach getLanguages() as $language}
