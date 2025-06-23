@@ -458,12 +458,12 @@
 								</div>
 								<div class="desc_info">
 									<div class="group_name" style="text-transform: lowercase; opacity: 0.5 !important;">{tr("birth_date")}:</div>
-                                        <div n:if="$user->getBirthdayPrivacy() == 0" class="group_desc" style="color: black; opacity: 1 !important;">
-                                            <span>{$user->getBirthday()->format('%e %B %Y')}</span>
-                                        </div>
-                                        <div n:if="$user->getBirthdayPrivacy() == 1" class="group_desc" style="color: black; opacity: 1 !important;">
-                                            <span>{$user->getBirthday()->format('%e %B')}</span>
-                                        </div>
+									<div n:if="$user->getBirthdayPrivacy() == 0" class="group_desc" style="color: black; opacity: 1 !important;">
+										<span>{$user->getBirthday()->format('%e %B %Y')}</span>
+									</div>
+									<div n:if="$user->getBirthdayPrivacy() == 1" class="group_desc" style="color: black; opacity: 1 !important;">
+										<span>{$user->getBirthday()->format('%e %B')}</span>
+									</div>
 								</div>
 							</div>
 						</div>
