@@ -402,7 +402,7 @@
 									</div>
 								</div>
 						</div>
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getMaritalStatus()" class="line_cell clear_fix">
 							<div class="thumb">							
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/relations.svg" />
 								</div>
@@ -419,7 +419,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="line_cell clear_fix">
+							<div m:if="$user->getRegistrationTime()" class="line_cell clear_fix">
 							<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/regday.svg" />
 								</div>
@@ -430,7 +430,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="line_cell clear_fix">
+							<div n:if="$user->getHometown()" class="line_cell clear_fix">
 							<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/city.svg" />
 								</div>
@@ -441,7 +441,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="line_cell clear_fix">
+							<div n:if="$user->getPoliticalViews()" class="line_cell clear_fix">
 							<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/pol.svg" />
 								</div>
@@ -452,18 +452,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="line_cell clear_fix">
+							<div n:if="$user->getBirthday()" class="line_cell clear_fix">
 							<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/bday.svg" />
 								</div>
 								<div class="desc_info">
 									<div class="group_name" style="text-transform: lowercase; opacity: 0.5 !important;">{tr("birth_date")}:</div>
-									<div n:if="$user->getBirthdayPrivacy() == 0" class="group_desc" style="color: black; opacity: 1 !important;">
-										<span>{$user->getBirthday()->format('%e %B %Y')}</span>
-									</div>
-									<div n:if="$user->getBirthdayPrivacy() == 1" class="group_desc" style="color: black; opacity: 1 !important;">
-										<span>{$user->getBirthday()->format('%e %B')}</span>
-									</div>
+                                        <div n:if="$user->getBirthdayPrivacy() == 0" class="group_desc" style="color: black; opacity: 1 !important;">
+                                            <span>{$user->getBirthday()->format('%e %B %Y')}</span>
+                                        </div>
+                                        <div n:if="$user->getBirthdayPrivacy() == 1" class="group_desc" style="color: black; opacity: 1 !important;">
+                                            <span>{$user->getBirthday()->format('%e %B')}</span>
+                                        </div>
 								</div>
 							</div>
 						</div>
@@ -477,7 +477,7 @@
 						</h3>
 					</a>
 				<div class="module_body clear_fix">
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getContactEmail()" class="line_cell clear_fix">
 								<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/email.svg" />
 								</div>
@@ -488,7 +488,7 @@
 									</div>
 								</div>
 							</div>
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getTelegram()" class="line_cell clear_fix">
 								<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/tg.svg" />
 								</div>
@@ -499,7 +499,7 @@
 									</div>
 								</div>
 							</div>
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getWebsite()" class="line_cell clear_fix">
 								<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/site.svg" />
 								</div>
@@ -510,7 +510,7 @@
 									</div>
 								</div>
 							</div>
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getCity()" class="line_cell clear_fix">
 								<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/city.svg" />
 								</div>
@@ -521,7 +521,7 @@
 									</div>
 								</div>
 							</div>
-						<div class="line_cell clear_fix">
+						<div n:if="$user->getPhysicalAddress()" class="line_cell clear_fix">
 								<div class="thumb">
 										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/address.svg" />
 								</div>
