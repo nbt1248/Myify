@@ -3,53 +3,24 @@
 
 {block content}
 
-    {var $menuItems = [
-        [
-            'url' => '/feed',
-            'title' => 'my_news',
-            'active' => !isset($globalFeed)
-        ],
-        [
-            'url' => '/feed/all',
-            'title' => 'all_news',
-            'active' => isset($globalFeed)
-        ],
-        [
-            'id' => '__feed_settings_link',
-            'url' => '#',
-            'title' => 'feed_settings',
-            'active' => false
-        ]
-    ]}
-
     {php $GLOBALS["_bigWall"] = 1}
-
-    <div class="wide_column_left">
-        <div class="narrow_column_wrap">
-            <div class="narrow_column">
-                {include "../components/ui_rmenu.xml", items => $menuItems}
-                <div class="page_block module_body">
-                    <div class="postFeedPageSelect">
-                        <p style="margin-bottom: 10px;">{_posts_per_page}:</p>
-                        <select id="pageSelect">
-                            <option value="1">1</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="wide_column_wrap">
             <div class="wide_column">
                 <div n:class="postFeedWrapper, $thisUser->hasMicroblogEnabled() ? postFeedWrapperMicroblog">
                     {include "../components/textArea.xml", route => "/wall" . $thisUser->getId() . "/makePost", graffiti => true, polls => true, notes => true, hasSource => true, geo => true}
                 </div>
+
+                     <div class="tabs">
+        <div n:attr="id => (isset($globalFeed) ? 'ki' : 'activetabs')" class="tab">
+            <a n:attr="id => (isset($globalFeed) ? 'ki' : 'act_tab_a')" href="/feed">{_my_news}</a>
+        </div>
+        <div n:attr="id => (isset($globalFeed) ? 'activetabs' : 'ki')" class="tab">
+            <a n:attr="id => (isset($globalFeed) ? 'act_tab_a' : 'ki')" href="/feed/all">{_all_news}</a>
+        </div>
+
+        <a href='#' id="__feed_settings_link" data-pagescount='{ceil($paginatorConf->count / $paginatorConf->perPage)}'>{_feed_settings}</a>
+    </div>
                 
                 <div class='scroll_container'>
                     {foreach $posts as $post}
