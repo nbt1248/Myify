@@ -445,7 +445,6 @@
         {script "js/al_comments.js"}
         {script "js/al_music.js"}
 	    <script src="/themepack/vkify16/1.0.0.0/resource/patch_page.js"></script>
-        {script "js/al_despacito_wall.js"}
         {script "js/al_photos.js"}
 
         {ifset $thisUser}

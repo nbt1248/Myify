@@ -3,19 +3,7 @@
 {block wrap}
 <div class="wrap2">
     <div class="wrap1">
-        <div class="page_wrap padding_top">
-            <div n:ifset="tabs" n:ifcontent class="tabs stupid-fix">
-                {include tabs}
-            </div>
-
-            {ifset size}
-                {include size, x => $dat}
-            {/ifset}
-
-            {ifset before_content}
-                {include before_content, x => $dat}
-            {/ifset}
-
+        <div class="left_big_block">
             {ifset specpage}
                 {include specpage, x => $dat}
             {else}
@@ -71,6 +59,19 @@
                         {/ifset}
                     {/if}
                 </div>
+            {/ifset}
+        </div>
+        <div class="right_small_block">
+            <div n:ifset="tabs" n:ifcontent>
+                {include tabs}
+            </div>
+
+            {ifset size}
+                {include size, x => $dat}
+            {/ifset}
+
+            {ifset before_content}
+                {include before_content, x => $dat}
             {/ifset}
 
             {ifset bottom}

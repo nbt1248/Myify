@@ -63,59 +63,43 @@
 {/block}
 
 {block tabs}
-    <div n:attr="id => ($act === 'friends' ? 'activetabs' : 'ki')" class="tab">
-        <a n:attr="id => ($act === 'friends' ? 'act_tab_a' : 'ki')" href="/friends{$thisUser->getId()}">{_all_friends}</a>
-    </div>
-    <div n:attr="id => ($act === 'online' ? 'activetabs' : 'ki')" class="tab">
-        <a n:attr="id => ($act === 'online' ? 'act_tab_a' : 'ki')" href="?act=online">{_online}</a>
-    </div>
-    <div n:if="!is_null($thisUser) && $user->getId() === $thisUser->getId()" n:attr="id => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming' ? 'activetabs' : 'ki')" class="tab">
-        <a n:attr="id => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming' ? 'act_tab_a' : 'ki')" href="?act=incoming">{_req}</a>
-    </div>
-	{if isset($thisUser) && $thisUser->getId() == $user->getId()}
-    <div id="ki" class="tab">
-        <a id="ki" href="/invite">{_invite}</a>
-    </div>
-	{/if}
-{/block}
-
-{block size}
-    <div n:if="$act === 'incoming' || $act === 'followers' || $act === 'outcoming'" class="mb_tabs">
-        <div n:attr="id => ($act === 'incoming' ? 'active' : 'ki')" class="mb_tab">
-            <div>
-                <a href="?act=incoming">{_incoming_req}</a>
-            </div>
-        </div>
-        <div n:attr="id => ($act === 'followers' ? 'active' : 'ki')" class="mb_tab">
-            <div>
-                <a href="?act=followers">{_followers}</a>
-            </div>
-        </div>
-        <div n:attr="id => ($act === 'outcoming' ? 'active' : 'ki')" class="mb_tab">
-            <div>
-                <a href="?act=outcoming">{_outcoming_req}</a>
-            </div>
-        </div>
-    </div>
-    <div style="padding-bottom: 0px;" class="summaryBar">
-        <div class="summary">
-            {if !is_null($thisUser) && $user->getId() === $thisUser->getId()}
-                {if $act == "incoming"}
-                    {tr("req", $count)}
-                {elseif $act == "outcoming"}
-                    {tr("req", $count)}
-                {elseif $act == "followers"}
-                    {tr("followers", $count)}
-                {elseif $act == "online"}
-                    {tr("friends_list_online", $count)}
-                {else}
-                    {tr("friends_list", $count)}
-                {/if}
-            {else}
-                {tr("friends", $count)}
-            {/if}
-        </div>
-    </div>
+    {var $menuItems = [
+        [
+            'url' => '/friends' . $thisUser->getId(),
+            'title' => 'all_friends',
+            'active' => $act === 'friends',
+            'extraItem' => [
+                'content' => $act === 'friends' ? $count : ''
+            ]
+        ],
+        [
+            'url' => '?act=online',
+            'title' => 'online',
+            'active' => $act === 'online',
+            'extraItem' => [
+                'content' => $act === 'online' ? $count : ''
+            ]
+        ],
+        [
+            'url' => '?act=incoming',
+            'title' => 'req',
+            'active' => $act === 'incoming' || $act === 'followers' || $act === 'outcoming',
+            'condition' => !is_null($thisUser) && $user->getId() === $thisUser->getId(),
+            'extraItem' => [
+                'content' => ($act === 'incoming' || $act === 'followers' || $act === 'outcoming') ? $count : ''
+            ]
+        ],
+        [
+            'url' => '/invite',
+            'title' => 'invite',
+            'active' => false,
+            'condition' => isset($thisUser) && $thisUser->getId() == $user->getId(),
+            'extraItem' => [
+                'content' => ''
+            ]
+        ]
+    ]}
+    {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => 'user'}
 {/block}
 
 {* BEGIN ELEMENTS DESCRIPTION *}

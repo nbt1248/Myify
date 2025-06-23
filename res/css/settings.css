@@ -51,7 +51,7 @@
     text-align: center;
 }
 
-.settings_list_row input:not([type="submit"], [type="checkbox"], [type="radio"]),.settings_list_row select,.settings_list_row textarea {
+.settings_list_row input:not([type="submit"], [type="checkbox"], [type="radio"]),.settings_list_row:not(.settings_privacy_row) select,.settings_list_row textarea {
     width: 300px;
 }
 
@@ -60,6 +60,8 @@
 }
 .settings_list_row label {
     margin-bottom: 10px;
+    display: flex;
+    width: fit-content;
 }
 
 .settings_list_row label.checkbox {
@@ -104,11 +106,17 @@
     border-bottom-width: 0
 }
 
+.settings_privacy_row .settings_labeled_text {
+    margin-left: 255px;
+}
+
 .settings_privacy_row .settings_label {
     width: 245px;
-    padding: 2px 10px 0 0;
     text-align: left;
     line-height: 18px
+}
+.settings_list_row:has(select, input:not([type="submit"])) .settings_label {
+    padding: 7px 10px 0 0;
 }
 
 .settings_row_button_wrap {

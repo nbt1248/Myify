@@ -48,7 +48,7 @@ let locales = {
 		"left_edge": "Левая граница:",
 		"right_edge": "Правая граница:",
 		'oldposts_disabled_desc': "VKify 2016 не поддерживает старый вид постов.",
-		"back_to_page": "вернутся к странице",
+		"back_to_page": "вернуться к странице",
 		"clear_playlist": "Очистить плейлист"
 	}
 }

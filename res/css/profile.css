@@ -525,6 +525,7 @@ td .nobold {
     border-radius: 2px;
     height: 34px;
     line-height: 32px;
+    user-select: none;
 }
 
 .profile_more_info_link:hover {
