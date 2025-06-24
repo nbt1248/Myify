@@ -284,7 +284,7 @@
                 "max_attachments": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["wall"]["postSizes"]["maxAttachments"] ?? 10},
                 "max_filesize_mb": 100,
                 "current_id": {isset($thisUser) ? $thisUser->getId() : 0},
-                "disable_ajax": {isset($disable_ajax) ? $disable_ajax : 0},
+                "disable_ajax": {isset($disable_ajax) ? $disable_ajax : 1},
                 "max_add_fields": {ovkGetQuirk("users.max-fields")},
                 "docs_max": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["maxSize"]},
                 "docs_allowed": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["allowedFormats"]},
