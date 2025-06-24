@@ -1,4 +1,4 @@
-id: vkify16
+id: myify
 version: "2.0.0.0"
 openvk_version: 0
 enabled: 1
@@ -6,9 +6,9 @@ override_templates: true
 inherits_master: false
 metadata:
     name:
-        _: "VKify 2016 (unstable)"
-        en: "VKify 2016 (unstable)"
-        ru: "VKify 2016 (нестабильна)"
-        uk: "VKify 2016 (нестабільна)"
-    author: "VKify: koke228 (ovk.to/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify 2016: ayato"
-    description: "ВК 2016-17 гг."
+        _: "Myify"
+        en: "Myify"
+        ru: "Myify"
+        uk: "Myify"
+    author: "VKify: koke228 (ovk.to/koke228); Стили VK 2016: thejenja (thejenja.github.io); VKify 2016: ayato; Myify: nbt1248"
+    description: "Мой Мир Mail.Ru"
