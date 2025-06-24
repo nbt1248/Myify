@@ -85,17 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
             maxWidth: 300
         });
 
-        safeSetupTooltip('#userMenuTrigger', 'userMenuTooltip', {
-            trigger: 'click',
-            placement: 'bottom-end',
-            onShow: (instance) => {
-                instance.reference.classList.add('shown');
-            },
-            onHide: (instance) => {
-                instance.reference.classList.remove('shown');
-            }
-        });
-
         document.querySelectorAll('.post_actions_icon').forEach(element => {
             if (!hasTippy(element)) {
                 tippy(element, window.postActionTooltipConfig);
@@ -110,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         );
     };
+
+    
 
     window.initializeTippys();
 
