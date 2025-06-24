@@ -1,50 +1,22 @@
 {extends "../@layout.xml"}
-{block title}{_wall}{/block}
-
 {block content}
-{var $menuItems = [
-    [
-        'url' => '/wall' . $owner,
-        'title' => 'all_posts',
-        'active' => $type == 'all'
-    ],
-    [
-        'url' => '/wall' . $owner . '?type=owners',
-        'title' => isset($club) ? 'clubs_posts' : tr("users_posts", ovk_proc_strtr($oObj->getFirstName(), 20)),
-        'active' => $type == 'owners'
-    ],
-    [
-        'url' => '/wall' . $owner . '?type=others',
-        'title' => 'others_posts',
-        'active' => $type == 'others'
-    ]
-]}
-    <div class="wide_column_left">
-        <div class="narrow_column_wrap">
-            <div class="narrow_column">
-                {include "../components/ui_rmenu.xml", items => $menuItems, ownblock => isset($club) ? 'club' : 'user'}
+    <div class="content_divider">
+        <div>
+            <div n:if="$canPost && $type == 'all'" class="content_subtitle">
+                {include "../components/textArea.xml", route => "/wall$owner/makePost", graffiti => true, polls => true, notes => true, hasSource => true, geo => true}
             </div>
-        </div>
-        <div class="wide_column_wrap">
-            <div class="wide_column">
-                <div class="content_divider">
-                    <div n:if="$canPost && $type == 'all'" class="content_subtitle">
-                        {include "../components/textArea.xml", route => "/wall$owner/makePost", graffiti => true, polls => true, notes => true, hasSource => true, geo => true}
+            
+            <div class="content scroll_container">
+                {if sizeof($posts) > 0}
+                    {foreach $posts as $post}
+                        {include "../components/post.xml", post => $post, commentSection => true}
+                    {/foreach}
+                    {include "../components/paginator.xml", conf => $paginatorConf}
+                {else}
+                    <div class="page_block module_body" style="border-top: 0px;">
+                        {_no_posts_abstract}
                     </div>
-                    
-                    <div class="content scroll_container">
-                        {if sizeof($posts) > 0}
-                            {foreach $posts as $post}
-                                {include "../components/post.xml", post => $post, commentSection => true}
-                            {/foreach}
-                            {include "../components/paginator.xml", conf => $paginatorConf}
-                        {else}
-                            <div class="page_block module_body" style="border-top: 0px;">
-                                {_no_posts_abstract}
-                            </div>
-                        {/if}
-                    </div>
-                </div>
+                {/if}
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-{extends "../@listView.xml"}
+{extends "../@listViewVid.xml"}
 {var $iterator = $videos}
 {var $count    = $paginatorConf->count}
 {var $page     = $paginatorConf->page}
@@ -6,20 +6,47 @@
 {block title}{_videos} {$user->getCanonicalName()}{/block}
 
 {block header}
-    <a href="{$user->getURL()}">{$user->getCanonicalName()}</a>
-    » {_videos}
 {/block}
 
 {block size}
-    <div style="padding-bottom: 0px; padding-top: 0;" class="summaryBar">
-        <div class="summary">
-            {tr("videos", $count)}
-            <span n:if="isset($thisUser) && $thisUser->getId() == $user->getId() && !OPENVK_ROOT_CONF['openvk']['preferences']['videos']['disableUploading']">
-                &nbsp;|&nbsp;
-                <a href="/videos/upload">{_upload_video}</a>
-            </span>
+    <div class="profilecover">
+            <div class="vcover">
+                    <div class="vcover_block_inner">
+                    <a href="{$user->getAvatarLink()|nocheck}">
+                        <img src="/themepack/myify/1.0.0.0/resource/vcover_200.png"
+                            alt="{$user->getCanonicalName()}"
+                            id="vbigCover"
+                            style="width: 100%; image-rendering: -webkit-optimize-contrast; height: 15.5em;"
+                            {if ($user->getAvatarPhoto())}
+                            onclick="OpenMiniature(event, {$user->getAvatarUrl('normal')}, null, {$user->getAvatarPhoto()->getPrettyId()}, null)"
+                            {/if}
+                            />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="column" id="vhead">
+                <div class="row">
+                {var $hasAvatar = !str_contains($user->getAvatarUrl('miniscule'), "/assets/packages/static/openvk/img/camera_200.png")}
+                    <div class="vavatar_block">
+                        <div class="avatar_block_inner">
+                        <a href="{$user->getAvatarLink()|nocheck}">
+					            <img src="{if $hasAvatar}{$user->getAvatarUrl('normal')}{else}/themepack/myify/1.0.0.0/resource/camera_200.png{/if}"
+                                alt="{$user->getCanonicalName()}"
+                                id="bigAvatar"
+                                style="width: 50px; image-rendering: -webkit-optimize-contrast;    border-radius: 100%;"
+                            />
+                        </a>
+                        </div>
+                    </div>
+                    <div class="vname">{$user->getCanonicalName()}</div>
+                </div>
+                <div class="vtabs" style="    margin-top: 15px;    margin-left: 60px;    text-transform: uppercase;    font-weight: 300;    font-size: 10px;">
+                    <div style="display: flex; flex-direction: row;"><a style="    color: white !important;">Видео</a><div style="    color: white !important;     margin-top: -3px;     margin-left: 3px;">{$count}</div></div>
+                </div>
+            </div>
         </div>
-    </div>
+        
 {/block}
 
 {block actions}
@@ -41,17 +68,9 @@
 {/block}
 
 {block name}
-    <span id="videoOpen" data-id="{$x->getPrettyId()}" style="color:unset;">{$x->getName()}</span>
+    <span id="videoOpen" data-id="{$x->getPrettyId()}" style="    color: #536B74;">{$x->getName()}</span>
 {/block}
 
 {block description}
-    <p>
-        <span>{$x->getDescription() ?? ""}</span>
-    </p>
-    <span style="color: grey;">{_video_uploaded} {$x->getPublicationTime()}</span><br/>
-    <span style="color: grey;">{_video_updated} {$x->getEditTime() ?? $x->getPublicationTime()}</span>
-    <p>
-        <a href="/video{$x->getPrettyId()}" data-id="{$x->getPrettyId()}">{_view_video}</a>
-        {if $x->getCommentsCount() > 0}| <a href="/video{$x->getPrettyId()}#comments">{_comments} ({$x->getCommentsCount()})</a>{/if}
-    </p>
+    <span style="    color: black;    opacity: 0.5;">{_video_uploaded} {$x->getPublicationTime()}</span><br/>
 {/block}

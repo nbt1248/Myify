@@ -24,7 +24,7 @@
 		<div id="activetabs" class="tab">
 			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
 		</div>
-		<a style="float: right;margin-right: 3px;margin-top: 4px;" href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
+		<a href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
 	{else}
 		<div id="ki" class="tab">
 			<a id="ki" href="/albums{$owner->getId()}">{_albums}</a>
@@ -36,16 +36,12 @@
 {/block}
 
 {block content}
-    <a href="/album{$album->getPrettyId()}">
-        {* TODO: Добавить склонения *}
-        <b>{$album->getPhotosCount()} {_photos}</b>
-    </a>
     
     {if !is_null($thisUser) && $album->canBeModifiedBy($thisUser) && !$album->isCreatedBySystem()}
-        &nbsp;|&nbsp;
-        <a href="/photos/upload?album={$album->getPrettyId()}">{_upload_photo}</a>
-        &nbsp;|&nbsp;
-        <a href="/album{$album->getPrettyId()}/edit">{_edit_album}</a>
+    <div class="row">
+        <a href="/photos/upload?album={$album->getPrettyId()}" style="    margin-right: 20px;    background: #fff;    color: #3F3F3F;    padding: 8px 14px;    border: 1px solid #D7D7D7;     height: fit-content;">{_upload_photo}</a>
+        <a href="/album{$album->getPrettyId()}/edit" style="    margin-right: 20px;    background: #fff;    color: #3F3F3F;    padding: 8px 14px;    border: 1px solid #D7D7D7;     height: fit-content;">{_edit_album}</a>
+    </div>
     {/if}
     <br/><br/>
     {if $album->getPhotosCount() > 0}

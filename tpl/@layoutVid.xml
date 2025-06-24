@@ -102,11 +102,11 @@
             </div>
         </div>
 
-        <div class="layout">
+        <div class="vlayout">
             <div id="xhead" class="dm"></div>
             <div class="page_header">
                 <div class="page_header_inner">
-                    <a href="/" class="home_button" title="{$instance_name}"><div class="home_button_bg"></div></a>
+                    <a href="/" class="home_button" title="{$instance_name}"><div class="home_button_bg" style="background: url(/themepack/myify/1.0.0.0/resource/icons/myv.png) no-repeat;"></div></a>
                     {if (isset($thisUser) ? (!$thisUser->isBanned() XOR !$thisUser->isActivated()) : true)}
                         <div class="home_search" id="search_box">
                             <div id="search_box_fr">
@@ -123,19 +123,11 @@
                         </div>
                         <div class="home_navigation">
                             {if isset($thisUser) && !$thisUser->isDeactivated()}
-                            <div n:if="OPENVK_ROOT_CONF['openvk']['preferences']['commerce'] && $thisUser->getCoins() != 0" id="votesBalance">
-                                <img style="width: 20px; margin-right: 5px;" src="/themepack/myify/1.0.0.0/resource/icons/hmailik.svg">
-                                {$thisUser->getCoins()|noescape}
-                                <a href="/settings?act=finance">+</a>
-                            </div>
-                                <a class="top_nav_btn" id="top_notify_btn" href="/notifications" class="link" title="{_my_feedback} [Alt+Shift+N]" accesskey="n">
-                                    <div class="top_nav_btn_icon"></div>
+                                <a class="top_nav_btn_v" id="top_myvid_btn" href="/videos{$thisUser->getId()}" class="link">
+                                    <div class="top_nav_btn_v_text" style="    width: 66px;">Моё видео</div>
                                 </a>
-                                <a class="top_nav_btn" id="top_im_btn" href="/im" class="link" title="{_my_messages}" accesskey="n">
-                                    <div class="top_nav_btn_icon"></div>
-                                </a>
-                                <a class="top_nav_btn" id="top_apps_btn" href="/apps" class="link" title="{_apps}" accesskey="n">
-                                    <div class="top_nav_btn_icon"></div>
+                                <a class="top_nav_btn_v" id="top_uploadvid_btn" href="/videos/upload" class="link">
+                                    <div class="top_nav_btn_v_text" style="    width: 62px;">Загрузить</div>
                                 </a>
                                 <div class="top_nav_audio" id="headerMusicLinkDiv">
                                     <a class="top_nav_btn" id="headerMusicBtn">
@@ -155,199 +147,7 @@
                     {/if}
                 </div>
             </div>
-
-            <div class="sidebar" n:if="!$hideSidebar">
-                <div class="navigation">
-                    {ifset $thisUser}
-                        {if !$thisUser->isBanned() XOR !$thisUser->isActivated() XOR $thisUser->isDeactivated()}
-                            <a href="/edit" class="link edit-button">{_edit_button}</a>
-                            <div class="end_navigation">
-                        {ifset $thisUser}
-                            {if $thisUser->isDeactivated()}
-                                <div class="link">
-                                    <a href="/logout?hash={urlencode($csrfToken)}">{_header_log_out}</a>
-                                </div>
-                            {else}
-                                <div class="link">
-                                    <a id="userMenuTrigger" href="{$thisUser->getURL()}" accesskey=".">
-                                        <img id="userMenuAvatar" src="{$thisUser->getAvatarUrl('miniscule')}">
-                                        <div id="userMenuName">{$thisUser->getFirstName()}</div>
-                                    </a>
-                                </div>
-                            {/if}
-                        {else}
-                            <div class="link">
-                                <a href="/reg">{_header_registration}</a>
-                            </div>
-                        {/ifset}
-                        </div>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('news')" href="/feed" class="link" title="{_my_feed} [Alt+Shift+,]" accesskey=",">{_my_feed}</a>
-                            <a href="/friends{$thisUser->getId()}" class="link">{_my_friends}
-                                <object type="internal/link" n:if="$thisUser->getRequestsCount() > 0">
-                                    <a href="/friends{$thisUser->getId()}?act=incoming" class="linkunderline">
-                                       +<b>{$thisUser->getRequestsCount()}</b>
-                                    </a>
-                                </object>
-                            </a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('photos')" href="/albums{$thisUser->getId()}" class="link">{_my_photos}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('videos')" href="/videos{$thisUser->getId()}" class="link">{_my_videos}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('audios')" href="/audios{$thisUser->getId()}" class="link">{_my_audios}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('notes')" href="/notes{$thisUser->getId()}" class="link">{_my_notes}</a>
-                            <a n:if="$thisUser->getLeftMenuItemStatus('groups')" href="/groups{$thisUser->getId()}" class="link">{_my_groups}</a>
-                            <a href="/settings" class="link">{_my_settings}</a>
-                            
-                            {if $thisUser->getLeftMenuItemStatus('docs') || $thisUser->getLeftMenuItemStatus('apps') || $thisUser->getLeftMenuItemStatus('fave')}
-                                <div class="menu_divider"></div>
-                                <a n:if="$thisUser->getLeftMenuItemStatus('apps')" href="/apps?act=installed" class="link">{_apps}</a>
-                                <a n:if="$thisUser->getLeftMenuItemStatus('docs')" href="/docs" class="link">{_my_documents}</a>
-                                <a n:if="$thisUser->getLeftMenuItemStatus('fave')" href="/fave" class="link">{_bookmarks_tab}</a>
-                            {/if}
-
-                            {var $canAccessAdminPanel = $thisUser->getChandlerUser()->can("access")->model("admin")->whichBelongsTo(NULL)}
-                            {var $canAccessHelpdesk   = $thisUser->getChandlerUser()->can("write")->model('openvk\Web\Models\Entities\TicketReply')->whichBelongsTo(0)}
-                            {var $menuLinksAvaiable   = sizeof(OPENVK_ROOT_CONF['openvk']['preferences']['menu']['links']) > 0 && $thisUser->getLeftMenuItemStatus('links')}
-                            <div n:if="$canAccessAdminPanel || $canAccessHelpdesk || $menuLinksAvaiable" class="menu_divider"></div>
-                            <a href="/admin" class="link" n:if="$canAccessAdminPanel" title="{_admin} [Alt+Shift+A]" accesskey="a" rel="nofollow">{_admin}</a>
-                            <a href="/support/tickets" class="link" n:if="$canAccessHelpdesk" rel="nofollow">{_helpdesk}
-                                {if $helpdeskTicketNotAnsweredCount > 0}
-									<object type="internal/link">
-										+<b>{$helpdeskTicketNotAnsweredCount}</b>
-									</object>
-                                {/if}
-                            </a>
-                            <a n:if="$canAccessHelpdesk" href="/scumfeed" class="link" rel="nofollow">{tr("reports")}
-                                {if $reportNotAnsweredCount > 0}
-									<object type="internal/link">
-										+<b>{$reportNotAnsweredCount}</b>
-									</object>
-                                {/if}
-                            </a>
-                            <a n:if="$canAccessHelpdesk" href="/noSpam" class="link" rel="nofollow">
-                                noSpam
-                            </a>
-                        <a
-                          n:if="$thisUser->getLeftMenuItemStatus('links')"
-                          n:foreach="OPENVK_ROOT_CONF['openvk']['preferences']['menu']['links'] as $menuItem"
-                          href="{$menuItem['url']}"
-                          target="_blank"
-                          class="link">
-                            {strpos($menuItem["name"], "@") === 0 ? tr(substr($menuItem["name"], 1)) : $menuItem["name"]}
-                        </a>
-                            <div id="_groupListPinnedGroups">
-                                <div n:if="$thisUser->getPinnedClubCount() > 0" class="menu_divider"></div>
-
-                                <a n:foreach="$thisUser->getPinnedClubs() as $club" href="{$club->getURL()}" class="link group_link">
-                                    {ovk_proc_strtr($club->getName(), 14)}
-
-                                    <object type="internal/link" style="white-space: normal;" id="sug{$club->getId()}" n:if="$club->getSuggestedPostsCount($thisUser) > 0 && $club->getWallType() == 2">
-                                        <a href="/club{$club->getId()}/suggested" class="linkunderline">
-                                            +<b>{$club->getSuggestedPostsCount($thisUser)}</b>
-                                        </a>
-                                    </object>
-                                </a>
-                            </div>
-
-                            <div id="news" n:if="OPENVK_ROOT_CONF['openvk']['preferences']['news']['show']">
-                                <b>{_news} </b>
-                                <hr size="1">
-                                <text>{$newsText}...</text>
-                                <br><br>
-                                <a href="{$newsLink}">{_news_more}</a>
-                            </div>
-
-                            <a n:if="OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['enable'] && $thisUser->getLeftMenuItemStatus('poster')" href="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['link']}" >
-                                <img src="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['src']}" alt="{php echo OPENVK_ROOT_CONF['openvk']['preferences']['adPoster']['caption']}" class="psa-poster" style="max-width: 100%; margin-top: 10px;" />
-                            </a>
-
-                            <div class="menu_divider" style="margin-left: 0; margin-top: 15px;"></div>
-
-                            <div class="left_menu_nav_wrap">
-                                <a href="/blog">{_footer_blog|firstUpper}</a>
-                                <a href="/support">{_footer_help|firstUpper}</a>
-                                <a href="/terms">{_footer_rules|firstUpper}</a>
-                                <a href="javascript:void(0);" id="moreOptionsLink">{_show_more}</a>
-                                
-                                <div id="moreOptionsContent">
-                                    <div class="tippy-menu">
-                                        <a href="/about">{_footer_about_instance|firstUpper}</a>
-                                        <a href="/language" 
-                                            onclick="changeLangPopup(); return false;">
-                                            {var $currentLang = getLanguage()}
-                                            {var $found = false}
-                                            {foreach getLanguages() as $language}
-                                                {if $language['code'] === $currentLang && !$found}
-                                                    {_select_language}: {$language['native_name']}
-                                                    {var $found = true}
-                                                {/if}
-                                            {/foreach}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="floating_sidebar">
-                                <a id="minilink-friends" class="minilink" href="/friends{$thisUser->getId()}">
-                                    <object type="internal/link" n:if="$thisUser->getRequestsCount() > 0">
-                                        <div class="counter">
-                                            +{$thisUser->getRequestsCount()}
-                                        </div>
-                                    </object>
-                                    <img src="/assets/packages/static/openvk/img/friends.svg">
-                                </a>
-                                <a id="minilink-albums" class="minilink" href="/albums{$thisUser->getId()}">
-                                    <img src="/assets/packages/static/openvk/img/photos.svg">
-                                </a>
-                                <a id="minilink-messenger" class="minilink" href="/im">
-                                    <object type="internal/link" n:if="$thisUser->getUnreadMessagesCount() > 0">
-                                        <div class="counter">
-                                            +{$thisUser->getUnreadMessagesCount()}
-                                        </div>
-                                    </object>
-                                    <img src="/assets/packages/static/openvk/img/messages.svg">
-                                </a>
-                                <a id="minilink-groups" class="minilink" href="/groups{$thisUser->getId()}">
-                                    <img src="/assets/packages/static/openvk/img/groups.svg">
-                                </a>
-                                <a id="minilink-notifications" class="minilink" href="/notifications">
-                                    <object type="internal/link" n:if="$thisUser->getNotificationsCount() > 0">
-                                        <div class="counter">
-                                            +{$thisUser->getNotificationsCount()}
-                                        </div>
-                                    </object>
-                                    <img src="/assets/packages/static/openvk/img/feedback.svg">
-                                </a>
-                            </div>
-                        {elseif !$thisUser->isActivated()}
-                            <a href="/logout?hash={urlencode($csrfToken)}" class="link">{_menu_logout}</a>
-                        {else}
-                            <a href="/support" class="link">{_menu_support}
-                                {if $ticketAnsweredCount > 0}
-                                    (<b>{$ticketAnsweredCount}</b>)
-                                {/if}
-                            </a>
-                            <a href="/logout?hash={urlencode($csrfToken)}" class="link">{_menu_logout}</a>
-                        {/if}
-                    {else}
-                        <form id="fastLogin" action="/login" method="POST" enctype="multipart/form-data">
-                            <label for="login"><span>{_email}:</span></label>
-                            <input id="login" type="text" name="login" required />
-                            <label for="password"><span>{_password}:</span></label>
-                            <input id="password" type="password" name="password" required />
-                            <input type="hidden" name="jReturnTo" value="{$_SERVER['REQUEST_URI']}" />
-                            <input type="hidden" name="hash" value="{$csrfToken}" />
-                            <input type="submit" value="{_log_in}" class="button" style="display: inline-block; font-family: Tahoma" />
-                            <a href="/reg"><input type="button" value="{_registration}" class="button button_blue" style="font-family: Tahoma" /></a><br><br>
-                            {if !OPENVK_ROOT_CONF['openvk']['preferences']['security']['disablePasswordRestoring']}
-                            <div class="forgot">
-                                <a href="/restore">{_forgot_password}</a>
-                            </div>
-                            {/if}
-                        </form>
-                    {/ifset}
-                    </div>
-                </div>
-
-            <div class="page_body">
+            <div class="vpage_body">
                     <script n:ifset="$flashMessage">
                         NewNotification(
                             {$flashMessage->title},

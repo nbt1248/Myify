@@ -29,30 +29,29 @@
                     {/ifset}
 
                     {if sizeof($data) > 0}
-                        <table class="list-grid"> {* Класс изменен для ясности *}
+                        <table class="photo-grid"> {* Класс изменен для ясности *}
                             <tbody n:attr="id => is_null($table_body_id) ? NULL : $table_body_id">
                                 {foreach $chunks as $rowItems}
                                     <tr>
                                         {foreach $rowItems as $dat}
-                                            <td class="list-grid-item"> {* Класс изменен для ясности *}
+                                            <td class="photo-grid-item"> {* Класс изменен для ясности *}
                                                 <div>
                                                     <a href="{include link, x => $dat}">
                                                         {include preview, x => $dat}
                                                     </a>
-                                                    <div class="info">
-                                                        <a href="{include link, x => $dat}">
-                                                            <b>{include name, x => $dat}</b>
-                                                        </a>
-                                                        {include description, x => $dat}
-                                                        <span n:ifset="actions" class="action_links">
-                                                            {include actions, x => $dat}
-                                                        </span>
-                                                    </div>
+                                                    <a href="{include link, x => $dat}">
+                                                        <b>{include name, x => $dat}</b>
+                                                    </a>
+                                                    <br/>
+                                                    {include description, x => $dat}
+                                                    <span n:ifset="actions" class="action_links">
+                                                        {include actions, x => $dat}
+                                                    </span>
                                                 </div>
                                             </td>
                                         {/foreach}
                                         {for $i = 0; $i < $itemsPerRow - count($rowItems); $i++}
-                                            <td class="list-grid-item empty-cell"></td>
+                                            <td class="photo-grid-item empty-cell"></td>
                                         {/for}
                                     </tr>
                                 {/foreach}

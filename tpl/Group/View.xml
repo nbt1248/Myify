@@ -2,7 +2,7 @@
 {var $backdrops = $club->getBackDropPictureURLs()}
 
 {block headIncludes}
-    <link rel="stylesheet" href="/themepack/vkify16/2.0.0.0/resource/profile.css">
+    <link rel="stylesheet" href="/themepack/myify/2.0.0.0/resource/profile.css">
 {/block}
 
 {block title}{$club->getName()}{/block} 
@@ -12,321 +12,233 @@
 {/block}
 
 {block content}
-<div class="left_big_block">
-    <div n:if="!is_null($alert = $club->getAlert())" class="group-alert">{strpos($alert, "@") === 0 ? tr(substr($alert, 1)) : $alert}</div>
-    <div class="public_info">
-		<h2>{$club->getName()}
-			<img n:if="$club->isVerified()"
-					 class="name-checkmark"
-					 src="/assets/packages/static/openvk/img/checkmark.png"
-					 alt="{_verified_page}"
-					 />
-		 </h2>
-    </div>
-	<div class="public_info_more">
-		<span n:if="$club->getDescriptionHtml()" class="nobold label">{_description}: </span><div n:if="$club->getDescriptionHtml()" style="max-width: 260px;display: inline-block;">{$club->getDescriptionHtml()|noescape}</div>
-		<br n:if="$club->getDescription() && $club->getWebsite()">
-		<br n:if="$club->getDescription() && $club->getWebsite()">
-		<span n:if="$club->getWebsite()" class="nobold label">{_website}: </span><div n:if="$club->getWebsite()" style="max-width: 260px;display: inline-block;"><a n:if="$club->getWebsite()" href="{$club->getWebsite()}" rel="ugc" target="_blank">{$club->getWebsite()}</a></div>
-	</div>
-    <div n:if="($topicsCount > 0 || $club->isEveryoneCanCreateTopics() || ($thisUser && $club->canBeModifiedBy($thisUser))) && $club->isDisplayTopicsAboveWallEnabled()">
-		<a href="/board{$club->getId()}">
-			<div class="content_title_expanded">
-				{_discussions}
-			</div>
-		</a>
-        <div>
-			<a href="/board{$club->getId()}">
-				<div class="content_subtitle">
-					{tr("topics", $topicsCount)}
+<div class="right_big_block">
+        <div class="page_block">
+		<div class="page_block cover_block">
+			{var $hasAvatar = !str_contains($club->getAvatarUrl('miniscule'), "/assets/packages/static/openvk/img/camera_200.png")}
+			<div class="cover">
+				<div class="cover_block_inner">
+				<a href="{$club->getAvatarLink()|nocheck}">
+					<img src="{if $hasAvatar}{$club->getAvatarUrl('normal')}{else}/themepack/myify/1.0.0.0/resource/gcover_200.png{/if}"
+						alt="{$club->getCanonicalName()}"
+						id="bigCover"
+						style="width: 100%; image-rendering: -webkit-optimize-contrast;"
+						{if ($club->getAvatarPhoto())}
+						onclick="OpenMiniature(event, {$club->getAvatarUrl('normal')}, null, {$club->getAvatarPhoto()->getPrettyId()}, null)"
+						{/if}
+					/>
+				</a>
 				</div>
-			</a>
-            <div>
-                <div n:foreach="$topics as $topic" class="topic-list-item" style="padding: 8px;">
-                    <b><a href="/topic{$topic->getPrettyId()}">{$topic->getTitle()}</a></b><br>
-                    <span class="nobold">{tr("updated_at", $topic->getUpdateTime())}</span>
+			</div>
+		</div>
+		<div class="page_block photo_block" id="group_photo_block">
+            {var $hasAvatar = !str_contains($club->getAvatarUrl('miniscule'), "/assets/packages/static/openvk/img/camera_200.png")}
+			<div class="avatar_block">
+				<div class="avatar_block_inner">
+				{if $user && $club->getId() == $club->getId()}
+					<a {if $hasAvatar}style="display:none"{/if} class="add_image_text" id="add_image">{_add_image}</a>
+					<div {if !$hasAvatar}style="display:none"{/if} class="avatar_controls">
+						<div class="avatarDelete hoverable"></div>
+						<div class="avatar_variants">
+							<a class="_add_image hoverable" id="add_image"><span>{_upload_new_picture}</span></a>
+						</div>
+					</div>
+				{/if}
+				<a href="{$club->getAvatarLink()|nocheck}">
+					<img src="{if $hasAvatar}{$club->getAvatarUrl('normal')}{else}/themepack/myify/1.0.0.0/resource/community_200.png{/if}"
+						alt="{$club->getCanonicalName()}"
+						id="bigAvatar"
+						style="width: 100%; image-rendering: -webkit-optimize-contrast;"
+						{if ($club->getAvatarPhoto())}
+						onclick="OpenMiniature(event, {$club->getAvatarUrl('normal')}, null, {$club->getAvatarPhoto()->getPrettyId()}, null)"
+						{/if}
+					/>
+				</a>
+				</div>
+			</div>
+			<div n:ifset="$thisUser" class="profile_actions" style="margin-top: -30px !important;">
+				{if $club->getSubscriptionStatus($thisUser) == false}
+					<form action="/setSub/club" method="post">
+						<input type="hidden" name="act" value="add" />
+						<input type="hidden" name="id"  value="{$club->getId()}" />
+						<input type="hidden" name="hash" value="{$csrfToken}" />
+						<input type="submit" value="{_join_community}" class="button" style="margin-right: 10px;" />
+					</form>
+				{else}
+					<form action="/setSub/club" method="post">
+						<input type="hidden" name="act" value="rem" />
+						<input type="hidden" name="id"  value="{$club->getId()}" />
+						<input type="hidden" name="hash" value="{$csrfToken}" />
+						<input type="submit" class="profile_link vova_link" value="{_leave_community}" style="text-align: center;" />
+					</form>
+				{/if}
+				<button class="button button_gray profile_more_btn fl_r" id="profile_more_btn"><span class="clear_fix">&nbsp;</span></button>
+                <div id="profile_actions_tooltip" style="display: none;">
+                    <div class="tippy-menu">
+						{if $thisUser->getChandlerUser()->can("access")->model("admin")->whichBelongsTo(NULL)}
+							<a href="/admin/clubs/id{$club->getId()}">
+								{_manage_group_action}
+							</a>
+							<a href="/admin/logs?obj_id={$club->getId()}&obj_type=Club">
+								{_last_actions}
+							</a>
+						{/if}
+						{if $club->canBeModifiedBy($thisUser)}
+							<a href="/club{$club->getId()}/edit">
+								{_edit_group}
+							</a>
+							<a href="/club{$club->getId()}/stats">
+								{_statistics}
+							</a>
+						{/if}
+							<a href="javascript:reportClub({$club->getId()})">
+								{_report}
+							</a>
+							<a n:if="!$club->isHideFromGlobalFeedEnabled()" id="__ignoreSomeone"  href="javascript:reportClub({$club->getId()})" data-val='{!$ignore_status ? 1 : 0}' data-id="{$club->getRealId()}">
+								{if !$ignore_status}{_ignore_club}{else}{_unignore_club}{/if}
+							</a>
+
+                    </div>
                 </div>
-            </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        tippy('#profile_more_btn', {
+                            content: document.getElementById('profile_actions_tooltip').innerHTML,
+                            allowHTML: true,
+                            interactive: true,
+                            trigger: 'mouseenter',
+                            placement: 'bottom-end',
+                            theme: 'light vk',
+                            arrow: true
+                        });
+                    });
+                </script>
         </div>
-    </div>
-    
-    <div n:if="!is_null($suggestedPostsCountByUser) && $suggestedPostsCountByUser > 0" class="sugglist">
-        <a href="/club{$club->getId()}/suggested" id="cound_r">{tr("suggested_by_you", $suggestedPostsCountByUser)}</a>
-    </div>
-
-    <div n:if="!is_null($suggestedPostsCountByEveryone) && $suggestedPostsCountByEveryone > 0" class="sugglist">
-        <a href="/club{$club->getId()}/suggested" id="cound_r">{tr("suggested_by_everyone", $suggestedPostsCountByEveryone)}</a>
-    </div>
-
-    {presenter "openvk!Wall->wallEmbedded", -$club->getId()}
-
-	{* детка, ты сделала костыль на 5 с плюсом ! *}
-	{* ты меня зажгла.. появилось оч сильное и реальное желание сделать ещё парочку.. нет.. именно намутить хорошенько. *}
-	{* чтобы папа Вова и дальше был доволен, жду в ближайшее время всех описанных и перечисленных тобою костылей. ну кроме последнего сценария..)) хотя... ;) *}
-	{* кстати насчет костыля в виде диалогов... в js отлично, а я еще люблю когда они как бы случайно совсем чуть-чуть отваливаются... *}
-	{* и раз уж ты такая плохая девочка, вот видео как раз для тебя: https://ovk.to/video8120_17 *}
-    <script n:if="isset($thisUser) && $club->getWallType() == 2 && !$club->canBeModifiedBy($thisUser)">
-        document.querySelector("textarea").setAttribute("placeholder", tr("suggest_new"))
-    </script>
-</div>
-<div class="right_small_block">
-    {var $avatarPhoto = $club->getAvatarPhoto()}
-    {var $avatarLink = ((is_null($avatarPhoto) ? FALSE : $avatarPhoto->isAnonymous()) ? "/photo" . ("s/" . base_convert((string) $avatarPhoto->getId(), 10, 32)) : $club->getAvatarLink())}
-    <div class="avatar_block" style="position:relative;" data-club="{$club->getId()}">
-        {if $thisUser && $club->canBeModifiedBy($thisUser)}
-            <a {if $avatarPhoto}style="display:none"{/if} class="add_image_text" id="add_image">{_add_image}</a>
-            <div {if !$avatarPhoto}style="display:none"{/if} class="avatar_controls">
-                <div class="avatarDelete hoverable"></div>
-                <div class="avatar_variants">
-                    <a class="_add_image hoverable" id="add_image"><span>{_upload_new_picture}</span></a>
-                </div>
-            </div>
-        {/if}
-
-        <a href="{$avatarLink|nocheck}">
-            <img src="{(is_null($avatarPhoto) ? '/themepack/vkify16/1.0.0.0/resource/community_200.png' : $club->getAvatarUrl('normal'))}"
-				 id="bigAvatar"
-				 style="width: 100%; image-rendering: -webkit-optimize-contrast;"
-				 {if ($club->getAvatarPhoto())}
-				 onclick="OpenMiniature(event, {$club->getAvatarUrl('normal')}, null, {$club->getAvatarPhoto()->getPrettyId()}, null)"
-				 {/if}
-				 />
-        </a>
-    </div>
-    <div n:ifset="$thisUser" id="profile_links">
-		<div class="frenMenu">
-		<span class="nobold" style="padding: 0px 0px 0px 3px;display: block;max-width: 193px;">
-			{_group_type_open}
-		</span>
-		<br>
-			{if $club->getSubscriptionStatus($thisUser) == false}
-				<form action="/setSub/club" method="post">
-					<input type="hidden" name="act" value="add" />
-					<input type="hidden" name="id"  value="{$club->getId()}" />
-					<input type="hidden" name="hash" value="{$csrfToken}" />
-					<input type="submit" value="{_join_community}" class="button" />
-				</form>
-			{else}
-				<form action="/setSub/club" method="post">
-					<input type="hidden" name="act" value="rem" />
-					<input type="hidden" name="id"  value="{$club->getId()}" />
-					<input type="hidden" name="hash" value="{$csrfToken}" />
-					<input type="submit" class="profile_link vova_link" value="{_leave_community}" style="text-align: center;" />
-				</form>
-			{/if}
-		</div>
-        {if $thisUser->getChandlerUser()->can("access")->model("admin")->whichBelongsTo(NULL)}
-		<a class="profile_link" onclick="document.querySelector('.profile_openmenu').style.display = 'block';" style="display: block; width: 96%; user-select: none !important;">
-			{_admin_actions}
-		</a>
-			<div class="profile_openmenu" style="display: none;">
-				<div class="sett_selected" onclick="document.querySelector('.profile_openmenu').style.display = 'none';">
-					{_admin_actions}
-				</div>
-				<a href="/admin/clubs/id{$club->getId()}">
-					<div class="sett_hover">
-						<span>{_manage_group_action}</span>
 					</div>
-				</a>
-				<a href="/admin/logs?obj_id={$club->getId()}&obj_type=Club">
-					<div class="sett_hover">
-						<span>{_last_actions}</span>
-					</div>
-				</a>
-			</div>
-        {/if}
-        {if $club->canBeModifiedBy($thisUser)}
-            <a href="/club{$club->getId()}/edit" id="profile_link">{_edit_group}</a>
-            <a href="/club{$club->getId()}/stats" rel="nofollow" id="profile_link">{_statistics}</a>
-        {/if}
-        {var $canReport = $thisUser->getId() != $club->getOwner()->getId()}
-        {if $canReport}
-        <a class="profile_link" style="display:block;" href="javascript:reportClub({$club->getId()})">{_report}</a>
-        {/if}
-        <a n:if="!$club->isHideFromGlobalFeedEnabled()" class="profile_link" style="display:block;" id="__ignoreSomeone" data-val='{!$ignore_status ? 1 : 0}' data-id="{$club->getRealId()}">
-            {if !$ignore_status}{_ignore_club}{else}{_unignore_club}{/if}
-        </a>
-    </div>
-    <div class="smallRightDataBlock">
-		<div n:if="$thisUser && $club->getFollowersCount() > 0">
-			{var $followersCount = $club->getFollowersCount()}
-			<a href="/club{$club->getId()}/followers">
-				<div class="content_title_expanded">
-					{_participants}
-				</div>
-			</a>
-			<div>
-				<a href="/club{$club->getId()}/followers">
-					<div class="content_subtitle">
-						{tr("participants", $followersCount)}
-					</div>
-				</a>
-				<div style="padding-left: 5px;" class="content_list">
-					<div class="cl_element" n:foreach="$club->getFollowers(1) as $follower">
-						<div class="cl_avatar">
-							<a href="{$follower->getURL()}">
-								<img class="ava" src="{$follower->getAvatarUrl('miniscule')}" />
-							</a>
-						</div>
-						<a href="{$follower->getURL()}" class="cl_name">
-							<text class="cl_fname">{$follower->getFirstName()}</text>
-						</a>    
-					</div>
-				</div>
+			<div class="sections" style="margin-top: -30px; margin-left: 230px;">
+				<a href="/club{$club->getId()}/followers"class="section">Участники</a>
+				<a href="/albums-{$club->getId()}" class="section">Фото</a>
+				<a href="/audios-{$club->getId()}"class="section">Музыка</a>
+				<a href="/board{$club->getId()}"class="section">Обсуждения</a>
 			</div>
 		</div>
-		<div n:if="$club->getAdministratorsListDisplay() == 0">
-			<a href="/club{$club->getId()}">
-				<div class="content_title_expanded">
-					{_creator}
-				</div>
-			</a>
-			<div class="avatar-list-item" style="padding: 8px;">
-				{var $author = $club->getOwner()}
-				<div class="avatar">
-					<a href="{$author->getURL()}">
-						<img class="ava" src="{$author->getAvatarUrl()}" />
-					</a>
-				</div>
-				{* Это наверное костыль, ну да ладно *}
-				<div n:class="info, mb_strlen($author->getCanonicalName()) < 22 ? info-centered" n:if="empty($club->getOwnerComment())">
-					<a href="{$author->getURL()}" class="title">{$author->getCanonicalName()}</a>
-				</div>
-				<div class="info" n:if="!empty($club->getOwnerComment())">
-					<a href="{$author->getURL()}" class="title">{$author->getCanonicalName()}</a>
-					<div class="subtitle">{$club->getOwnerComment()}</div>
-				</div>
-			</div>
-		</div>
-		<div n:if="$club->getAdministratorsListDisplay() == 1">
-			{var $managersCount = $club->getManagersCount(true)}
-			<a href="/club{$club->getId()}/followers?onlyAdmins=1">
-				<div class="content_title_expanded">
-					{_administrators}
-				</div>
-			</a>
-			<div>
-				<a href="/club{$club->getId()}/followers?onlyAdmins=1">
-					<div class="content_subtitle">
-						{tr("administrators", $managersCount)}
-					</div>
-				</a>
-				<div class="avatar-list">
-					<div class="avatar-list-item" n:if="!$club->isOwnerHidden()">
-						{var $author = $club->getOwner()}
-						<div class="avatar">
-							<a href="{$author->getURL()}">
-								<img class="ava" src="{$author->getAvatarUrl()}" />
-							</a>
+	</div>
+			<div class="page_info_wrap">
+				<div n:if="!is_null($alert = $club->getAlert())" class="user-alert">{strpos($alert, "@") === 0 ? tr(substr($alert, 1)) : $alert}</div>
+				{var $thatIsThisUser = isset($user) && $club->getId() == $club->getId()}
+				<div n:if="$thatIsThisUser" class="page_status_popup" id="status_editor" style="display: none;">
+					<form name="status_popup_form" onsubmit="changeStatus(); return false;">
+						<div style="margin-bottom: 10px;">
+							<input type="text" name="status" size="50" value="{$club->getStatus()}" />
+							<label style="width: 316px;display: block;">
+								<input type="checkbox" name="broadcast" n:attr="checked => $club->isBroadcastEnabled()" />
+								{_broadcast_audio}
+							</label>
 						</div>
-						<div class="info">
-							<a href="{$author->getURL()}" class="title">{$author->getCanonicalName()}</a>
-							<div class="subtitle" n:if="!empty($club->getOwnerComment())">{$club->getOwnerComment()}</div>
-						</div>
-					</div>
-					<div class="avatar-list-item" n:foreach="$club->getManagers(1, true) as $manager">
-						{var $user = $manager->getUser()}
-						<div class="avatar">
-							<a href="{$user->getURL()}">
-								<img height="32" class="ava" src="{$user->getAvatarUrl()}" />
-							</a>
-						</div>
-						<div class="info">
-							<a href="{$user->getURL()}" class="title">{$user->getCanonicalName()}</a>
-							<div class="subtitle" n:if="!empty($manager->getComment())">{$manager->getComment()}</div>
-						</div>
-					</div>
+						<input type="hidden" name="hash" value="{$csrfToken}" />
+						<button type="submit" name="submit" class="button" style="height: 25px;">{_send}</button>
+					</form>
 				</div>
-			</div>
-		</div>
-		<div n:if="($topicsCount > 0 || $club->isEveryoneCanCreateTopics() || ($thisUser && $club->canBeModifiedBy($thisUser))) && !$club->isDisplayTopicsAboveWallEnabled()">
-			<a href="/board{$club->getId()}">
-				<div class="content_title_expanded">
-					{_discussions}
-				</div>
-			</a>
-			<div>
-				<a href="/board{$club->getId()}">
-					<div class="content_subtitle">
-						{tr("topics", $topicsCount)}
-					</div>
-				</a>
-				<div>
-					<div n:foreach="$topics as $topic" class="topic-list-item">
-						<b><a href="/topic{$topic->getPrettyId()}">{$topic->getTitle()}</a></b><br>
-						<span class="nobold">{tr("updated_at", $topic->getUpdateTime())}</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div n:if="$albumsCount > 0 || ($thisUser && $club->canBeModifiedBy($thisUser))">
-			<a href="/albums{$club->getId() * -1}">
-				<div class="content_title_expanded">
-					{_albums}
-				</div>
-			</a>
-			<div>
-				<a href="/albums{$club->getId() * -1}">
-					<div class="content_subtitle">
-						{tr("albums", $albumsCount)}
-					</div>
-				</a>
-				<div n:if="$albumsCount > 0" style="padding-left: 13px; padding-bottom: 10px;">
-					<a n:foreach="$albums as $album" href="/album{$album->getPrettyId()}">
-						<div class="ovk-album" style="display: inline-block;">
-						{var $cover = $album->getCoverPhoto()}
-
-							<div class="albumInfo">
-								<div class="albumCamera">{$album->getPhotosCount()}</div>
-								<div class="albumName">{$album->getName()}</div>
+				<div class="accountInfo clearFix">
+					<div class="page_top">
+						<div class="column">
+							<div class="row">
+								<h2 class="page_name" style="    font-size: 19px;    margin: -1px 0;">{$club->getName()} <a class="page_verified" n:if="$club->isVerified()" href="/verify"></a></h2>
 							</div>
-								<img
-								src="{is_null($cover)?'/themepack/vkify16/2.0.0.0/resource/m_noalbum.png':$cover->getURLBySizeId('small')}"
-								style="{is_null($cover)?'':'width: 178px;'|noescape}"
-								class="albumPreview" loading=lazy />
+							<div class="page_status" style="display: flex;    font-size: 13px;">
+								<div id="page_status_text">
+									{$club->getDescriptionHtml()}
+								</div>
+							</div>
 						</div>
+					</div>
+				</div>
+        </div>
+	<div class="bottom_big_block">
+		<div class="left_small_block2">
+			<div n:if="!is_null($suggestedPostsCountByUser) && $suggestedPostsCountByUser > 0" class="sugglist">
+			<a href="/club{$club->getId()}/suggested" id="cound_r">{tr("suggested_by_you", $suggestedPostsCountByUser)}</a>
+		</div>
+
+		<div n:if="!is_null($suggestedPostsCountByEveryone) && $suggestedPostsCountByEveryone > 0" class="sugglist">
+			<a href="/club{$club->getId()}/suggested" id="cound_r">{tr("suggested_by_everyone", $suggestedPostsCountByEveryone)}</a>
+		</div>
+
+		{* детка, ты сделала костыль на 5 с плюсом ! *}
+		{* ты меня зажгла.. появилось оч сильное и реальное желание сделать ещё парочку.. нет.. именно намутить хорошенько. *}
+		{* чтобы папа Вова и дальше был доволен, жду в ближайшее время всех описанных и перечисленных тобою костылей. ну кроме последнего сценария..)) хотя... ;) *}
+		{* кстати насчет костыля в виде диалогов... в js отлично, а я еще люблю когда они как бы случайно совсем чуть-чуть отваливаются... *}
+		{* и раз уж ты такая плохая девочка, вот видео как раз для тебя: https://ovk.to/video8120_17 *}
+		<script n:if="isset($user) && $club->getWallType() == 2 && !$club->canBeModifiedBy($user)">
+			document.querySelector("textarea").setAttribute("placeholder", tr("suggest_new"))
+		</script>
+	        {presenter "openvk!Wall->wallEmbedded", -$club->getId()}
+		</div>
+		<div class="right_small_block2">
+			<div class="module clear page_list_module">
+					<a class="module_header">
+						<h3 class="header_top clear_fix">
+							<span class="header_label fl_l">
+								Анкета
+							</span>
+						</h3>
 					</a>
-				</div>
-			</div>
-		</div>
-		<div n:if="($thisUser && $docsCount > 0 || ($thisUser && $club->canBeModifiedBy($thisUser)))">
-			<a href="/docs{$club->getRealId()}">
-				<div class="content_title_expanded">
-					{_documents}
-				</div>
-			</a>
-			<div>
-				<a href="/docs{$club->getRealId()}">
-					<div class="content_subtitle">
-						{tr("documents", $docsCount)}
+					<div class="module_body clear_fix">
+						<div class="line_cell clear_fix">
+								<div class="thumb">					
+										<img class="cell_img" src="/themepack/myify/1.0.0.0/resource/site.svg" />
+								</div>
+								<div class="desc_info">
+									<div class="group_name" style="text-transform: lowercase; opacity: 0.5 !important;">{_personal_website}</div>
+									<div class="group_desc" style="color: black; opacity: 1 !important;">
+										<span><a href="{$club->getWebsite()}" style="color: black !important; opacity: 1 !important;">{$club->getWebsite()}</a></span>
+									</div>
+								</div>
+						</div>
 					</div>
-				</a>
-				<div>
-					{foreach $docs as $doc}
-						{include "../Documents/components/doc.xml", doc => $doc, hideButtons => true, noTags => true}
-					{/foreach}
-				</div>
-			</div>
-		</div>
-		<div n:if="$thisUser">
-			<a href="/audios-{$club->getId()}">
-				<div class="content_title_expanded">
-					{_audios}
-				</div>
-			</a>
-			<div>
-				<a href="/audios-{$club->getId()}">
-					<div class="content_subtitle">
-						{tr("audios_count", $audiosCount)}
+			</div>	
+			<div class="module clear page_list_module" n:if="($topicsCount > 0 || $club->isEveryoneCanCreateTopics() || ($user && $club->canBeModifiedBy($user))) && !$club->isDisplayTopicsAboveWallEnabled()">
+					<a  href="/board{$club->getId()}" class="module_header">
+						<h3 class="header_top clear_fix">
+							<span class="header_label fl_l">
+								{_discussions} {$topicsCount}
+							</span>
+						</h3>
+					</a>
+					<div class="module_body clear_fix">
+						<div class="line_cell clear_fix" n:foreach="$topics as $topic" >
+								<div class="desc_info">
+									<div class="group_name"><b><a href="/topic{$topic->getPrettyId()}" style="color: black !important;">{$topic->getTitle()}</a></b></div>
+								</div>
+						</div>
 					</div>
-				</a>
-				<div class="content_list long">
-					<div class="audio" n:foreach="$audios as $audio" style="width: 100%;">
-						{include "../Audio/player.xml", audio => $audio}
+			</div>	
+			<div class="module clear page_list_module" n:if="$thisUser && $club->getFollowersCount() > 0">
+					<a href="/club{$club->getId()}/followers" class="module_header">
+						<h3 class="header_top clear_fix">
+						{var $followersCount = $club->getFollowersCount()}
+							<span class="header_label fl_l">
+								{_participants} {$followersCount}
+							</span>
+						</h3>
+					</a>
+					<div class="module_body clear_fix">
+						<div class="content_list">
+							<div class="cl_element" n:foreach="$club->getFollowers(1) as $follower">
+							<div class="cl_avatar">
+								<a href="{$follower->getURL()}">
+									<img class="ava" src="{$follower->getAvatarUrl('miniscule')}" />
+								</a>
+							</div>
+							<a href="{$follower->getURL()}" class="cl_name">
+								<text class="cl_fname">{$follower->getFirstName()}</text>
+							</a>    
+						</div>
+						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+					<b><a href="/club{$club->getId()}/followers?onlyAdmins=1" style="    text-align: center;    width: 100%;    display: flex;    flex-direction: column;    color: black;">{_administrators}</a></b>
+		</div>	
+	</div>
 </div>
 
 {/block}
