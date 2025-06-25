@@ -12,7 +12,7 @@
     <div class="profilecover">
             <div class="vcover">
                     <div class="vcover_block_inner">
-                    <a href="{$user->getAvatarLink()|nocheck}">
+                    <a>
                         <img src="/themepack/myify/1.0.0.0/resource/vcover_200.png"
                             alt="{$user->getCanonicalName()}"
                             id="vbigCover"
