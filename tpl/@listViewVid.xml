@@ -21,7 +21,7 @@
             {else}
                 <div class="container_gray {ifset noscroll}no_scroll_container{else}scroll_container{/ifset}">
                     {var $data = is_array($iterator) ? $iterator : iterator_to_array($iterator)}
-                    {var $itemsPerRow = 7} {* Изменено на 7 объектов в ряду *}
+                    {var $itemsPerRow = 8} {* Возвращено к 8 объектам в ряду *}
                     {var $chunks = array_chunk($data, $itemsPerRow)}
 
                     {ifset top}
