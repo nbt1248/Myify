@@ -1,4 +1,4 @@
-{extends "../@layout.xml"}
+{extends "../@layoutMusic.xml"}
 
 {block title}
     {if $mode == 'list'}
@@ -49,204 +49,308 @@
             }
         {/if}
     </script>
-
-    <div class="wide_column_left">
-    <div class="narrow_column_wrap">
-        <div class="narrow_column">
-            {var $tabMenuItems = []}
-            
-            {* My Music tab *}
-            {if isset($thisUser)}
-                {var $tabMenuItems[] = [
-                    'url' => "/audios" . $thisUser->getId(),
-                    'title' => 'my_music',
-                    'active' => $mode === 'list' && $isMy,
-                    'id' => $mode === 'list' && $isMy ? 'mymussel' : null,
-                    'extraItem' => [
-                        'url' => "/player/upload",
-                        'class' => "addAudioSmall",
-                        'content' => "<div class='addIcon'></div>",
-                        'onclick' => "showAudioUploadPopup(); return false;"
-                    ]
-                ]}
-            {/if}
-
-            {* Uploaded tab *}
-            {var $tabMenuItems[] = [
-                'url' => "/audios/uploaded",
-                'title' => 'my_audios_small_uploaded',
-                'active' => $mode === 'uploaded',
-                'id' => $mode === 'uploaded' ? 'used' : 'ki'
-            ]}
-
-            {* New tab *}
-            {if isset($thisUser)}
-                {var $tabMenuItems[] = [
-                    'url' => "/search?section=audios",
-                    'title' => 'audio_new',
-                    'active' => $mode === 'new',
-                    'id' => $mode === 'new' ? 'used' : 'ki'
-                ]}
-            {/if}
-
-            {* Popular tab *}
-            {if isset($thisUser)}
-                {var $tabMenuItems[] = [
-                    'url' => "/search?section=audios&order=listens",
-                    'title' => 'audio_popular',
-                    'active' => $mode === 'popular',
-                    'id' => $mode === 'popular' ? 'used' : 'ki'
-                ]}
-            {/if}
-
-            {if isset($thisUser)}
-                {* Add separator before playlists section *}
-                {var $tabMenuItems[] = ['isSeparator' => true]}
-
-                {* My Playlists tab *}
-                {var $tabMenuItems[] = [
-                    'url' => "/playlists" . $thisUser->getId(),
-                    'title' => 'my_playlists',
-                    'active' => $mode === 'playlists' && $ownerId == $thisUser->getId(),
-                    'id' => $mode === 'playlists' && $ownerId == $thisUser->getId() ? 'used' : 'ki'
-                ]}
-
-                {var $tabMenuItems[] = [
-                    'url' => "/audios/newPlaylist",
-                    'title' => 'new_playlist',
-                    'active' => false
-                ]}
-            {/if}
-
-            {* Other user/club tabs *}
-            {if !$isMy && $mode !== 'popular' && $mode !== 'new' && $mode != 'alone_audio' && $mode != 'uploaded'}
-                {* Add separator before other user/club section *}
-                {var $tabMenuItems[] = ['isSeparator' => true]}
-                
-                {var $tabMenuItems[] = [
-                    'url' => "/audios" . $ownerId,
-                    'title' => $ownerId > 0 ? 'music_user' : 'music_club',
-                    'active' => $mode === 'list',
-                    'id' => $mode === 'list' ? 'used' : 'ki'
-                ]}
-
-                {if isset($thisUser) && isset($club) && $club->canUploadAudio($thisUser)}
-                    {var $tabMenuItems[] = [
-                        'url' => "/player/upload?gid=" . abs($ownerId),
-                        'title' => 'upload_audio',
-                        'active' => false
-                    ]}
-                {/if}
-
-                {if isset($thisUser) && isset($ownerId) && !$isMy}
-                    {var $tabMenuItems[] = [
-                        'url' => "/playlists" . $ownerId,
-                        'title' => $ownerId > 0 ? 'playlists_user' : 'playlists_club',
-                        'active' => $mode === 'playlists' && $ownerId != $thisUser->getId(),
-                        'id' => $mode === 'playlists' && $ownerId != $thisUser->getId() ? 'used' : 'ki'
-                    ]}
-                {/if}
-
-                {if isset($thisUser) && $isMyClub}
-                    {var $tabMenuItems[] = [
-                        'url' => "/audios/newPlaylist" . ($isMyClub ? "?gid=" . abs($ownerId) : ""),
-                        'title' => 'new_playlist',
-                        'active' => false
-                    ]}
-                {/if}
-            {/if}
-
-            {include "../components/ui_rmenu.xml", 
-                items => $tabMenuItems, 
-                additionalCssClass => 'audio_tabs', 
-                id => 'audio_tabs'
-            }
-
-            {if $friendsAudios}
-                {var $friendsMenuItems = []}
-                {foreach $friendsAudios as $friend}
-                    {var $friendsMenuItems[] = [
-                        'url' => "/audios" . $friend->getRealId(),
-                        'title' => $friend->getCanonicalName(),
-                        'translate' => false,
-                        'avatar' => $friend->getAvatarURL(),
-                        'additionalInfo' => $audioStatus ? $audioStatus->getName() : tr("audios_count", $friend->getAudiosCollectionSize()),
-                        'isRich' => true
-                    ]}
-                {/foreach}
-                {include "../components/ui_rmenu.xml", 
-                    items => $friendsMenuItems,
-                    additionalCssClass => 'friends_audio_list',
-                    id => 'friends_audio_list'
-                }
-            {/if}
-        </div>
-    </div>
-
-    <div class="wide_column_wrap">
+    <div class="columns row">
         <div class="wide_column">
-            {include "bigplayer.xml", buttonsShow_summary => $audiosCount > 10}
+            <div class="wide_column_left">
+                {* narrow_column перемещен сюда, перед profile_cover *}
+                <div class="narrow_column_wrap">
+                    <div class="narrow_column">
+                        {var $tabMenuItems = []}
+                        
+                        {* My Music tab *}
+                        {if isset($thisUser)}
+                            {var $tabMenuItems[] = [
+                                'url' => "/audios" . $thisUser->getId(),
+                                'title' => 'my_music',
+                                'active' => $mode === 'list' && $isMy,
+                                'id' => $mode === 'list' && $isMy ? 'mymussel' : null,
+                            ]}
+                        {/if}
 
-            <div n:if="isset($audios)" class='summaryBarHideable summaryBar summaryBarFlex padding' style="margin: 0px -10px;width: 99.5%;display: none;">
-                <div class='summary'>
-                    <b>{tr("is_x_audio", $audiosCount)}</b>
+                        {* Uploaded tab *}
+                        {var $tabMenuItems[] = [
+                            'url' => "/audios/uploaded",
+                            'title' => 'my_audios_small_uploaded',
+                            'active' => $mode === 'uploaded',
+                            'id' => $mode === 'uploaded' ? 'used' : 'ki'
+                        ]}
+
+                        {* New tab *}
+                        {if isset($thisUser)}
+                            {var $tabMenuItems[] = [
+                                'url' => "/search?section=audios",
+                                'title' => 'audio_new',
+                                'active' => $mode === 'new',
+                                'id' => $mode === 'new' ? 'used' : 'ki'
+                            ]}
+                        {/if}
+
+                        {* Popular tab *}
+                        {if isset($thisUser)}
+                            {var $tabMenuItems[] = [
+                                'url' => "/search?section=audios&order=listens",
+                                'title' => 'audio_popular',
+                                'active' => $mode === 'popular',
+                                'id' => $mode === 'popular' ? 'used' : 'ki'
+                            ]}
+                        {/if}
+
+                        {if isset($thisUser)}
+                            {* Add separator before playlists section *}
+                            {var $tabMenuItems[] = ['isSeparator' => true]}
+
+                            {* My Playlists tab *}
+                            {var $tabMenuItems[] = [
+                                'url' => "/playlists" . $thisUser->getId(),
+                                'title' => 'my_playlists',
+                                'active' => $mode === 'playlists' && $ownerId == $thisUser->getId(),
+                                'id' => $mode === 'playlists' && $ownerId == $thisUser->getId() ? 'used' : 'ki'
+                            ]}
+
+                            {var $tabMenuItems[] = [
+                                'url' => "/audios/newPlaylist",
+                                'title' => 'new_playlist',
+                                'active' => false
+                            ]}
+                        {/if}
+
+                        {* Other user/club tabs *}
+                        {if !$isMy && $mode !== 'popular' && $mode !== 'new' && $mode != 'alone_audio' && $mode != 'uploaded'}
+                            {* Add separator before other user/club section *}
+                            {var $tabMenuItems[] = ['isSeparator' => true]}
+                            
+                            {var $tabMenuItems[] = [
+                                'url' => "/audios" . $ownerId,
+                                'title' => $ownerId > 0 ? 'music_user' : 'music_club',
+                                'active' => $mode === 'list',
+                                'id' => $mode === 'list' ? 'used' : 'ki'
+                            ]}
+
+                            {if isset($thisUser) && isset($club) && $club->canUploadAudio($thisUser)}
+                                {var $tabMenuItems[] = [
+                                    'url' => "/player/upload?gid=" . abs($ownerId),
+                                    'title' => 'upload_audio',
+                                    'active' => false
+                                ]}
+                            {/if}
+
+                            {if isset($thisUser) && isset($ownerId) && !$isMy}
+                                {var $tabMenuItems[] = [
+                                    'url' => "/playlists" . $ownerId,
+                                    'title' => $ownerId > 0 ? 'playlists_user' : 'playlists_club',
+                                    'active' => $mode === 'playlists' && $ownerId != $thisUser->getId(),
+                                    'id' => $mode === 'playlists' && $ownerId != $thisUser->getId() ? 'used' : 'ki'
+                                ]}
+                            {/if}
+
+                            {if isset($thisUser) && $isMyClub}
+                                {var $tabMenuItems[] = [
+                                    'url' => "/audios/newPlaylist" . ($isMyClub ? "?gid=" . abs($ownerId) : ""),
+                                    'title' => 'new_playlist',
+                                    'active' => false
+                                ]}
+                            {/if}
+                        {/if}
+
+                        {include "../components/ui_rmenu.xml", 
+                            items => $tabMenuItems, 
+                            additionalCssClass => 'audio_tabs', 
+                            id => 'audio_tabs'
+                        }
+
+                        {if $friendsAudios}
+                            {var $friendsMenuItems = []}
+                            {* Ограничиваем $friendsAudios до первых 3 элементов *}
+                            {var $limitedFriendsAudios = array_slice($friendsAudios, 0, 3)}
+                            
+                            {foreach $limitedFriendsAudios as $friend}
+                                {var $friendsMenuItems[] = [
+                                    'url' => "/audios" . $friend->getRealId(),
+                                    'title' => $friend->getCanonicalName(),
+                                    'translate' => false,
+                                    'avatar' => $friend->getAvatarURL(),
+                                    'additionalInfo' => $audioStatus ? $audioStatus->getName() : tr("audios_count", $friend->getAudiosCollectionSize()),
+                                    'isRich' => true
+                                ]}
+                            {/foreach}
+                            {include "../components/ui_rmenu.xml", 
+                                items => $friendsMenuItems,
+                                additionalCssClass => 'friends_audio_list',
+                                id => 'friends_audio_list'
+                            }
+                        {/if}
+                    </div>
                 </div>
 
-                {include "../components/paginator.xml", conf => (object) [
-                    "page"     => $page,
-                    "count"    => $audiosCount,
-                    "amount"   => sizeof($audios),
-                    "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
-                    "atTop"    => true,
-                    "space"    => 6,
-                    "tidy"     => true,
-                ]}
-            </div>
-
-            <div class="page_block audiosDiv">
-                <div class="audiosContainer audiosSideContainer" n:if="$mode != 'playlists'">
-                    <div n:if="$audiosCount <= 0" style='height: 100%;'>
-                        {include "../components/content_error.xml", description => $ownerId > 0 ? ($ownerId == $thisUser->getId() ? tr("no_audios_thisuser") : tr("no_audios_user")) : tr("no_audios_club")}
-                    </div>
-                    <div n:if="$audiosCount > 0" class="scroll_container">
-                        <div class="scroll_node" n:foreach="$audios as $audio">
-                            {include "player.xml", audio => $audio, club => $club}
+                <div class="profilecover">
+                    <div class="vcover">
+                        <div class="vcover_block_inner">
+                            <a href="{if $mode === 'uploaded'}
+                                {$thisUser->getAvatarLink()|nocheck}
+                            {else}
+                                {$owner->getAvatarLink()|nocheck}
+                            {/if}
+                            ">
+                                <img src="/themepack/myify/1.0.0.0/resource/mcover_200.svg"
+                                    alt="{if $mode === 'uploaded'}
+                                        {$thisUser->getCanonicalName()}
+                                    {else}
+                                        {$owner->getCanonicalName()}
+                                    {/if}"
+                                    id="vbigCover"
+                                    style="width: 100%; image-rendering: -webkit-optimize-contrast; height: 15.5em;"
+                                />
+                            </a>
                         </div>
                     </div>
+                </div>
+                <div class="column" id="mhead">
+                    <div class="row">
+                        {var $avatarUrl = ''}
+                        {var $avatarObject = null}
 
-                    <div n:if="$mode != 'new' && $mode != 'popular'">
+                        {if $mode === 'uploaded'}
+                            {var $avatarUrl = $thisUser->getAvatarUrl('normal')}
+                            {var $avatarObject = $thisUser}
+                        {else}
+                            {var $avatarUrl = $owner->getAvatarUrl('normal')}
+                            {var $avatarObject = $owner}
+                        {/if}
+
+                        {var $hasAvatar = !str_contains($avatarObject->getAvatarUrl('miniscule'), "/assets/packages/static/openvk/img/camera_200.png")}
+
+                            <div class="vavatar_block">
+                                <div class="avatar_block_inner">
+                                <a href="{if $mode === 'uploaded'}
+                                    {$thisUser->getAvatarLink()|nocheck}
+                                {else}
+                                    {$owner->getAvatarLink()|nocheck}
+                                {/if}">
+                                        <img src="{if $mode === 'uploaded'}
+                                            {$thisUser->getAvatarUrl('normal')}
+                                        {else}
+                                            {if $hasAvatar}
+                                                {$owner->getAvatarUrl('normal')}
+                                            {else}
+                                                /themepack/myify/1.0.0.0/resource/camera_200.png
+                                            {/if}
+                                        {/if}"
+                                            alt="{if $mode === 'uploaded'}
+                                                {$thisUser->getCanonicalName()}
+                                            {else}
+                                                {$owner->getCanonicalName()}
+                                            {/if}"
+                                            id="bigAvatar"
+                                            style="width: 100px;
+                                                image-rendering: -webkit-optimize-contrast;
+                                                border-radius: 100%;
+                                                border: 5px solid white;
+                                                box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.12);"
+                                        />
+                                </a>
+                                </div>
+                            </div>
+                            <div class="mname">{if $mode === 'uploaded'}
+                                {$thisUser->getCanonicalName()}
+                            {else}
+                                {$owner->getCanonicalName()}
+                            {/if}</div>
+                        </div>
+                        <div class="vtabs" style="     margin-top: 15px;      margin-left: 60px;      text-transform: uppercase;      font-weight: 300;      font-size: 10px;">
+                            <div style="display: flex; flex-direction: row;"><a href="/audios/newPlaylist" class="newpl">Создать плейлист</a></div>
+                        </div>
+                    </div>
+                    <div class="mtabs">
+                        <div class="mtab"><a href="/audios{$owner->getId()}" style="color: black;">Музыка</a></div>
+                        <div class="mtab"><a href="/playlists{$owner->getId()}" style="color: black;">Плейлисты</a></div>
+                    </div>
+                </div>
+            <div class="wide_column_wrap" style="    width: fit-content;">
+                <div class="wide_column">
+
+                    <div n:if="isset($audios)" class='summaryBarHideable summaryBar summaryBarFlex padding' style="margin: 0px -10px;width: 99.5%;display: none;">
+                        <div class='summary'>
+                            <b>{tr("is_x_audio", $audiosCount)}</b>
+                        </div>
+
                         {include "../components/paginator.xml", conf => (object) [
                             "page"     => $page,
                             "count"    => $audiosCount,
                             "amount"   => sizeof($audios),
                             "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
-                            "atBottom" => true,
+                            "atTop"    => true,
+                            "space"    => 6,
+                            "tidy"     => true,
                         ]}
                     </div>
-                </div>
-                
-                <div class="audiosPaddingContainer audiosSideContainer audiosPaddingContainer" style="width: 72.2%;" n:if="$mode == 'playlists'">
-                    <div n:if="$playlistsCount <= 0" style='height: 100%;'>
-                        {include "../components/content_error.xml", description => $ownerId > 0 ? ($ownerId == $thisUser->getId() ? tr("no_playlists_thisuser") : tr("no_playlists_user")) : tr("no_playlists_club")}
-                    </div>
 
-                    <div class="scroll_container playlistContainer" n:if="$playlistsCount > 0">
-                        <div class='scroll_node' n:foreach='$playlists as $playlist'>
-                            {include 'playlistListView.xml', playlist => $playlist}
+                    <div class="page_block audiosDiv">
+                        <div class="audiosContainer audiosSideContainer" n:if="$mode != 'playlists'">
+                            <div n:if="$audiosCount <= 0" style='height: 100%;'>
+                                {include "../components/content_error.xml", description => $ownerId > 0 ? ($ownerId == $thisUser->getId() ? tr("no_audios_thisuser") : tr("no_audios_user")) : tr("no_audios_club")}
+                            </div>
+                            <div n:if="$audiosCount > 0" class="scroll_container">
+                                <div class="scroll_node" n:foreach="$audios as $audio">
+                                    {include "player.xml", audio => $audio, club => $club}
+                                </div>
+                            </div>
+
+                            <div n:if="$mode != 'new' && $mode != 'popular'">
+                                {include "../components/paginator.xml", conf => (object) [
+                                    "page"     => $page,
+                                    "count"    => $audiosCount,
+                                    "amount"   => sizeof($audios),
+                                    "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
+                                    "atBottom" => true,
+                                ]}
+                            </div>
                         </div>
-                    </div>
+                        
+                        <div class="audiosPaddingContainer audiosSideContainer audiosPaddingContainer" style="width: 72.2%;" n:if="$mode == 'playlists'">
+                            <div n:if="$playlistsCount <= 0" style='height: 100%;'>
+                                {include "../components/content_error.xml", description => $ownerId > 0 ? ($ownerId == $thisUser->getId() ? tr("no_playlists_thisuser") : tr("no_playlists_user")) : tr("no_playlists_club")}
+                            </div>
 
-                    <div>
-                        {include "../components/paginator.xml", conf => (object) [
-                            "page"     => $page,
-                            "count"    => $playlistsCount,
-                            "amount"   => sizeof($playlists),
-                            "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
-                            "atBottom" => true,
-                        ]}
+                            <div class="scroll_container playlistContainer" n:if="$playlistsCount > 0">
+                                {* Новая логика для отображения плейлистов в сетке *}
+                                {var $playlistItemsPerRow = 2} {* 2 элемента в ряду *}
+                                {var $playlistChunks = array_chunk($playlists, $playlistItemsPerRow)}
+
+                                <table class="playlist-grid">
+                                    <tbody>
+                                        {foreach $playlistChunks as $rowItems}
+                                            <tr>
+                                                {foreach $rowItems as $playlist}
+                                                    <td class="playlist-grid-item">
+                                                        {include 'playlistListView.xml', playlist => $playlist}
+                                                    </td>
+                                                {/foreach}
+                                                {* Заполнение пустых ячеек, если в последнем ряду меньше 2 элементов *}
+                                                {for $i = 0; $i < $playlistItemsPerRow - count($rowItems); $i++}
+                                                    <td class="playlist-grid-item empty-cell"></td>
+                                                {/for}
+                                            </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div>
+                                {include "../components/paginator.xml", conf => (object) [
+                                    "page"     => $page,
+                                    "count"    => $playlistsCount,
+                                    "amount"   => sizeof($playlists),
+                                    "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
+                                    "atBottom" => true,
+                                ]}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    <div class="small_column" style="    min-width: 40%;">
+            {include "bigplayer.xml", buttonsShow_summary => $audiosCount > 10}
+    </div>
     </div>
 {/block}

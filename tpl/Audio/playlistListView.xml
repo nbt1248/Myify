@@ -8,13 +8,6 @@
             <span class="playlistName noOverflow">
                 {$playlist->getName()}
             </span>
-            <span n:if='!empty($playlist->getDescription())' class="playlistDesc noOverflow">
-                {$playlist->getDescription()}
-            </span>
         </div>
-
-        <span class="playlistMeta">
-            {$playlist->getMetaDescription()|noescape}
-        </span>
     </div>
 </a>
