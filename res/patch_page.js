@@ -432,8 +432,8 @@ function parseAudio(onlyscnodes = false) {
 const vkfavicon = {
     "fav": "/themepack/myify/1.0.0.0/resource/favicon_vk.ico",
     "fav_chat": "/themepack/myify/1.0.0.0/resource/fav_chat.ico",
-    "playiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP//////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAvkQAAL/4AADBsAAAw2wAAMUoAADG6AAAyKgAAMpsAADMNAAAzfwAAM/EAADRlAAA02AAANU0AADXCAAA2Nw==",
-    "pauseiconnew": "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/////////////////q4Jc/6uCXP////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/////////////////6uCXP+rglz/////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP////////////////+rglz/q4Jc/////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    "playiconnew": "/themepack/myify/1.0.0.0/resource/playiconnew.ico",
+    "pauseiconnew": "/themepack/myify/1.0.0.0/resource/pauseiconnew.ico"
 }
 
 if (window.location.href.includes('im?sel=')) {
@@ -855,80 +855,63 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
 
     const mushtml = `
-<div class="bigPlayer ctx_place">
+<div class="bigPlayer ctx_place" style="margin: 0;">
     <div class="bigPlayerWrapper">
-        <div class="playButtons">
-            <div onmousedown="this.classList.add('pressed')" onmouseup="this.classList.remove('pressed')" class="playButton musicIcon" data-tip="simple-black" data-title="${tr('play_tip')}"></div>
-            <div class="arrowsButtons">
-                <div class="nextButton musicIcon" data-tip="simple-black" data-title=""></div>
-                <div class="backButton musicIcon" data-tip="simple-black" data-title=""></div>
+        <div class="row" style="justify-content: space-between;    width: 100%;">
+            <div class="volumePanel">
+                <div class="deviceButton musicIcon" data-tip='simple-black' data-title="{_mute_tip} [M]" style="    min-width: 15px;    background-image: url(/themepack/myify/1.0.0.0/resource/bigvol.svg);    min-height: 15px;    transform: translateY(20%);"></div>
+                <div class="volumePanelTrack">
+                    <div class="selectableTrack">
+                        <div id='bigPlayerVolumeSliderWrapper'>&nbsp;
+                            <div class="slider"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="shareButton musicIcon" data-tip='simple-black' data-title="{_share}" style="content: url(/themepack/myify/1.0.0.0/resource/bigshare.svg); width: 15px; background: none;    transform: translateY(10px);"></div>
         </div>
-
-        <div class="trackPanel">
+        <div class="column">
+            <div class="trackPanel">
             <div class="trackInfo">
                 <div class="trackName">
-                    <span class="trackPerformers"><a href="/">?</a></span> —
-                    <span>?</span>
+                    <img src="/themepack/myify/1.0.0.0/resource/emptycover.svg" style="height: 100px;">
+                    <span class="trackPerformers">
+                        <a>{_track_unknown}</a>
+                    </span>
+                    <span>{_track_noname}</span>
                 </div>
-
+            </div>
+        </div>
                 <div class="timer">
                     <span class="time">00:00</span>
-                    <span>/</span>
+                </div>
+                <div class="track">
+                    <div class="selectableTrack">
+                        <div id='bigPlayerLengthSliderWrapper'>&nbsp;
+                            <div class="slider"></div>
+                        </div>
+                        <div class='selectableTrackLoadProgress'>
+                            <div class="load_bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timer">
                     <span class="elapsedTime">-00:00</span>
                 </div>
+        <div class="playButtons">
+            <div class="arrowsButtons">
+                <div class="nextButton musicIcon" data-tip='simple-black' data-title=""></div>
             </div>
-
-            <div class="track">
-                <div class="selectableTrack">
-                    <div id="bigPlayerLengthSliderWrapper">&nbsp;
-                        <div class="slider"></div>
-                    </div>
-                    <div class="selectableTrackLoadProgress">
-                        <div class="load_bar"></div>
-                    </div>
-                </div>
+            <div class="playButton musicIcon" data-tip='simple-black' data-title="{_play_tip} [Space]"></div>
+            <div class="arrowsButtons">
+                <div class="backButton musicIcon" data-tip='simple-black' data-title=""></div>
             </div>
         </div>
-
-        <div class="volumePanel">
-            <div class="volumePanelTrack">
-                <div class="selectableTrack">
-                    <div id="bigPlayerVolumeSliderWrapper">&nbsp;
-                        <div class="slider" style="padding-left:122%"></div>
-                    </div>
-                </div>
             </div>
+        <div class="additionalButtons row">
+            <div class="shuffleButton musicIcon" data-tip='simple-black' data-title="{_shuffle_tip}"></div>
+            <div class="repeatButton musicIcon" data-tip='simple-black' data-title="{_repeat_tip} [R]" ></div>
         </div>
-
-        <div class="additionalButtons">
-            <div class="repeatButton musicIcon" data-tip="simple-black" data-title="${tr('repeat_tip')}"></div>
-            <div class="shuffleButton musicIcon" data-tip="simple-black" data-title="${tr('shuffle_tip')}"></div>
-            <div class="deviceButton musicIcon" data-tip="simple-black" data-title="${tr('mute_tip')}"></div>
-        </div>
-    </div>
-</div>
-<div class="audio_content_wrap">
-    <div class="audio_content">
-        <div class="vkifytracksplaceholder"></div>
-            <div class="musfooter"><span class="playingNow"></span>
-            <a id="ajclosebtn" onclick="tippy.hideAll();"><vkifyloc name="clear_playlist"></vkifyloc></a>
-        </div>
-    </div>
-    <div class="rightlist">
-        <div class="verticalGrayTabs">
-            <div class="with_padding">
-                <a onclick="tippy.hideAll();" href="/audios${window.openvk.current_id}">${tr('my_music')}</a>
-                <a onclick="tippy.hideAll();" href="/player/upload">${tr('upload_audio')}</a>
-                <a onclick="tippy.hideAll();" href="/search?section=audios" id="ki">${tr('audio_new')}</a>
-                <a onclick="tippy.hideAll();" href="/search?section=audios&order=listens" id="ki">${tr('audio_popular')}</a>
-                <hr>
-                <a onclick="tippy.hideAll();" href="/playlists${window.openvk.current_id}" id="ki">${tr('my_playlists')}</a>
-                <a onclick="tippy.hideAll();" href="/audios/newPlaylist">${tr('new_playlist')}</a>
-            </div>
-            <div class="friendsAudiosList">
-            ${friendshtml}
-            </div>
         </div>
     </div>
 </div>
