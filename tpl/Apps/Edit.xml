@@ -1,9 +1,5 @@
 {extends "../@layout.xml"}
 
-{block headIncludes}
-    <link rel="stylesheet" href="/themepack/vkify16/1.0.0.0/resource/css/settings.css">
-{/block}
-
 {block title}
     {if $create}
         {_create_app}
@@ -12,89 +8,95 @@
     {/if}
 {/block}
 
-{block content}
-    {var $tabs = [
-        [
-            'url' => '/apps?act=list',
-            'title' => 'all_apps',
-            'active' => false,
-            'id' => 'apps_tab_list'
-        ],
-        [
-            'url' => '/apps?act=installed',
-            'title' => 'installed_apps',
-            'active' => false,
-            'id' => 'apps_tab_installed'
-        ],
-        [
-            'url' => '/apps?act=dev',
-            'title' => 'own_apps',
-            'active' => true,
-            'id' => 'apps_tab_dev'
-        ]
-    ]}
-    {include "../components/page_tabs_header.xml", tabs => $tabs, id => 'apps_top_tabs', extra => '<a class="side_link" href="/app' . $id  . '">' . $name . '</a>'}
-    <div class="page_block">
-        <form method="POST" enctype="multipart/form-data">
-            <div class="settings_panel settings_padding game_edit">
-                <div class="settings_list_row">
-                    <div class="settings_label">{_name}</div>
-                    <div class="settings_labeled_text">
-                        <input type="text" name="name" value="{$name ?? ''}" />
-                    </div>
-                </div>
-                <div class="settings_list_row">
-                    <div class="settings_label">{_description}</div>
-                    <div class="settings_labeled_text">
-                        <input type="text" name="desc" value="{$desc ?? ''}" />
-                    </div>
-                </div>
-                <div class="settings_list_row">
-                    <div class="settings_label">{_avatar}</div>
-                    <div class="settings_labeled_text">
-                        <input type="file" name="ava" accept="image/*" />
-                    </div>
-                </div>
-                <div class="settings_list_row">
-                    <div class="settings_label">{_app_news}</div>
-                    <div class="settings_labeled_text">
-                        <input type="text" name="note" placeholder="{ovk_scheme(true) . $_SERVER['HTTP_HOST']}/note{$thisUser->getId()}_10" value="{$note ?? ''}" />
-                    </div>
-                </div>
-                <div class="settings_list_row">
-                    <div class="settings_label">URL</div>
-                    <div class="settings_labeled_text">
-                        <input type="text" name="url" value="{$url ?? ''}" />
-                    </div>
-                </div>
-                <div class="settings_list_row">
-                    <div class="settings_label">{_app_state}</div>
-                    <div class="settings_labeled_text">
-                        <label><input type="checkbox" name="enable" n:attr="checked => ($on ?? false)" /> {_app_enabled}</label>
-                    </div>
-                </div>
-                <div class="settings_save_footer">
-                    <input type="hidden" name="hash" value="{$csrfToken}" />
-                    <input type="submit" value="{_save}" class="button" />
-                </div>
-            </div>
-        </form>
-    </div>
+{block header}
+    {if $create}
+        {_new_app}
+    {else}
+        <a href="/apps?act=dev">{_own_apps_alternate}</a> »
+        <a href="/app{$id}">{$name}</a> »
+        {_edit}
+    {/if}
+{/block}
 
-    <div class="page_block">
-        {include "../components/page_block_header.xml", title => "additional_information"}
-        <div class="settings_panel settings_padding">
-            <div class="settings_list_row">
-                <ul style="color: unset;">
-                    {if $create}
-                        <li>{_app_creation_hint_url}</li>
-                        <li>{_app_creation_hint_iframe}</li>
-                    {else}
-                        <li>{tr("app_balance", $coins)|noescape} (<a href="javascript:withdraw({$id})">{_app_withdrawal_q}</a>)</li>
-                        <li>{tr("app_users", $users)|noescape}</li>
-                    {/if}
-                </ul>
-            </div>
+{block content}
+    <div class="container_gray">
+        <h4>{_main_information}</h4>
+        <form method="POST" enctype="multipart/form-data">
+            <table cellspacing="7" cellpadding="0" width="60%" border="0" align="center">
+                <tbody>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_name}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="name" value="{$name ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_description}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="desc" value="{$desc ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_avatar}: </span>
+                        </td>
+                        <td>
+                            <input type="file" name="ava" accept="image/*" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_app_news}: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="note" placeholder="{ovk_scheme(true) . $_SERVER['HTTP_HOST']}/note{$thisUser->getId()}_10" value="{$note ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">URL: </span>
+                        </td>
+                        <td>
+                            <input type="text" name="url" value="{$url ?? ''}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" valign="top">
+                            <span class="nobold">{_app_state}: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="enable" n:attr="checked => ($on ?? false)" /> {_app_enabled}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <input type="hidden" name="hash" value="{$csrfToken}" />
+                            <input type="submit" value="{_save}" class="button" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <br/>
+
+        <h4>{_additional_information}</h4>
+        <div>
+            <ul style="color: unset;">
+                {if $create}
+                    <li>{_app_creation_hint_url}</li>
+                    <li>{_app_creation_hint_iframe}</li>
+                {else}
+                    <li>{tr("app_balance", $coins)|noescape} (<a href="javascript:withdraw({$id})">{_app_withdrawal_q}</a>)</li>
+                    <li>{tr("app_users", $users)|noescape}</li>
+                {/if}
+            </ul>
         </div>
     </div>
 
