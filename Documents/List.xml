@@ -1,0 +1,82 @@
+{extends "../@layout.xml"}
+
+{block title}
+    {if !isset($group)}
+        {_my_documents_objectively}
+    {else}
+        {_documents_of_group}
+    {/if}
+{/block}
+
+{block content}
+    {var $is_gallery = $current_tab == 3 || $current_tab == 4}
+    <div class="wide_column_left">
+    <div class="narrow_column_wrap">
+        <div class="narrow_column">
+            {var $tabMenuItems = [
+                [
+                    'url' => '?tab=0',
+                    'title' => 'document_type_0',
+                    'active' => $current_tab == 0,
+                    'count' => null
+                ]
+            ]}
+            {foreach $tabs as $tab}
+                {var $tabMenuItems[] = [
+                    'url' => '?tab=' . $tab['type'],
+                    'title' => $tab['name'],
+                    'translate' => false,
+                    'active' => $tab['type'] == $current_tab,
+                    'count' => $tab['count'] > 1 ? $tab['count'] : null
+                ]}
+            {/foreach}
+            {include "../components/ui_rmenu.xml", items => $tabMenuItems, additionalCssClass => 'docs_tabs', id => 'docs_tabs', ownblock => isset($group) ? 'club' : null}
+            <div n:if="$count > 3" class="page_block module_body">
+                    <select name="docs_sort">
+                        <option n:attr="selected => $order == 0" value="0">{_documents_sort_add}</option>
+                        <option n:attr="selected => $order == 1" value="1">{_documents_sort_alphabet}</option>
+                        <option n:attr="selected => $order == 2" value="2">{_documents_sort_size}</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+    <div class="wide_column_wrap">
+        <div class="wide_column">
+            {capture $uploadBtnExtra}
+                {if !isset($group) && $canUpload}
+                    <input id='upload_entry_point' class='button' type='button' value='{_upload_button}'>
+                {/if}
+            {/capture}
+            {include "../components/page_block_header.xml", title => "documents", extra => $uploadBtnExtra}
+            <div class="page_block docs_page_wrapper">
+            <div n:class="docs_page_content, $is_gallery ? docs_page_gallery">
+                <div n:attr="id => !$is_gallery && sizeof($tags) > 0 ? search_page">
+                    <div n:class="container_white, scroll_container, !$is_gallery && sizeof($tags) > 0 ? page_wrap_content_main">
+                        {if $count > 0}
+                            {foreach $docs as $doc}
+                                {if $is_gallery}
+                                    {include "components/image.xml", doc => $doc, scroll_context => true, club => isset($group) ? $group : NULL}
+                                {else}
+                                    {include "components/doc.xml", doc => $doc, scroll_context => true, club => isset($group) ? $group : NULL}
+                                {/if}
+                            {/foreach}
+                        {else}
+                            {include "../components/error.xml", description => tr("there_is_no_documents_alright")}
+                        {/if}
+                    </div>
+
+                    <div n:if="!$is_gallery && sizeof($tags) > 0" class='page_wrap_content_options verticalGrayTabsWrapper'>
+                        <div class="page_wrap_content_options_list verticalGrayTabs with_padding">
+                            <a id="used">{_documents_all}</a>
+                            {foreach $tags as $tag}
+                                <a href="/search?section=docs&tags={urlencode($tag)}">{$tag}</a>
+                            {/foreach}
+                        </div>
+                    </div>
+                </div>
+                {include "../components/paginator.xml", conf => $paginatorConf}
+            </div>
+            </div>
+        </div>
+    </div>
+{/block}

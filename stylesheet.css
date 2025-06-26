@@ -3192,7 +3192,7 @@ td input[type="submit"]:before {
 }
 
 #profile_link:hover, .profile_link:hover {
-    background-color: rgb(22, 140, 225);
+    background-color: rgb(22, 140, 225) !important;
 }
 
 .tabs.stupid-fix {
