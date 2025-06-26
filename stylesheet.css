@@ -3422,3 +3422,8 @@ a[href="/albums/create"] {
     height: 200px;
     object-fit: contain;
 }
+
+.tabs div[style="float: right;"] {
+    display: flex;
+    align-items: center;
+}
