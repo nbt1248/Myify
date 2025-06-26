@@ -1,0 +1,87 @@
+{extends "../@layoutVidView.xml"}
+
+{block title}{_video}{/block}
+
+{block header}
+    <a href="{$user->getURL()}">{$user->getCanonicalName()}</a>
+    »
+    <a href="/videos{$user->getId()}">{_videos}</a>
+    »
+    {_video}
+{/block}
+
+{block content}
+    <p class="vtitle"><b>{$video->getName()}</b></p>
+    <div class="row" id="vinfo">
+    <div class="author" style="margin-right: 5px;    font-size: 14px;">
+        <b>{$user->getCanonicalName()}</b>
+    </div>
+    <div class='upload_time' style="font-size: 14px;">
+        {_info_upload_date}: {$video->getPublicationTime()}
+    </div>
+    </div>
+    <div class='media-page-wrapper video-page-wrapper'>
+        <div class='video-page-wrapper-video'>
+            {if $video->getType() === 0}
+                <div class="bsdn" data-name="{$video->getName()}" data-author="{$user->getCanonicalName()}">
+                    <video src="{$video->getURL()}"></video>
+                </div>
+            {else}
+                {var $driver = $video->getVideoDriver()}
+                {if !$driver}
+                    {_unknown_video}
+                {else}
+                    {$driver->getEmbed()|noescape}
+                {/if}
+            {/if}
+        </div>
+
+        <div class='ovk-vid-details'>
+            <div class='media-page-wrapper-description' style="    margin-top: 20px;    display: flex;    flex-direction: row;">
+                    {if isset($thisUser)}
+                        {var $liked = $video->hasLikeFrom($thisUser)}
+                        {var $likesCount = $video->getLikesCount()}
+                        <a href="/video{$video->getPrettyId()}/like?hash={rawurlencode($csrfToken)}" class="post_like post_share" data-liked="{(int) $liked}" data-likes="{$likesCount}" data-id="{$video->getPrettyId()}" data-type='video'>
+                            <i class="heart post_like_icon _icon" id=""></i>
+                            <span class="post_like_link _link">Нравится</span>
+                            <span class="likeCnt post_like_count _count"></span>
+                        </a>
+                        <div n:if="isset($thisUser) && $thisUser->getId() === $user->getId()" style="    display: flex;    flex-direction: row;">
+                            <a href="/video{$video->getPrettyId()}/edit" class="profile_link" style="display:block; min-width: 100px;height: fit-content; margin-top: 0;">
+                                {_edit}
+                            </a>
+                            <a id='_videoDelete' href="/video{$video->getPrettyId()}/remove" class="profile_link" style="display:block; min-width: 100px;height: fit-content; margin-top: 0;">
+                                {_delete}
+                            </a>
+                        </div>
+                        <a n:if="isset($thisUser)" onclick="javascript:repost({$video->getPrettyId()}, 'video')" class="profile_link" style="display:block; min-width: 100px;height: fit-content; margin-top: 0;">
+                            {_share}
+                        </a>
+                        {if isset($thisUser)}
+                            {if $thisUser->getId() != $video->getOwner()->getId()}
+                                {var canReport = true}
+                            {/if}
+                        {/if}
+
+                        <a n:if="$canReport ?? false" class="profile_link"style="display:block; min-width: 100px;height: fit-content; margin-top: 0;" href="javascript:reportVideo({$video->getId()})">{_report}</a>
+                        <a n:if="$video->getType() == 0" href="{$video->getURL()}" download="" class="profile_link"style="display:block; min-width: 100px;height: fit-content; margin-top: 0;">{_download_video}</a>
+                        {/if}
+            </div>
+
+            <hr/>
+        
+            <div class="media-page-wrapper-details">
+                <div class='media-page-wrapper-comments' id="comments">
+                    {include "../components/comments.xml",
+                            comments => $comments,
+                            count => $cCount,
+                            page => $cPage,
+                            model => "videos",
+                            parent => $video}
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+{/block}

@@ -1,0 +1,60 @@
+{extends "../@listViewImg.xml"}
+{var $iterator = iterator_to_array($albums)}
+{var $page     = $paginatorConf->page}
+
+{block title}{_albums} {$owner->getCanonicalName()}{/block}
+
+{block header}
+    {if isset($thisUser) && $thisUser->getId() == $owner->getId()}
+        {_my_photos}
+    {else}
+        <a href="{$owner->getURL()}">
+        {$owner->getCanonicalName()}</a>
+        »
+        {_albums}
+    {/if}
+{/block}
+
+{block tabs}
+	{if isset($thisUser) && $thisUser->getId() == $owner->getId()}
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+		<a href="/albums/create{$isClub ? '?gpid=' . $owner->getId() : ''}">{_create_album}</a>
+	{else}
+		<div id="activetabs" class="tab">
+			<a id="act_tab_a" href="/albums{$owner->getId()}">{_albums}</a>
+		</div>
+	{/if}
+{/block}
+
+{block size}
+{/block}
+
+{block actions}
+
+{/block}
+
+{* BEGIN ELEMENTS DESCRIPTION *}
+
+{block link|strip|stripHtml}
+    /album{$x->getPrettyId()}
+{/block}
+
+{block preview}
+    {var $cover   = $x->getCoverPhoto()}
+    {var $preview = is_null($cover) ? "/themepack/myify/2.0.0.0/resource/m_noalbum_2x.png" : $cover->getURLBySizeId("normal")}
+
+    <a href="/album{$x->getPrettyId()}">
+        <img src="{$preview}" alt="{$x->getName()}" style="height: 170px;    width: 170px;    object-fit: cover;" loading=lazy />
+    </a>
+    <b>{$x->getName()}</b><br>
+    <span style="color: grey;">{$x->getPhotosCount()} {_photos}</span><br />
+{/block}
+
+{block name}
+
+{/block}
+
+{block description}
+{/block}

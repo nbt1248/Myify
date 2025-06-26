@@ -1,0 +1,23 @@
+{extends "../@layout.xml"}
+{block content}
+    <div class="content_divider">
+        <div>
+            <div n:if="$canPost && $type == 'all'" class="content_subtitle">
+                {include "../components/textArea.xml", route => "/wall$owner/makePost", graffiti => true, polls => true, notes => true, hasSource => true, geo => true}
+            </div>
+            
+            <div class="content scroll_container">
+                {if sizeof($posts) > 0}
+                    {foreach $posts as $post}
+                        {include "../components/post.xml", post => $post, commentSection => true}
+                    {/foreach}
+                    {include "../components/paginator.xml", conf => $paginatorConf}
+                {else}
+                    <div class="page_block module_body" style="border-top: 0px;">
+                        {_no_posts_abstract}
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+{/block}

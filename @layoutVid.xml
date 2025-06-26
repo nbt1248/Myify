@@ -1,0 +1,319 @@
+{var $instance_name = OPENVK_ROOT_CONF['openvk']['appearance']['name']}
+{if !isset($parentModule) || substr($parentModule, 0, 21) === 'libchandler:absolute.'}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {ifset title}{include title} - {/ifset}{$instance_name}
+        </title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/themepack/myify/1.0.0.0/resource/favicon_vk.ico" />
+        <meta name="application-name" content="{$instance_name}" />
+        <meta n:ifset="$csrfToken" name="csrf" value="{$csrfToken}" />
+
+        <script src="/language/{php echo getLanguage()}.js" crossorigin="anonymous"></script>
+        {script "js/node_modules/jquery/dist/jquery.min.js"}
+        {script "js/node_modules/jquery-ui/dist/jquery-ui.min.js"}
+        {script "js/node_modules/umbrellajs/umbrella.min.js"}
+        {script "js/l10n.js"}
+        {script "js/openvk.cls.js"}
+        {script "js/utils.js"}
+        {script "js/node_modules/dashjs/dist/dash.all.min.js"}
+
+        <script src="/assets/packages/static/openvk/js/node_modules/cropperjs/dist/cropper.js" type="module"></script>
+
+        {css "js/node_modules/tippy.js/dist/backdrop.css"}
+        {css "js/node_modules/cropperjs/dist/cropper.css"}
+        {css "js/node_modules/tippy.js/dist/border.css"}
+        {css "js/node_modules/tippy.js/dist/svg-arrow.css"}
+        {css "js/node_modules/tippy.js/themes/light.css"}
+        {css "js/node_modules/jquery-ui/themes/base/resizable.css"}
+        {script "js/node_modules/@popperjs/core/dist/umd/popper.min.js"}
+        {script "js/node_modules/tippy.js/dist/tippy-bundle.umd.min.js"}
+        {css "js/node_modules/tippy.js/animations/shift-toward-subtle.css"}
+        {script "js/node_modules/handlebars/dist/handlebars.min.js"}
+        {script "js/node_modules/react/dist/react-with-addons.min.js"}
+        {script "js/node_modules/react-dom/dist/react-dom.min.js"}
+        {script "js/vnd_literallycanvas.js"}
+        {css "js/node_modules/literallycanvas/lib/css/literallycanvas.css"}
+
+        {if $isTimezoned == NULL}
+            {script "js/timezone.js"}
+        {/if}
+
+        {include "_includeCSS.xml"}
+
+        {ifset headIncludes}
+            {include headIncludes}
+        {/ifset}
+    </head>
+    <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if}{var $hideSidebar = $_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '/reg' || $_SERVER['REQUEST_URI'] === '/login'}{if $hideSidebar} class="no-sidebar"{/if}>
+        <div id="sudo-banner" n:if="isset($thisUser) && $userTainted">
+            <p>
+                {_you_entered_as} <b>{$thisUser->getCanonicalName()}</b>. {_please_rights}
+                {_click_on} <a href="/setSID/unset?hash={rawurlencode($csrfToken)}">{_there}</a>, {_to_leave}.
+            </p>
+        </div>
+
+        <div n:if="OPENVK_ROOT_CONF['openvk']['preferences']['bellsAndWhistles']['testLabel']" id="test-label">FOR TESTING PURPOSES ONLY</div>
+
+        <div class="notifications_global_wrap"></div>
+        <div class="dimmer">
+            <div id='absolute_territory'></div>
+        </div>
+        <div class="upLeftErrors"></div>
+
+        <div class="articleView">
+            <a id="articleCloseButton" class="button" href="javascript:void(u('body').removeClass('article'));">{_close}</a>
+            <div class="articleView_container">
+                <div class="articleView_info">
+                    <div class="articleView_author">
+                        <img id="articleAuthorAva" src="" />
+                        <div>
+                            <span><a id="articleAuthorName"></a></span>
+                            <time id="articleTime"></time>
+                        </div>
+                    </div>
+
+                    <div class="articleView_link">
+                        <a id="articleLink" href="/" class="button">{_aw_legacy_ui}</a>
+                    </div>
+                </div>
+
+                <div class="articleView_text" id="articleText">
+                </div>
+            </div>
+        </div>
+
+        {if isset($backdrops) && !is_null($backdrops)}
+            <div id="backdrop" style="background-image: url('{$backdrops[0]|noescape}'), url('{$backdrops[1]|noescape}');">
+                <div id="backdropDripper"></div>
+            </div>
+        {/if}
+
+        <div class="toTop">
+            <div id='to_up'>
+                <img style="width: 14px;margin-right: 2px;margin-left: 3px;" src="/themepack/myify/1.0.0.0/resource/toTop.png">
+                <span>{_to_top}</span>
+            </div>
+            
+            <div id='to_back'>
+                <img style="width: 14px;margin-right: 2px;rotate: 180deg;margin-left: 3px;" src="/themepack/myify/1.0.0.0/resource/toTop.png">
+            </div>
+        </div>
+
+        <div class="vlayout">
+            <div id="xhead" class="dm"></div>
+            <div class="page_header">
+                <div class="page_header_inner">
+                    <a href="/" class="home_button" title="{$instance_name}"><div class="home_button_bg" style="background: url(/themepack/myify/1.0.0.0/resource/icons/myv.png) no-repeat;"></div></a>
+                    {if (isset($thisUser) ? (!$thisUser->isBanned() XOR !$thisUser->isActivated()) : true)}
+                        <div class="home_search" id="search_box">
+                            <div id="search_box_fr">
+                                <form id="search_form" action="/search" method="get">
+                                    <div id="search_and_one_more_wrapper">
+                                        <input autocomplete="off" type="search" maxlength="79" name="q" placeholder="{tr("header_search")}" title="{tr("header_search")} [Alt+Shift+F]" accesskey="f">
+                                    </div>
+                                    <button class="search_box_button">
+                                        <span>{tr("header_search")}</span>
+                                    </button>
+                                </form>
+                            </div>
+                            <div id="searchBoxFastTips"></div>
+                        </div>
+                        <div class="home_navigation">
+                            {if isset($thisUser) && !$thisUser->isDeactivated()}
+                                <a class="top_nav_btn_v" id="top_myvid_btn" href="/videos{$thisUser->getId()}" class="link">
+                                    <div class="top_nav_btn_v_text" style="    width: 66px;">Моё видео</div>
+                                </a>
+                                <a class="top_nav_btn_v" id="top_uploadvid_btn" href="/videos/upload" class="link">
+                                    <div class="top_nav_btn_v_text" style="    width: 62px;">Загрузить</div>
+                                </a>
+                                <div class="top_nav_audio" id="headerMusicLinkDiv">
+                                    <a class="top_nav_btn" id="headerMusicBtn">
+                                        <div class="top_nav_btn_icon"></div>
+                                    </a>
+                                    <div class="top_audio_player" id="top_audio_player">
+                                        <div class="top_audio_player_btn top_audio_player_prev"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_btn top_audio_player_play _top_audio_player_play"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_btn top_audio_player_next"><div class="top_audio_player_btn_icon"></div></div>
+                                        <div class="top_audio_player_title_wrap">
+                                            <div class="top_audio_player_title"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="vpage_body">
+                    <script n:ifset="$flashMessage">
+                        NewNotification(
+                            {$flashMessage->title},
+                            {$flashMessage->msg ?? ''},
+                            null,
+                            () => {},
+                            5000,
+                            false
+                        );
+                    </script>
+                {ifset wrap}
+                    {include wrap}
+                {else}
+                    <div class="wrap2">
+                        <div class="wrap1">
+                            <div id="auth" class="page-wrap">
+                                <div class="page_content">
+
+                                    {include content}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {/ifset}
+                {if !isset($thisUser)}
+                    <div class="footer_wrap">
+                        <div class="footer_nav">
+                            <div class="footer_copy">
+                                <a href="/about">{$instance_name}</a> © 2016
+                            </div>
+                            <div class="footer_lang">
+                                {var $currentUrl = $_SERVER["REQUEST_URI"]}
+                                {foreach array_slice(getLanguages(), 0, 3) as $language}
+                                    <a href="/language?lg={$language['code']}&hash={urlencode($csrfToken)}&jReturnTo={php echo rawurlencode($currentUrl)}" 
+                                       rel="nofollow" 
+                                       title="{$language['native_name']}" 
+                                       class="vkify-footer-lang">
+                                        {$language['native_name']}
+                                    </a>
+                                {/foreach}
+                                <a href="/language" 
+                                   onclick="changeLangPopup(); return false;" 
+                                   class="vkify-footer-lang">
+                                    all languages &raquo;
+                                </a>
+                            </div>
+                            <div class="footer_links">
+                                <a href="/about" class="link">{_footer_about_instance}</a>
+                                <a href="/support" class="link">{_footer_help}</a>
+                                <a href="/blog" class="link">{_footer_blog}</a>
+                                <a href="/terms" class="link">{_footer_rules}</a>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+                </div>
+            </div>
+            <div id="ajloader" class="loader">
+                <img src="/assets/packages/static/openvk/img/loading_mini.gif">
+            </div>
+
+        {include "components/cookies.xml"}
+
+        {script "js/node_modules/msgpack-lite/dist/msgpack.min.js"}
+        {script "js/node_modules/soundjs/lib/soundjs.min.js"}
+        {script "js/node_modules/ky/umd.js"}
+        {script "js/messagebox.js"}
+        {script "js/notifications.js"}
+        {script "js/scroll.js"}
+        {script "js/player.js"}
+        {script "js/al_wall.js"}
+        <script src="/themepack/myify/1.0.0.0/resource/patch_wall.js"></script>
+        {script "js/al_docs.js"}
+        {script "js/al_api.js"}
+        {script "js/al_mentions.js"}
+        {script "js/al_polls.js"}
+        {script "js/al_suggestions.js"}
+        {script "js/al_navigation.js"}
+        {script "js/al_comments.js"}
+        {script "js/al_music.js"}
+	    <script src="/themepack/myify/1.0.0.0/resource/patch_page.js"></script>
+        {script "js/al_despacito_wall.js"}
+        {script "js/al_photos.js"}
+
+        {ifset $thisUser}
+            {script "js/al_notifs.js"}
+            {script "js/al_feed.js"}
+        {/ifset}
+
+        {script "js/node_modules/leaflet/dist/leaflet.js"}
+        {script "js/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"}
+        {css "js/node_modules/leaflet/dist/leaflet.css"}
+        {css "js/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css"}
+        
+        <script>bsdnHydrate();</script>
+
+        <script n:if="OPENVK_ROOT_CONF['openvk']['telemetry']['plausible']['enable']" async defer data-domain="{php echo OPENVK_ROOT_CONF['openvk']['telemetry']['plausible']['domain']}" src="{php echo OPENVK_ROOT_CONF['openvk']['telemetry']['plausible']['server']}js/plausible.js"></script>
+        
+        <script n:if="OPENVK_ROOT_CONF['openvk']['telemetry']['piwik']['enable']">
+            {var $piwik = (object) OPENVK_ROOT_CONF['openvk']['telemetry']['piwik']}
+            
+            //<![CDATA[
+            (function(window,document,dataLayerName,id){ 
+            window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({ start:(new Date).getTime(),event:"stg.start" });var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
+            function stgCreateCookie(a,b,c){ var d="";if(c){ var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d=";expires="+e.toUTCString() }document.cookie=a+"="+b+d+";path=/" }
+            var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
+            var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
+            tags.async=!0,tags.src={$piwik->container . "/"}+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
+            !function(a,n,i){ a[n]=a[n]||{  };for(var c=0;c<i.length;c++)!function(i){ a[n][i]=a[n][i]||{  },a[n][i].api=a[n][i].api||function(){ var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({ event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1) }) } }(i[c]) }(window,"ppms",["tm","cm"]);
+             })(window,document,{$piwik->layer}, {$piwik->site});
+            //]]>
+        </script>
+        
+        <script n:if="OPENVK_ROOT_CONF['openvk']['telemetry']['matomo']['enable']">
+            {var $matomo = (object) OPENVK_ROOT_CONF['openvk']['telemetry']['matomo']}
+            //<![CDATA[
+            var _paq = window._paq = window._paq || [];
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u="//" + {$matomo->container} + "/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', {$matomo->site}]);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+            //]]>
+        </script>
+
+        <script id='_js_ep_script'>
+            window.openvk = {
+                "audio_genres": {\openvk\Web\Models\Entities\Audio::genres},
+                "at_search": {$atSearch ?? false},
+                "max_attachments": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["wall"]["postSizes"]["maxAttachments"] ?? 10},
+                "max_filesize_mb": 100,
+                "current_id": {isset($thisUser) ? $thisUser->getId() : 0},
+                "disable_ajax": {isset($disable_ajax) ? $disable_ajax : 1},
+                "max_add_fields": {ovkGetQuirk("users.max-fields")},
+                "docs_max": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["maxSize"]},
+                "docs_allowed": {\OPENVK_ROOT_CONF["openvk"]["preferences"]["docs"]["allowedFormats"]},
+            }
+        </script>
+
+        {ifset bodyScripts}
+            {include bodyScripts}
+        {/ifset}
+        {script "js/router.js"}
+    </body>
+    <script src="/themepack/myify/1.0.0.0/resource/tippys.js"></script>
+	<script src="/themepack/myify/1.0.0.0/resource/router_patch.js"></script>
+	<script src="/themepack/myify/1.0.0.0/resource/localizator.js" crossorigin="anonymous"></script>
+	<script>
+		window.openvk.locales = {
+        {foreach getLanguages() as $language}
+			{$language['code']}: {$language['native_name']},
+        {/foreach}
+		}
+	</script>
+	<script>
+		window.vkifylocalize("{php echo getLanguage()}");
+	</script>
+</html>
+{/if}
+
+{if isset($parentModule) && substr($parentModule, 0, 21) !== 'libchandler:absolute.'}
+    <!-- INCLUDING TEMPLATE FROM PARENTMODULE: {$parentModule} -->
+
+    {include content}
+{/if} 

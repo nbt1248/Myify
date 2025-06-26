@@ -1,0 +1,84 @@
+{extends "@layout.xml"}
+
+{block wrap}
+<div class="wrap2">
+    <div class="wrap1">
+        <div class="page_wrap padding_top">
+            <div n:ifset="tabs" n:ifcontent class="tabs stupid-fix">
+                {include tabs}
+            </div>
+
+            {ifset size}
+                {include size, x => $dat}
+            {/ifset}
+
+            {ifset before_content}
+                {include before_content, x => $dat}
+            {/ifset}
+
+            {ifset specpage}
+                {include specpage, x => $dat}
+            {else}
+                <div class="container_gray {ifset noscroll}no_scroll_container{else}scroll_container{/ifset}">
+                    {var $data = is_array($iterator) ? $iterator : iterator_to_array($iterator)}
+                    {var $itemsPerRow = 4} {* Изменено на 4 объекта в ряду *}
+                    {var $chunks = array_chunk($data, $itemsPerRow)}
+
+                    {ifset top}
+                        {include top, x => $dat}
+                    {/ifset}
+
+                    {if sizeof($data) > 0}
+                        <table class="photo-grid"> {* Класс изменен для ясности *}
+                            <tbody n:attr="id => is_null($table_body_id) ? NULL : $table_body_id">
+                                {foreach $chunks as $rowItems}
+                                    <tr>
+                                        {foreach $rowItems as $dat}
+                                            <td class="photo-grid-item"> {* Класс изменен для ясности *}
+                                                <div>
+                                                    <a href="{include link, x => $dat}">
+                                                        {include preview, x => $dat}
+                                                    </a>
+                                                    <a href="{include link, x => $dat}">
+                                                        <b>{include name, x => $dat}</b>
+                                                    </a>
+                                                    <br/>
+                                                    {include description, x => $dat}
+                                                    <span n:ifset="actions" class="action_links">
+                                                        {include actions, x => $dat}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        {/foreach}
+                                        {for $i = 0; $i < $itemsPerRow - count($rowItems); $i++}
+                                            <td class="photo-grid-item empty-cell"></td>
+                                        {/for}
+                                    </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                        
+                        {include "components/paginator.xml", conf => (object) [
+                            "page"     => $page,
+                            "count"    => $count,
+                            "amount"   => sizeof($data),
+                            "perPage"  => $perPage ?? OPENVK_DEFAULT_PER_PAGE,
+                            "atBottom" => true,
+                        ]}
+                    {else}
+                        {ifset customErrorMessage}
+                            {include customErrorMessage}
+                        {else}
+                            {include "components/nothing.xml"}
+                        {/ifset}
+                    {/if}
+                </div>
+            {/ifset}
+
+            {ifset bottom}
+                {include bottom}
+            {/ifset}
+        </div>
+    </div>
+</div>
+{/block}
